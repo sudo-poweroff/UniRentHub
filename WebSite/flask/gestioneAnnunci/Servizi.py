@@ -1,6 +1,6 @@
 class Servizi:
 
-    def __init__(self, id_servizio, id_alloggio):
+    def __init__(self, id_servizio=None, id_alloggio=None):
         self.__id_servizio = id_servizio
         self.__id_alloggio = id_alloggio
 

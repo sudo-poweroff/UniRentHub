@@ -1,6 +1,6 @@
 class Segnalazione:
 
-    def __init__(self, email, emailS, stato, motivo):
+    def __init__(self, email=None, emailS=None, stato=None, motivo=None):
         self.__email = email
         self.__emailS = emailS
         self.__stato = stato

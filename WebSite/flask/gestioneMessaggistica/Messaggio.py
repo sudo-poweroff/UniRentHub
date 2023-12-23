@@ -1,6 +1,6 @@
 class Messaggio:
 
-    def __init__(self, id_messaggio, email, id_chat, contenuto):
+    def __init__(self, id_messaggio=None, email=None, id_chat=None, contenuto=None):
         self.__id_messaggio = id_messaggio
         self.__email = email
         self.__id_chat = id_chat

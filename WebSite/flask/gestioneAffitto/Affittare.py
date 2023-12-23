@@ -1,6 +1,6 @@
 class Affittare:
 
-    def __init__(self, id_alloggio, email, data_inizio, data_fine, numero_carta, data_scadenza, prezzo):
+    def __init__(self, id_alloggio=None, email=None, data_inizio=None, data_fine=None, numero_carta=None, data_scadenza=None, prezzo=None):
         self.__id_alloggio = id_alloggio
         self.__email = email
         self.__data_inizio = data_inizio

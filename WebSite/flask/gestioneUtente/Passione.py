@@ -1,6 +1,6 @@
 class Passione:
 
-    def __init__(self, id_passione, nome):
+    def __init__(self, id_passione=None, nome=None):
         self.__id_passione = id_passione
         self.__nome = nome
 

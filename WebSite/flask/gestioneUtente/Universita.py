@@ -1,6 +1,6 @@
 class Universita:
 
-    def __init__(self, denomimazione, email, indirizzo):
+    def __init__(self, denomimazione=None, email=None, indirizzo=None):
         self.__denominazione = denomimazione
         self.__email = email
         self.__indirizzo = indirizzo

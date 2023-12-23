@@ -1,6 +1,6 @@
 class Partecipazione:
 
-    def __init__(self, id_chat, email):
+    def __init__(self, id_chat=None, email=None):
         self.__id_chat = id_chat
         self.__email = email
 

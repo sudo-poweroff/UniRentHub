@@ -1,6 +1,6 @@
 class Assegnazione:
 
-    def __init__(self, idPassione, email):
+    def __init__(self, idPassione=None, email=None):
         self.__idPassione = idPassione
         self.__email = email
 

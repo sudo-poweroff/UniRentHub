@@ -1,6 +1,6 @@
 class Iscrizione:
 
-    def __init__(self, denominazione, email):
+    def __init__(self, denominazione=None, email=None):
         self.__denominazione = denominazione
         self.__email = email
 

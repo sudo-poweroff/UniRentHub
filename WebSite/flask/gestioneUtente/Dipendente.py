@@ -1,6 +1,6 @@
 class Dipendente:
 
-    def __init__(self, email, nome, cognome, tipo_dipendente, password):
+    def __init__(self, email=None, nome=None, cognome=None, tipo_dipendente=None, password=None):
         self.__email = email
         self.__nome = nome
         self.__cognome = cognome
