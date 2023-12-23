@@ -1,5 +1,5 @@
 class Cliente:
-    def __init__(self, email, nome, cognome, tipo_utente, data_nascita, numero_carta, verificato, data_scadenza):
+    def __init__(self, email=None, nome=None, cognome=None, tipo_utente=None, data_nascita=None, numero_carta=None, verificato=None, data_scadenza=None, password=None):
         self.__email = email
         self.__nome = nome
         self.__cognome = cognome
@@ -8,6 +8,7 @@ class Cliente:
         self.__numero_carta = numero_carta
         self.__verificato = verificato
         self.__data_scadenza = data_scadenza
+        self.__password = password
 
     def getEmail(self):
         return self.__email
@@ -33,6 +34,9 @@ class Cliente:
     def getDataScadenza(self):
         return self.__data_scadenza
 
+    def getPassword(self):
+        return self.__password
+
     def setEmail(self, email):
         self.__email = email
 
@@ -56,3 +60,6 @@ class Cliente:
 
     def setDataScadenza(self, data_scadenza):
         self.__data_scadenza = data_scadenza
+
+    def setPassword(self, password):
+        self.__password = password
