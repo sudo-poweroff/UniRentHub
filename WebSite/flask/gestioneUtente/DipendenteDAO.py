@@ -9,7 +9,7 @@ class DipendenteDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-    def insertDipendente(self, dipendente):
+    def createDipendente(self, dipendente):
         query = """
             INSERT INTO dipendente (email, nome, cognome, tipo_dipendente, password)
             VALUES (%s, %s, %s, 'Homechecker', %s)

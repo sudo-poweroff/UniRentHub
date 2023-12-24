@@ -9,7 +9,7 @@ class ClienteDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-    def insertCliente(self, cliente):
+    def createCliente(self, cliente):
         query= """
             INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, data_scadenza, verificato, password)
             VALUES (%s, %s, %s, %s, %s, '', '', 0, %s)
