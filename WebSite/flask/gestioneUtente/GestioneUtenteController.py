@@ -9,6 +9,9 @@ gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 def main():
     return "<h1>Sono Scarso</h1>"
 
+@gu.route('/home')
+def home():
+    return render_template("Homepage.html")
 
 @gu.route('/registrazione', methods=['GET', 'POST'])
 def reg():
