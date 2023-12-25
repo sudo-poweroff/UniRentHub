@@ -1,8 +1,9 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
+
 
 
 @gu.route('/')
@@ -11,6 +12,11 @@ def main():
 
 @gu.route('/home')
 def home():
+    return render_template("Homepage.html")
+
+@gu.route("/logout")
+def logout():
+    session.pop("user", None)
     return render_template("Homepage.html")
 
 @gu.route('/registrazione', methods=['GET', 'POST'])
@@ -23,6 +29,14 @@ def reg():
         dao = DipendenteDAO()
 
         dipendente = dao.ricercaEmailD(email)
+
+        session.permanent = True  # la sessione è permanente
+        nomedip = dipendente.getNome()
+        maildip = dipendente.getEmail()
+        pwddip = dipendente.getPassword()
+        session["nomedip"] = nomedip
+        session["maildip"] = maildip
+        session["pwddip"] = pwddip
 
         return  render_template("output.html", dipendente=dipendente.getNome())
     else:

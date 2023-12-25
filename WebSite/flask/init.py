@@ -2,6 +2,7 @@ from flask import Flask
 from gestioneUtente.GestioneUtenteController import gu
 
 app = Flask(__name__)
+app.secret_key = 'hello'
 
 app.register_blueprint(gu)
 
