@@ -1,17 +1,61 @@
 {% extends "base.html" %}
 {% block title %} Homepage {% endblock %}
+{% block style %}
+    <style>
+    /*---------------------------------------
+      HERO
+    -----------------------------------------*/
+    .hero-section {
+      background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+      position: relative;
+      overflow: hidden;
+      padding-top: 150px;
+      padding-bottom: 150px;
+    }
+
+    .hero-section .input-group {
+      background-color: var(--white-color);
+      border-radius: var(--border-radius-large);
+      padding: 10px 15px;
+    }
+
+    .hero-section .input-group-text {
+      background-color: transparent;
+      border: 0;
+    }
+
+    .hero-section input[type="search"] {
+      border: 0;
+      box-shadow: none;
+      margin-bottom: 0;
+      padding-left: 0;
+    }
+
+    .hero-section button[type="submitsearch"] {
+      background-color: var(--primary-color);
+      border: 0;
+      border-radius: var(--border-radius-large) !important;
+      color: var(--white-color);
+      max-width: 150px;
+    }
+
+    </style>
+{% endblock %}
+
 {% block start %}
 
     <ul class="nav">
       <li><a href="Homepage.html" class="active">Home</a></li>
       <li><a href="#">Community</a></li>  <!-- Qui va il link URH Community -->
-
       <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#">Sei un proprietario?</a></li> <!-- Questo dev'essere il login locatore SEMMAI, bisogna decidere come gestirlo -->
+      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
+      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
+      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
+      <li><a href="#">Sei un proprietario?</a></li> <!-- bisogna decidere come gestirlo -->
         {% if tipo != "Studente"  and tipo != "Locatore" %}
-          <li><a href="LoginCliente.html"><i class="fa-user"></i> Accedi</a></li>
+          <li><a href="LoginCliente.html"><i class="fa-user"></i>Accedi</a></li>
         {% elif tipo == "Studente"  or tipo == "Locatore" %}
-            <li><a href="Homepage.html"><i class="fa-user"></i> Logout</a></li>
+            <li><a href="Homepage.html"><i class="fa-user"></i>Logout</a></li>
         {% endif %}
    </ul>
       <a class='menu-trigger'>
@@ -35,9 +79,30 @@
   </div>
   <!-- ***** Preloader End ***** -->
 
+  <!-- CODICE SEARCHBAR START                //TODO
+    <div class="rowsearchbar">
+                        <div class="col-lg-8 col-12 mx-auto">
+                            <h1 class="text-white text-center">Discover. Learn. Enjoy</h1>
 
+                            <h6 class="text-center">platform for creatives around the world</h6>
+
+                            <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bi-search" id="basic-addon1">
+
+                                    </span>
+
+                                    <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Design, Code, Marketing, Finance ..." aria-label="Search">
+
+                                    <button type="submitsearch" class="form-control">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+    CODICE SEARCHBAR END -->
 
   <div class="main-banner">
+
     <div class="owl-carousel owl-banner">
       <div class="item item-1">
         <div class="header-text">
