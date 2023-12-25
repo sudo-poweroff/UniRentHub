@@ -32,7 +32,7 @@ class Dipendente:
         self.__tipo_dipendente = tipo
 
     def getPassword(self):
-        return self.__tipo_dipendente
+        return self.__password
 
     def setPassword(self, password):
         self.__password = password
