@@ -4,6 +4,7 @@ from gestioneUtente.GestioneUtenteController import gu
 
 app = Flask(__name__)
 app.secret_key = 'hello'
+app.debug = True
 
 app.register_blueprint(gu)
 
