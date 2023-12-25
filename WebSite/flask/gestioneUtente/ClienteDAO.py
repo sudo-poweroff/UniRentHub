@@ -71,7 +71,34 @@ class ClienteDAO:
         else:
             return None
 
+    def accesso(self, email,pwd):
+        query="""
+            SELECT *
+            FROM cliente
+            WHERE email =%s
+            AND password = %s
+        """
 
+        values =(email,pwd)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            cliente = Cliente(
+                email=result[0],
+                nome=result[1],
+                cognome=result[2],
+                tipo_utente=result[3],
+                data_nascita=result[4],
+                numero_carta=result[5],
+                data_scadenza=result[6],
+                verificato=result[7],
+                password=result[8]
+            )
+            return cliente
+        else:
+            return None
 
 
 

@@ -42,13 +42,14 @@ class DipendenteDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def ricercaEmailD(self, email):
+    def ricercaDip(self, email,password):
         query = """
             SELECT *
             FROM dipendente
             WHERE email = %s
+            AND password = %s
         """
-        values = (email,)
+        values = (email,password)
 
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()

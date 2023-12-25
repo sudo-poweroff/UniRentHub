@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,13 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/registrazione" method="post">
+<form action="/AccessoAdmin" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
     <input type="submit" id="submit" name="submit">
 </form>
+<h1> {{ session["messaggio"] }} </h1>
 </body>
 </html>
