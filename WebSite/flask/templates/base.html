@@ -43,17 +43,19 @@ https://templatemo.com/tm-591-villa-agency
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
+                    {% block start %}
                     <ul class="nav">
                       <li><a href="Homepage.html" class="active">Home</a></li>
                       <li><a href="#">Community</a></li>  <!-- Qui va il link URH Community -->
 
                       <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
                       <li><a href="#">Sei un proprietario?</a></li> <!-- Questo dev'essere il login locatore SEMMAI, bisogna decidere come gestirlo -->
-                      <li><a href="#"><i class="fa-user"></i> Accedi</a></li>
+                      <li><a href="LoginCliente.html"><i class="fa-user"></i> Accedi</a></li>
                   </ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
+                    {% endblock %}
                     <!-- ***** Menu End ***** -->
                 </nav>
             </div>

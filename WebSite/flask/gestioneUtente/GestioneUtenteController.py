@@ -7,15 +7,14 @@ from .ClienteDAO import ClienteDAO
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
 
-
 @gu.route('/')
 def main():
-    return "<h1>Sono Scarso</h1>"
+    #passiamo il tipo utente alla html per modificare l'header
+    tipo_utente = session.get("tipodip", "gest")
+    return render_template("Homepage.html", tipo = tipo_utente)
 
-@gu.route('/home')
-def home():
-    return render_template("Homepage.html")
-@gu.route('/LoginCliente', methods=['GET', 'POST'])
+
+@gu.route('/LoginCliente.html', methods=['GET', 'POST'])
 def accessoU():
     session["messaggio"] = ""
     if request.method == "POST":
@@ -38,21 +37,22 @@ def accessoU():
             session["pwddip"] = pwdcliente
             session["tipodip"] = tipocliente
 
-            return redirect(url_for('gu.home'))
+            return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
             session["messaggio"] = "Credenziali errate"
     return render_template("LoginCliente.html")
 
 
-
 @gu.route("/logout")
 def logout():
     session.pop("user", None)
-    return redirect(url_for('gu.home'))
+    return redirect(url_for('gu.main'))
 
-@gu.route('/output')
+
+@gu.route('/Homepage.html') #per il log-out, NON TOCCATE PATH
 def show_output():
-    return render_template('output.html')
+    return render_template('Homepage.html')
+
 
 @gu.route('/AccessoAdmin', methods=['GET', 'POST'])
 def reg():
@@ -89,7 +89,6 @@ def dipendenti_homechecker():
         return render_template('admin.html', dipendenti=dipendenti_homechecker)
     else:
         return 'Nessun dipendente con tipologia "Homechecker" trovato.'
-
 
 
 @gu.route('/admin', methods=['GET', 'POST'])

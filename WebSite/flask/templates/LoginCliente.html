@@ -3,20 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="../static/css/pop-up.css">
 </head>
 <body>
-<form action="LoginCliente" method="post">
-    <p>Mail: </p>
-    <p><label>
-        <input type = "text" name="email">
-    </label></p>
-        <p>Password: </p>
-    <p><label>
-        <input type = "password" name="password">
-    </label></p>
-    <p><input type="submit" value="submit "></p>
+    <form  action="#" method="post">
+        <header>
+            <a class="active">Sign In</a>
+            <a>Sign Up</a>
+        </header>
+        <section id="section-1">
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required name="email"/>
+                <label for="user">Email</label>
+            </div>
+            <div class="form-group">
+                <input id="password" type="password" required name="password"/>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group-check">
+                <input id="keep" type="checkbox" /><label for="keep">Keep me Signed in</label>
+            </div>
+            <div class="form-group">
+                <input id="signInButton" type="button" value="Sign In" />
+                <script>
+                        document.getElementById("signInButton").onclick = function() {
+                               document.querySelector('form').submit();
+                        };
+                </script>
+            </div>
+        </section>
+        <section id="section-2">
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required />
+                <label for="user">Username</label>
+            </div>
+            <div class="form-group">
+                <input id="email" type="text" autocomplete="off" required />
+                <label for="email">Email</label>
+            </div>
+            <div class="form-group">
+                <input id="password" type="password" required />
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <input id="password-2" type="password" required />
+                <label for="password-2">Retype Password</label>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Sign Up" />
+            </div>
+        </section>
+        <footer>
+            <a>Forgot Password?</a>
+        </footer>
     </form>
-<h1>{{ session["messaggio"] }}</h1>
-
+    <script src="../static/js/pop-up.js"></script>
 </body>
 </html>

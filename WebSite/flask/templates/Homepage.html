@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% block title %} Homepage {% endblock %}
+{% block start %}
+
+    <ul class="nav">
+      <li><a href="Homepage.html" class="active">Home</a></li>
+      <li><a href="#">Community</a></li>  <!-- Qui va il link URH Community -->
+
+      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
+      <li><a href="#">Sei un proprietario?</a></li> <!-- Questo dev'essere il login locatore SEMMAI, bisogna decidere come gestirlo -->
+        {% if tipo != "Studente"  and tipo != "Locatore" %}
+          <li><a href="LoginCliente.html"><i class="fa-user"></i> Accedi</a></li>
+        {% elif tipo == "Studente"  or tipo == "Locatore" %}
+            <li><a href="Homepage.html"><i class="fa-user"></i> Logout</a></li>
+        {% endif %}
+   </ul>
+      <a class='menu-trigger'>
+        <span>Menu</span>
+      </a>
+
+{% endblock %}
 {% block content %}
 
 
