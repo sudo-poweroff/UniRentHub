@@ -1,18 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>UniRentHub | Accesso</title>
+    <link rel="stylesheet" href="../static/css/dipendentiLog.css">
 </head>
 <body>
-<form action="/AccessoAdmin" method="post">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
-    <input type="submit" id="submit" name="submit">
-</form>
-<h1> {{ session["messaggio"] }} </h1>
+    <form  action="/AccessoAdmin" method="post">
+        <header>
+            <a class="active">Accedi</a>
+        </header>
+        <section id="section-1">
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required name="email"/>
+                <label for="user">Email</label>
+            </div>
+            <div class="form-group">
+                <input id="password" type="password" required name="password"/>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <input name="Button" id="signInButton" type="button" value="Accedi" />
+                <script>
+                     document.getElementById("signInButton").onclick = function() {
+                         document.querySelector('form').submit();
+                };
+                </script>
+            </div>
+        </section>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../static/js/pop-up.js"></script>
 </body>
 </html>

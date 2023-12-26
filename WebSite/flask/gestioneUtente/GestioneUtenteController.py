@@ -93,7 +93,7 @@ def reg():
         dipendente = Dipendente()
         dao = DipendenteDAO()
 
-        dipendente = dao.ricercaDip(email,password)
+        dipendente = dao.ricercaDip(email, password)
         if dipendente:
             session.permanent = True  # la sessione è permanente
             nomedip = dipendente.getNome()
