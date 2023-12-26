@@ -5811,6 +5811,7 @@ readers do not read off random characters that represent icons */
 .fa-fort-awesome:before {
   content: "\f286"; }
 
+
 .fa-fort-awesome-alt:before {
   content: "\f3a3"; }
 
