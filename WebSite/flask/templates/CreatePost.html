@@ -14,20 +14,20 @@
     {% include "header.html" %}
 <div class="content-container">
 
-    <h3 style="font-family: 'Open Sans', sans-serif;"> UniRentHub Comunity Post</h3>
-
+    <h3 style="font-family: 'Open Sans', sans-serif;"> UniRentHub Community Post</h3>
+    <br>
     <form method="post" action="/CreatePost">
       <div class="form-group">
         <label for="exampleFormControlInput1">Titolo</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="titolo" name="titolo">
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Titolo" name="titolo">
       </div>
 
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Descrizione</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descrizione" placeholder="descrizione..."></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descrizione" placeholder="Descrizione..."></textarea>
       </div>
 
-      <button type="submit">Invia</button>
+      <button type="submit">Pubblica</button>  <--! va solo visto come tenerlo a sinsitra //TODO -->
     </form>
 
   </div>
