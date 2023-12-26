@@ -12,13 +12,16 @@ class ClienteDAO:
     def createCliente(self, cliente):
         query= """
             INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, data_scadenza, verificato, password)
-            VALUES (%s, %s, %s, %s, %s, '', '', 0, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (
             cliente.getEmail(), cliente.getNome(), cliente.getCognome(),
-            cliente.getPassword(), cliente.getTipo(), cliente.getDataNascita(),
+            cliente.getTipo(), cliente.getDataNascita(),
+            cliente.getNumeroCarta(), cliente.getDataScadenza(),
+            0,  # Aggiunto il valore per verificato
             cliente.getPassword()
         )
+
         self.__cursor.execute(query, values)
         self.__connection.commit()
 

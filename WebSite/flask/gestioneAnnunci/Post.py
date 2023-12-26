@@ -1,6 +1,6 @@
 class Post:
 
-    def __init__(self, id_post, titolo, descrizione, email):
+    def __init__(self, id_post = None, titolo = None, descrizione = None, email = None):
         self.__id_post = id_post
         self.__titolo = titolo
         self.__descrizione = descrizione
