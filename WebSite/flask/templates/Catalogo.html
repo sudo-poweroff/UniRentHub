@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalgo</title>
+</head>
+<body>
+<h1> Catalogo</h1>
+{% for alloggio in alloggi %}
+ <div>
+     Nome: {{ alloggio[3] }}
+     <a href="/Annuncio.html?id={{ alloggio[0] }}">Dettagli</a>
+     <img src="{{ immagini[0] }}">
+
+</div>
+{% endfor %}
+</body>
+</html>

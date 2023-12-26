@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
 
+from .AnnuncioDAO import AnnuncioDAO
 from .GestioneAnnunciService import pubblicazione_post
 
 
@@ -19,3 +20,25 @@ def creaPost():
     elif request.method == "GET":
         return render_template("CreatePost.html")
     return render_template("LoginCliente.html", message="Metodo di richiesta non valido")
+
+@gu2.route('/Catalogo.html')
+def catalogo():
+    dao = AnnuncioDAO()
+    alloggi = dao.visualizza()
+    immagini = []
+    for alloggio in alloggi:
+        id_alloggio = alloggio[0]
+        immagine = dao.visualizzaimg(id_alloggio)
+        immagini.append(immagine)
+    return render_template("catalogo.html", immagini=immagini,alloggi=alloggi)
+
+
+@gu2.route('/Annuncio.html')
+def annuncio():
+    dao = AnnuncioDAO()
+    id_alloggio = request.args.get('id')
+    alloggio = dao.visualizzaannuncio(id_alloggio)
+    servizi = dao.visualizzaservizi(id_alloggio)
+    immagini = dao.visualizzaimmagini(id_alloggio)
+
+    return render_template("Annuncio.html", alloggio=alloggio, servizi=servizi, immagini=immagini)
