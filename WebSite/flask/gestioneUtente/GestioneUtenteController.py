@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
+from flask import Blueprint, request, render_template, session, redirect, url_for
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente

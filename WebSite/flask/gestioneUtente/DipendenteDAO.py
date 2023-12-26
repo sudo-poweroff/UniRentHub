@@ -42,7 +42,7 @@ class DipendenteDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def ricercaDip(self, email,password):
+    def ricercaDip(self, email, password):
         query = """
             SELECT *
             FROM dipendente

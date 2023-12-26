@@ -14,9 +14,9 @@
     {% include "header.html" %}
 <div class="content-container">
 
-    <h2>Crea il tuo post</h2>
+    <h3 style="font-family: 'Open Sans', sans-serif;"> UniRentHub Comunity Post</h3>
 
-    <form method="post" action="CreatePost.html">
+    <form method="post" action="/CreatePost">
       <div class="form-group">
         <label for="exampleFormControlInput1">Titolo</label>
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="titolo" name="titolo">
@@ -24,7 +24,7 @@
 
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Descrizione</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descrizione"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descrizione" placeholder="descrizione..."></textarea>
       </div>
 
       <button type="submit">Invia</button>
