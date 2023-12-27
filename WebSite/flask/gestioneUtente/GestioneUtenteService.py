@@ -2,6 +2,8 @@ import re
 from flask import Flask, flash
 from .Cliente import Cliente
 from .ClienteDAO import ClienteDAO
+from .Dipendente import Dipendente
+from .DipendenteDAO import DipendenteDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -47,9 +49,26 @@ def registra_cliente(nome, cognome, email, password, tipo_utente):
                     dao = ClienteDAO()
                     dao.createCliente(cliente)
                     return cliente
+#creazione nuovo homechecker
+def registra_homechecker_service(email, nome, cognome, password):
+    if is_valid_email(email):
 
+        if is_valid_password(password):
+
+            dipendente = Dipendente(nome=nome, cognome=cognome, email=email, password=password)
+            dao = DipendenteDAO()
+            dao.registra_homechecker(dipendente)
+            return dipendente
 
 def get_cliente_by_email_password(email, password):
     dao = ClienteDAO()
     cliente = dao.accesso(email=email, pwd=password)
     return cliente
+
+#metodo stampa homechecker
+def show_homecheckerService():
+    dao = DipendenteDAO()
+    dipendenti_homechecker = dao.ricercaTdipendente('Homechecker')
+    return dipendenti_homechecker
+
+

@@ -10,7 +10,6 @@ class DipendenteDAO:
         self.__cursor = self.__gestioneConnessione.getCursor()
 
     def registra_homechecker(self, dipendente):
-        dipendente.setTipo('Homechecker')
         query = """
             INSERT INTO dipendente (email, nome, cognome, tipo_dipendente, password)
             VALUES (%s, %s, %s, 'Homechecker', %s)
