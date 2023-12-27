@@ -1945,3 +1945,77 @@ body {
 
 
 
+
+
+/*
+---------------------------------------------
+Homecheckeradding Page
+---------------------------------------------
+*/
+
+
+
+
+
+ .homechecker-text {
+    text-align: center;
+    margin-top: 30px; /* Ridotto ulteriormente il margine superiore */
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-family: 'Open Sans', sans-serif;
+}
+        .input-container input {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            padding: 12px;
+            font-size: 18px;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 20px;
+        }
+
+        .reg-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 60vh; /* Ridotto ulteriormente l'altezza per spostare in alto */
+        }
+
+        .input-container input:first-child {
+            margin-top: 10px;
+        }
+/* Stili per il layout del form */
+.reg-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stili per gli elementi all'interno del form */
+.input-container {
+    display: flex;
+    flex-direction: column; /* Colonna per posizionare gli elementi uno sopra l'altro */
+    margin-bottom: 15px; /* Spazio tra i campi */
+}
+
+.input-container label {
+    margin-bottom: 5px; /* Spazio tra la label e l'input */
+}
+
+.input-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.homechecker-text {
+    font-size: 26px;
+   font-family: 'Open Sans', sans-serif;
+}
+
+.input-container input {
+  color: #333;
+}

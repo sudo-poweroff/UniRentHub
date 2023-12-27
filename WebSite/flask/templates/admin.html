@@ -3,28 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="../static/css/post.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+
 </head>
 <body>
-        <h1>Admin Page </h1>
-    <ul>
-        {% for dipendente in dipendenti %}
-            <li>Nome: {{ dipendente.getNome() }}, Cognome: {{ dipendente.getCognome() }}, Email: {{ dipendente.getEmail() }}</li>
-        {% endfor %}
-    </ul>
-<form action="/admin" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+    {% include "header.html" %}
+    <div class="form-container ">
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
-
-        <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" name="cognome" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <input type="submit" value="Registra Homechecker">
-    </form>
+        <form action="/registra_homechecker" method="POST">
+            <div class="reg-container">
+                 <h3  class="homechecker-text">Registrazione nuovo Homechecker</h3>
+                <div class="input-container">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+                <div class="input-container">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Nome">
+                </div>
+                <div class="input-container">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" required placeholder="Cognome">
+                </div>
+                <div class="input-container">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+                <button type="submit">Registra Homechecker</button>
+            </div>
+        </form>
+    </div>
+    {% include "footer.html" %}
+    <script src="../static/js/pop-up.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jscleaner.js"> </script>
 </body>
 </html>
