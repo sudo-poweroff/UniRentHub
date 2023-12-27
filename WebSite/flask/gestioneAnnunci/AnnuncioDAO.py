@@ -53,3 +53,39 @@ class AnnuncioDAO:
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchall()
         return result
+
+    def visualizzaservizidisponibili(self):
+        query= """
+        SELECT descrizione FROM servizi
+        """
+        self.__cursor.execute(query)
+        result = self.__cursor.fetchall()
+        return result
+
+    def cercaidcasa(self):
+        query="""
+        SELECT MAX(alloggio.id_alloggio) FROM alloggio
+        """
+        self.__cursor.execute(query)
+        result = self.__cursor.fetchall()
+        return result
+
+    def inseriscicasa(self,titolo,tipo,descrizione,num_bagni,num_camere,classe_energetica,num_ospiti,
+                           metri_quadri,prezzo,periodo_minimo,arredamento,pannelli_fotovoltaici,
+                           pannelli_solari):
+        query="""
+        INSERT INTO Alloggio (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse) VALUES
+        %s,true,%s,%s,%s,%s,%s,%s,%s,DATA,%s,%s,%s,false,%s,%s,%s,%s)
+        """
+        values = (titolo,)
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchall()
+
+    def inseriscipossedimento(self,id_alloggio,id_servizio):
+        query="""
+        INSERT INTO possedimento (id_servizio,id_alloggio)VALUES
+        %s,%s 
+        """
+        values = (id_servizio,id_alloggio)
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchall()
