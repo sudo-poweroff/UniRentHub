@@ -9,7 +9,7 @@ CREATE TABLE Cliente (
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     tipo_utente ENUM('Studente', 'Locatore') NOT NULL,
-    data_nascita DATE,
+    data_nascita DATE NOT NULL,
     numero_carta VARCHAR(16) CHECK(numero_carta >= 16),
     data_scadenza DATE,
     verificato BOOLEAN,
@@ -60,7 +60,7 @@ CREATE TABLE Segnalazione (
 
 -- Creazione della tabella Università
 CREATE TABLE Università (
-    denominazione VARCHAR(255) PRIMARY KEY,
+    denominazione ENUM('Federico II', 'Politecnico di Milano', 'Università Roma Tre', 'Università degli Studi di Salerno', 'La Sapienza') PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     indirizzo VARCHAR(255) NOT NULL
 );
@@ -68,7 +68,7 @@ CREATE TABLE Università (
 
 -- Creazione della tabella Iscrizione
 CREATE TABLE Iscrizione (
-    denominazione VARCHAR(255),
+    denominazione ENUM('Federico II', 'Politecnico di Milano', 'Università Roma Tre', 'Università degli Studi di Salerno', 'La Sapienza'),
     email VARCHAR(255),
     FOREIGN KEY (denominazione) REFERENCES Università(denominazione) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (email) REFERENCES Cliente(email) ON DELETE CASCADE ON UPDATE CASCADE
