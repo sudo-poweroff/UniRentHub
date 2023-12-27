@@ -2,6 +2,8 @@ import re
 from flask import Flask, flash
 from .Cliente import Cliente
 from .ClienteDAO import ClienteDAO
+from .Iscrizione import Iscrizione
+from .IscrizioneDAO import IscrizioneDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -38,12 +40,12 @@ def controlla_campi(nome, cognome, email):
     return False
 
 
-def registra_cliente(nome, cognome, email, password, tipo_utente):
+def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, data_scadenza):
     if controlla_campi(nome, cognome, email):
         if is_valid_email(email):
             if is_valid_password(password):
                 if controlla_email_esistente(email):
-                    cliente = Cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo_utente)
+                    cliente = Cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo_utente, numero_carta=numero_carta, data_scadenza=data_scadenza)
                     dao = ClienteDAO()
                     dao.createCliente(cliente)
                     return cliente
@@ -53,3 +55,12 @@ def get_cliente_by_email_password(email, password):
     dao = ClienteDAO()
     cliente = dao.accesso(email=email, pwd=password)
     return cliente
+
+
+#regitrazione iscrizione università
+def iscrizione_universita(email, denominazione):
+    iscrizione = Iscrizione(email=email, denominazione=denominazione)
+    dao = IscrizioneDAO()
+    dao.create_iscrizione(iscrizione)
+    return iscrizione
+
