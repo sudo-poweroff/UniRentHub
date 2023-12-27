@@ -1,117 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <title>UniRentHub | {% block title %} {% endblock %} </title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-
-   <!-- Bootstrap core CSS della SearchBar-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="../static/css/searchbar/bootstrap.min.css" rel="stylesheet">
-
-    <link href="../static/css/searchbar/bootstrap-icons.css" rel="stylesheet">
-
   {% block style %}
 
   {% endblock %}
-
-
-    <!-- Additional CSS Files -->
-
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/fontawesome.css">
-    <link rel="stylesheet" href="../static/css/owl.css">
-    <link rel="stylesheet" href="../static/css/animate.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
-
-<!--
-
-TemplateMo 591 villa agency
-
-https://templatemo.com/tm-591-villa-agency
-
--->
   </head>
-
-
 <body>
-<!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                        <a href="Homepage.html" class="img" style="display: inline-block; padding-top: 15px; width: 25%;">
-                        <img src="../static/img/Group%207.png" alt="" style="width: 100%; height: auto;">
-                        </a>
-
-                    <!-- ***** Logo End ***** -->
-
-                    <!-- ***** Menu Start ***** -->
-                    {% block start %}
-                    <ul class="nav">
-      <li><a href="Homepage.html" class="active">Home</a></li>
-      <li><a href="#">Community</a></li>  <!-- Qui va il link URH Community -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#">Sei un proprietario?</a></li> <!-- bisogna decidere come gestirlo -->
-    {% if 'tipoC' in session %}
-        {% if session['tipo'] != "Studente" and session['tipo'] != "Locatore" %}
-            <li><a href="LoginCliente.html"><i class="fa-user"></i>Accedi</a></li>
-        {% elif session['tipo'] == "Studente" or session['tipo'] == "Locatore" %}
-            <li><a href="http://127.0.0.1:5000/logout"><i class="fa-user"></i>Logout</a></li>
-        {% endif %}
-    {% endif %}
-
-   </ul>
-      <a class='menu-trigger'>
-        <span>Menu</span>
-      </a>
-
-                    {% endblock %}
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-
-
 {% block content %} {% endblock content %}
-
-
- <footer>
-    <div class="container">
-      <div class="col-lg-8">
-        <p>Copyright © 2024 UniRentHub, All rights reserved.
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="../static/js/jquery.min.js"></script>
-  <script src="../static/js/bootstrap.min.js"></script>
-  <script src="../static/js/isotope.min.js"></script>
-  <script src="../static/js/owl-carousel.js"></script>
-  <script src="../static/js/counter.js"></script>
-  <script src="../static/js/custom.js"></script>
-  <script src="../static/js/cookie.js"></script>
-
-
 </body>
 </html>

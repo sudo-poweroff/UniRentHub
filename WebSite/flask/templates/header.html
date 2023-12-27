@@ -1,91 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>UniRentHub | Header</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .navbar-brand img {
+      max-width: 200px; /* Imposta la larghezza massima */
+      max-height: 200px; /* Imposta l'altezza massima */
+            margin-left: 100px;
+    }
+        .navbar-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+            margin-right: 200px;
+}
 
-    <title>UniRentHub | </title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-
-   <!-- Bootstrap core CSS della SearchBar-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="../static/css/searchbar/bootstrap.min.css" rel="stylesheet">
-
-    <link href="../static/css/searchbar/bootstrap-icons.css" rel="stylesheet">
-
-
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/fontawesome.css">
-    <link rel="stylesheet" href="../static/css/owl.css">
-    <link rel="stylesheet" href="../static/css/animate.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
+        .navbar-collapse {
+  justify-content: flex-end;
+            margin-right: 0;
+}
+        header {
+  position: relative; / Assicura che il position e il z-index funzionino correttamente /
+  z-index: 1; / Imposta il livello dell'header a 1 /
+}
+    </style>
 </head>
 <body>
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="../static/img/Group%207.png" alt="Logo">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li style="margin-left: 400px" class="nav-item active" id="community">
+        <a style="font-size: 20px" class="nav-link" href="#">Community <span class="sr-only">(current)</span></a>
+      </li>
+      <li style="margin-left: 30px" class="nav-item active" id="servizi">
+        <a style="font-size: 20px; margin-right: 550px;" class="nav-link" href="#">Servizi</a>
+      </li>
+        <li>
+            <button  style="border-radius: 20px; background-color: #556b2f; border-color: #556b2f !important;  box-shadow: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                 Accedi
+            </button>
+        </li>
+        <li>
+            <svg style="margin-top: 7px; cursor: pointer; margin-left: 20px; " xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" onclick="redirectToPage2()">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"></path>
+            </svg>
+            <script>
+                function redirectToPage2() {
+                    // Sostituisci 'URL_DESTINAZIONE' con l'URL della pagina a cui vuoi reindirizzare l'utente
+                    window.location.href = 'CreatePost.html';
+                }
+            </script>
+        </li>
+        <li>
+            <svg style="margin-top: 7px; cursor: pointer; margin-left: 20px" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" onclick="redirectToPage()">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
+            </svg>
 
+            <script>
+                function redirectToPage() {
+                    // Sostituisci 'URL_DESTINAZIONE' con l'URL della pagina a cui vuoi reindirizzare l'utente
+                    window.location.href = 'CreatePost.html';
+                }
+            </script>
+        </li>
 
-
-
-<!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                        <a href="Homepage.html" class="img" style="display: inline-block; padding-top: 15px; width: 25%;">
-                        <img src="../static/img/Group%207.png" alt="" style="width: 100%; height: auto;">
-                        </a>
-
-                    <!-- ***** Logo End ***** -->
-
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-      <li><a href="Homepage.html" class="active">Home</a></li>
-      <li><a href="output.html">Community</a></li>  <!-- Qui va il link URH Community -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#"></a></li> <!-- Questo va lasciato VUOTO -->
-      <li><a href="#">Sei un proprietario?</a></li> <!-- bisogna decidere come gestirlo -->
-    {% if 'tipoC' in session %}
-        {% if session['tipo'] != "Studente" and session['tipo'] != "Locatore" %}
-            <li><a href="LoginCliente.html"><i class="fa-user"></i>Accedi</a></li>
-        {% elif session['tipo'] == "Studente" or session['tipo'] == "Locatore" %}
-            <li><a href="http://127.0.0.1:5000/logout"><i class="fa-user"></i>Logout</a></li>
-        {% endif %}
-    {% endif %}
-
-   </ul>
-      <a class='menu-trigger'>
-        <span>Menu</span>
-      </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Il mio profilo</a>
+          <a class="dropdown-item" href="#">Lista preferiti</a>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
+      </li>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+
+ <form class="px-4 py-3">
+    <div class="form-group">
+      <label for="exampleDropdownFormEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
     </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
+    <div class="form-group">
+      <label for="exampleDropdownFormPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+    </div>
+    <div style="margin-top: 10px" class="form-check">
+    </div>
+    <button style="border-radius:20px ;margin-top:20px; background-color: #556b2f; border-color: #556b2f !important;  box-shadow: none;" type="submit" class="btn btn-primary" >Sign in</button>
+<a  style="margin-top:20px; color: #556b2f" href="modal.html" class="btn btn-link">Non sei registrato?</a>
+  </form>
 
-
-
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="../static/js/jquery.min.js"></script>
-  <script src="../static/js/bootstrap.min.js"></script>
-  <script src="../static/js/isotope.min.js"></script>
-  <script src="../static/js/owl-carousel.js"></script>
-  <script src="../static/js/counter.js"></script>
-  <script src="../static/js/custom.js"></script>
-  <script src="../static/js/cookie.js"></script>
-
-
+    </div>
+  </div>
+</div>
+</div>
+    </ul>
+  </div>
+</nav>
+    </header>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
