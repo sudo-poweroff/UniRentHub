@@ -5,7 +5,7 @@ from .GestioneAnnunciService import pubblicazione_post
 
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
-
+#ciccioègay
 
 @gu2.route('/CreatePost', methods=['POST', 'GET'])
 def creaPost():

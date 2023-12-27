@@ -9,3 +9,4 @@
 
         // Chiamare questa funzione ogni volta che viene aggiunta una nuova card
         spostaSeparatore();
+//ciccioègay

@@ -1,5 +1,6 @@
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 class AnnuncioDAO:
+    # ciccioègay
     def __init__(self):
         self.__gestioneConnessione = GestioneConnessione()
         self.__connection = self.__gestioneConnessione.getConnessione()

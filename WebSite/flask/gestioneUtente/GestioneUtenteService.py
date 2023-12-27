@@ -26,7 +26,7 @@ def controlla_email_esistente(email):
     else:
         return True #se il cliente non esiste torni true
 
-
+#ciccioègay
 #Controlla campi
 def controlla_campi(nome, cognome, email):
     if not isinstance(nome, str) or not 0 < len(nome) <= 45:
