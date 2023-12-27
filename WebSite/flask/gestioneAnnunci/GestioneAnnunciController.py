@@ -42,3 +42,63 @@ def annuncio():
     immagini = dao.visualizzaimmagini(id_alloggio)
 
     return render_template("Annuncio.html", alloggio=alloggio, servizi=servizi, immagini=immagini)
+
+@gu2.route('/CaricaAnnuncio.html')
+def allservizi():
+    dao = AnnuncioDAO()
+    servizi = dao.visualizzaservizidisponibili()
+    return render_template("CaricaAnnuncio.html",servizi=servizi)
+
+@gu2.route('/Carica', methods=['POST'])
+def pubblicazione():
+    titolo = request.form.get("titolo")
+    indirizzo = request.form.get("indirizzo")
+    cap = request.form.get("cap")
+    provincia = request.form.get("provincia")
+    citta = request.form.get("citta")
+    tipo = request.form.get("tipo")
+    descrizione = request.form.get("Descrizione")
+    num_bagni = request.form.get("num_bagni")
+    num_camere = request.form.get("num_camere")
+    classe_energetica = request.form.get("classee")
+    num_ospiti = request.form.get("num_ospiti")
+    metri_quadri = request.form.get("metri_quadri")
+    prezzo = request.form.get("prezzo")
+    periodo_minimo = request.form.get("periodo_minimo")
+    pannelli_fotovoltaici = request.form.get("pannelli_fotovoltaici")
+    pannelli_solari = request.form.get("pannelli_solari")
+    arredamento = request.form.get("arredamento")
+    dao = AnnuncioDAO()
+    servizi = dao.visualizzaservizidisponibili()
+    servizi_selezionati = []
+    for key, value in request.form.items():
+        if key.startswith('servizio_') and value == 'on':
+            servizio_selezionato = key.split('_')[1]  # Ottieni l'ID dell'elemento selezionato
+            servizi_selezionati.append(servizio_selezionato)
+
+
+    return render_template("boh.html",
+                           titolo=titolo,
+                           indirizzo=indirizzo,
+                           cap=cap,
+                           provincia=provincia,
+                           citta=citta,
+                           tipo=tipo,
+                           descrizione=descrizione,
+                           num_bagni=num_bagni,
+                           num_camere=num_camere,
+                           classe_energetica=classe_energetica,
+                           num_ospiti=num_ospiti,
+                           metri_quadri=metri_quadri,
+                           prezzo=prezzo,
+                           periodo_minimo=periodo_minimo,
+                           arredamento=arredamento,
+                           pannelli_fotovoltaici=pannelli_fotovoltaici,
+                           pannelli_solari=pannelli_solari,
+                           servizi_selezionati=servizi_selezionati
+    )
+
+
+
+
+
