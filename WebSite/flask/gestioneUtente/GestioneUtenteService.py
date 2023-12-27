@@ -15,7 +15,6 @@ def is_valid_password(password):
     password_pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$')
     return bool(re.match(password_pattern, password))
 
-
 #Controlla email esistente
 def controlla_email_esistente(email):
     dao = ClienteDAO()
