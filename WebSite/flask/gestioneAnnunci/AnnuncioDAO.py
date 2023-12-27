@@ -89,3 +89,4 @@ class AnnuncioDAO:
         values = (id_servizio,id_alloggio)
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchall()
+#aa
