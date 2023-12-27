@@ -29,7 +29,7 @@ def registrazione():
         cvv = request.form["cvv"]
         scadenza = request.form["scadenza"]
 
-        user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo, numero_carta=numero_carta, data_scadenza=scadenza)
+        user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo, numero_carta = numero_carta, scadenza = scadenza)
         if tipo == "Studente":
             iscrizione = iscrizione_universita(denominazione=denominazione, email=email)
 
