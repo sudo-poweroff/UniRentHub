@@ -56,22 +56,24 @@ INSERT INTO Segnalazione (email, emailS, stato, motivo) VALUES
 
 -- Popolamento della tabella Università
 INSERT INTO Università (denominazione, email, indirizzo) VALUES
-('Università di Roma', 'uniroma@example.com', 'Via Universitaria, 123'),
+('Federico II', 'uniFede@example.com', 'Via Universitaria, 123'),
 ('Politecnico di Milano', 'polimi@example.com', 'Via Politecnico, 456'),
-('Università di Napoli', 'unina@example.com', 'Via Napoletana, 789');
+('Università Roma Tre', 'uniRoma@example.com', 'Via Napoletana, 789'),
+('Università degli Studi di Salerno', 'salerno@example.com', 'Via Napoletana, 789'),
+('La Sapienza', 'lasapienza@example.com', 'Via Napoletana, 789');
 
 -- Popolamento della tabella Iscrizione
 INSERT INTO Iscrizione (denominazione, email) VALUES
-('Università di Roma', 'cliente1@example.com'),
+('Federico II', 'cliente1@example.com'),
 ('Politecnico di Milano', 'cliente2@example.com'),
-('Università di Napoli', 'cliente3@example.com'),
-('Politecnico di Milano', 'cliente4@example.com'),
-('Università di Napoli', 'cliente5@example.com'),
-('Università di Roma', 'cliente6@example.com'),
+('La Sapienza', 'cliente3@example.com'),
+('Università Roma Tre', 'cliente4@example.com'),
+('La Sapienza', 'cliente5@example.com'),
+('Università Roma Tre', 'cliente6@example.com'),
 ('Politecnico di Milano', 'cliente7@example.com'),
-('Università di Napoli', 'cliente8@example.com'),
-('Università di Roma', 'cliente9@example.com'),
-('Politecnico di Milano', 'cliente10@example.com');
+('Università degli Studi di Salerno', 'cliente8@example.com'),
+('Università degli Studi di Salerno', 'cliente9@example.com'),
+('Università degli Studi di Salerno', 'cliente10@example.com');
 
 -- Popolamento della tabella Chat
 INSERT INTO Chat (titolo) VALUES
