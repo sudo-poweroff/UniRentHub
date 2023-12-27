@@ -126,47 +126,74 @@ label.light {
     {% include "header.html" %}
 <div style="margin-top: 100px; margin-bottom: 100px" class="row">
     <div class="col-md-12">
-      <form action="index.html" method="post">
+      <form action="/registrazione" method="post">
         <h1> Registrazione </h1>
 
         <fieldset>
 
           <legend><span class="number">1</span> Profilo</legend>
 
-          <label for="name">Nome:</label>
-          <input type="text" id="name" name="user_name" placeholder="Nome">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="nome" placeholder="Nome">
 
-            <label for="name">Cognome:</label>
-          <input type="text" id="name" name="user_name" placeholder="Cognome">
+            <label for="name">Cognome</label>
+          <input type="text" id="name" name="cognome" placeholder="Cognome">
 
-          <label for="email">Email:</label>
-          <input type="email" id="mail" name="user_email">
+          <label for="email">Email</label>
+          <input type="email" id="mail" name="email" placeholder="Email">
 
-          <label for="password">Password:</label>
-          <input type="password" id="password"       name="user_password" placeholder="Password">
+          <label for="password">Password</label>
+          <input type="password" id="password"       name="password" placeholder="Password">
 
-            <label for="password">Conferma Password:</label>
-          <input type="password" id="password"       name="user_password" placeholder="Conferma Password">
+            <label for="password">Conferma Password</label>
+          <input type="password" id="password"       name="password2" placeholder="Conferma Password">
 
-             <label for="name">Università:</label>
-          <input type="text" id="name" name="user_name" placeholder="Universita">
+              <div class="form-group">
+                <label id="l-uni" for="exampleFormControlSelect1">Università</label>
+                <select name="universita" class="form-control" id="exampleFormControlSelect1">
+                  <option value="Federico II">Federico II</option>
+                  <option value="Politecnico di Milano">Politecnico di Milano</option>
+                  <option value="Università Roma Tre">Università Roma Tre</option>
+                  <option value="Università degli Studi di Salerno">Università degli Studi di Salerno</option>
+                  <option value="La Sapienza">La Sapienza</option>
+                </select>
+              </div>
 
             <div class="form-group-check">
-                <input id="keep" type="checkbox" value="Locatore" name="locatore2"/><label for="keep">Locatore</label>
+                <input id="keep" type="checkbox" value="Locatore" name="locatore2" onchange="handleLocatoreCheckbox()"/><label for="keep">Locatore</label>
             </div>
+            <script>
+            function handleLocatoreCheckbox() {
+                var universitaInput = document.getElementById('exampleFormControlSelect1');
+                var locatoreCheckbox = document.getElementById('keep');
+                var label = document.getElementById('l-uni')
+
+                // Se la casella di controllo "Locatore" è selezionata, pulisci il campo dell'università
+                if (locatoreCheckbox.checked) {
+                    universitaInput.value = '';
+                    universitaInput.disabled = true;
+                    universitaInput.style.display = 'none';
+                    label.style.display = 'none'// Opzionale: disabilita l'input per indicare visivamente che è stato pulito
+                } else {
+                    universitaInput.disabled = false;
+                    universitaInput.style.display = 'block';
+                    label.style.display = 'block'// Abilita l'input se la casella di controllo "Locatore" non è selezionata
+                    }
+                }
+</script>
         </fieldset>
         <fieldset>
 
           <legend><span style="margin-top: 30px" class="number">2</span> Pagamento</legend>
 
             <label for="name">Numero Carta:</label>
-          <input type="text" id="name" name="user_name" placeholder="Numero Carta">
+          <input type="text" id="name" name="numero_carta" placeholder="Numero Carta">
 
             <label for="name">CVV:</label>
-          <input type="text" id="name" name="user_name" placeholder="CVV">
+          <input type="text" id="name" name="cvv" placeholder="CVV">
 
             <label for="name">Data Scadenza:</label>
-          <input type="date" id="name" name="user_name" placeholder="Data Scadenza">
+          <input type="date" id="name" name="scadenza" placeholder="Data Scadenza">
 
          </fieldset>
 

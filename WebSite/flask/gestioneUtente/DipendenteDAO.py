@@ -21,8 +21,6 @@ class DipendenteDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-
-
     def deleteDipendente(self, email):
         query = """
             DELETE FROM dipendente WHERE email = %s
