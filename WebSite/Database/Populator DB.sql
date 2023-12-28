@@ -34,29 +34,29 @@ INSERT INTO Dipendente (email, nome, cognome, tipo_dipendente, password) VALUES
 
 -- Popolamento della tabella Post
 INSERT INTO Post (titolo, descrizione, email) VALUES
-('Ricerca di un coinquilino', "Sto cercando un coinquilino con cui condividere l'affitto per questo anno e condividere allenamenti in palestra", 'matteobianchi@gmail.com'),
-('Ragazzo/a a cui piace l arte?', 'Sono alla ricerca di un ragazzo o una ragazza che ha la passione per l arte', 'gioromano@gmail.com'),
-('Qualcuno in cerca di un appartamento a Fisciano?', 'Ho appena trovato un alloggio a Fisciano nelle zone dell università di Fisciano, c è qualcuno che è interessato a condividere l alloggio con me per questo anno?', 'saramarti@gmail.com'),
-('Ricerca di un coinquilino', "Sto cercando un coinquilino con cui condividere l'affitto per questo anno e che è iscritto al corso di Informatica", 'francescopixcont@gmail.com'),
+('Ricerca di un coinquilino', 'Sto cercando un coinquilino con cui condividere l\'affitto per questo anno e condividere allenamenti in palestra', 'matteobianchi@gmail.com'),
+('Ragazzo/a a cui piace l\'arte?', 'Sono alla ricerca di un ragazzo o una ragazza che ha la passione per l\'arte', 'gioromano@gmail.com'),
+('Qualcuno in cerca di un appartamento a Fisciano?', 'Ho appena trovato un alloggio a Fisciano nelle zone dell università di Fisciano, c\'è qualcuno che è interessato a condividere l\'alloggio con me per questo anno?', 'saramarti@gmail.com'),
+('Ricerca di un coinquilino', 'Sto cercando un coinquilino con cui condividere l\'affitto per questo anno e che è iscritto al corso di Informatica', 'francescopixcont@gmail.com'),
 ('Ragazzo/a a cui piace allenarsi?', 'Sono alla ricerca di un ragazzo o una ragazza che ha voglia di allenarsi in compagnia nelle zone di Napoli', 'giorgioferraro@gmail.com');
 
 -- Popolamento della tabella Passione
 INSERT INTO Passione (nome) VALUES
-('Viaggi'), 
-('Calcio'), 
-('Basket'), 
-('Nuoto'), 
-('Gym'), 
-('Lettura'), 
-('Cinema'), 
-('Serie tv'), 
-('Giardinaggio'), 
-('Cucina'), 
-('Musica'), 
+('Viaggi'),
+('Calcio'),
+('Basket'),
+('Nuoto'),
+('Gym'),
+('Lettura'),
+('Cinema'),
+('Serie tv'),
+('Giardinaggio'),
+('Cucina'),
+('Musica'),
 ('Arte'),
-('Fotografia'), 
+('Fotografia'),
 ('Tecnologia'),
-('Programmazione');  
+('Programmazione');
 
 -- Popolamento della tabella Assegnazione
 INSERT INTO Assegnazione (id_passione, email) VALUES
@@ -83,11 +83,11 @@ INSERT INTO Assegnazione (id_passione, email) VALUES
 
 -- Popolamento della tabella Segnalazione
 INSERT INTO Segnalazione (email, emailS, stato, motivo) VALUES
-('sofiaesposito@gmail.com', 'andreaconti@gmail.com', 'Aperta', 'Annuncio non rispecchia correttamente quello che ho trovato all arrivo nell alloggio'),
-('lucaferrari@gmail.com', 'andreaconti@gmail.com', 'Aperta', 'Le condizioni in cui ho trovato l alloggio al mio arrivo erano davvero pessime. Il locatore ha indicato nell annuncio tutt altro rispetto a quello che ho ritrovato nell alloggio.'),
+('sofiaesposito@gmail.com', 'andreaconti@gmail.com', 'Aperta', 'Annuncio non rispecchia correttamente quello che ho trovato all\'arrivo nell alloggio'),
+('lucaferrari@gmail.com', 'andreaconti@gmail.com', 'Aperta', 'Le condizioni in cui ho trovato l alloggio al mio arrivo erano davvero pessime. Il locatore ha indicato nell\'annuncio tutt altro rispetto a quello che ho ritrovato nell\'alloggio.'),
 ('gioromano@gmail.com', 'giugatti@gmail.com', 'Chiusa', 'Proprietario non molto affidabile.'),
 ('cristyanesp@gmail.com', 'giorgioferraro@gmail.com' ,'Aperta', 'Ragazzo non molto educato, una cattiva compagnia con cui condividere un affitto. Sconsigliato.'),
-('marcogreco@gmail.com', 'giugatti@gmail.com', 'Chiusa', 'Problema col pagamento, non riesco ad effettuare il pagamento per procedeere all affitto');
+('marcogreco@gmail.com', 'giugatti@gmail.com', 'Chiusa', 'Problema col pagamento, non riesco ad effettuare il pagamento per procedeere all\'affitto');
 
 -- Popolamento della tabella Università
 INSERT INTO Università (denominazione, email, indirizzo) VALUES
@@ -141,15 +141,15 @@ INSERT INTO Partecipazione (id_chat, email) VALUES
 INSERT INTO Messaggio (email, id_chat, contenuto) VALUES
 ('sofiaesposito@gmail.com', 1, 'Ciao!'),
 ('kekkamancini@gmail.com', 1, 'Salve!'),
-('sofiaesposito@gmail.com', 1, "Vorrei avere delle informazioni aggiuntive sull'alloggio da lei pubblicato"),
+('sofiaesposito@gmail.com', 1, 'Vorrei avere delle informazioni aggiuntive sull\'alloggio da lei pubblicato'),
 ('kekkamancini@gmail.com', 1, 'Va bene, cosa vuoi sapere di preciso?'),
 ('chiararusso@gmail.com', 2, 'Ciao, a me piace cucinare, per caso nel suo alloggio posso trovare lo stresso necessario per cucinare?'),
-('sofybianchi@gmail.com', 2, "Si, nell'alloggio puoi trovare tutto lo stretto necessario per cucinare."),
+('sofybianchi@gmail.com', 2, 'Si, nell\'alloggio puoi trovare tutto lo stretto necessario per cucinare.'),
 ('cristyanesp@gmail.com', 3, 'Ciao'),
 ('cristyanesp@gmail.com', 3, 'ho visto che anche tu ti alleni in palestra, ti va di allenarci insieme?'),
 ('francescopixcont@gmail.com', 3, 'Va bene, per me possiamo organizzarci.'),
 ('francescopixcont@gmail.com', 3, 'In che palestra vai ad allenarti tu?'),
-('cristyanesp@gmail.com', 3, "nella palestra dell'università, quando vuoi possiamo andare anche dopo i corsi"),
+('cristyanesp@gmail.com', 3, 'nella palestra dell\'università, quando vuoi possiamo andare anche dopo i corsi'),
 ('matteobianchi@gmail.com', 4, 'Ciao! Consigli su libri d arte?'),
 ('saramarti@gmail.com', 4, 'Se ti piace il genere fantasy, ti consiglio i libri di Harry Potter.'),
 ('chiararusso@gmail.com', 5, 'Ciao, ti va di conoscerci?'),
@@ -199,7 +199,7 @@ INSERT INTO Prenotazione (id_alloggio, email, data_visita) VALUES
 INSERT INTO Recensione (id_alloggio, email, titolo, voto, descrizione, data_recensione) VALUES
 (1, 'gioromano@gmail.com', 'Bellissima esperienza', 5, 'La camera era pulita e accogliente. Ottima posizione!', '2023-02-20'),
 (2, 'matteobianchi@gmail.com', 'Consigliato', 4, 'Il monolocale era spazioso e ben arredato. Buon rapporto qualità-prezzo.', '2023-03-01'),
-(3, 'giorgioferraro@gmail.com', 'Esperienza positiva', 4, 'Stanza comoda e vicina all università. Proprietario gentile.', '2023-03-15'),
+(3, 'giorgioferraro@gmail.com', 'Esperienza positiva', 4, 'Stanza comoda e vicina all\'università. Proprietario gentile.', '2023-03-15'),
 (4, 'sofiaesposito@gmail.com', 'Vacanza da sogno', 5, 'La villa è incredibile. Vista mozzafiato e tutti i comfort disponibili.', '2023-04-01'),
 (5, 'saramarti@gmail.com', 'Buon soggiorno', 3, 'Il bilocale era nella media. Niente di eccezionale ma sufficiente per brevi periodi.', '2023-04-10');
 
