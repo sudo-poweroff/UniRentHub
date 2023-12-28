@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, session, redirect, url_fo
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
-    show_homecheckerService, iscrizione_universita, accesso_admin
+    show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
@@ -125,25 +125,32 @@ def reg():
     return render_template("AccessoAdmin.html")
 
 
-#registrazione e stampa homechecker
 @gu.route('/admin', methods=['GET', 'POST'])
 def registra_homechecker():
 
     dipendenti_homechecker = show_homecheckerService()
 
     if request.method == 'POST':
-        email = request.form['email']
-        nome = request.form['nome']
-        cognome = request.form['cognome']
-        password = request.form['password']  # Assicurati di ottenere la password dal form HTML
-
-        # Creazione dell'oggetto Dipendente con i valori forniti dal form
-        nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
-        if nuovo_homechecker:
-            #se avviene la registrazione aggiorna la lista
+        if 'delete_email' in request.form:
+            email_da_eliminare = request.form['delete_email']
+            print("ciao")
+            # Chiamata alla funzione per eliminare il dipendente dal DAO
+            elimina_dipendente_service(email_da_eliminare)
+            print("ciao2")
+            # Se l'eliminazione ha avuto successo, aggiorna la lista dei dipendenti
             dipendenti_homechecker = show_homecheckerService()
-            return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker,nuovo_homechecker=nuovo_homechecker)
+            return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
 
+        else:
+            email = request.form['email']
+            nome = request.form['nome']
+            cognome = request.form['cognome']
+            password = request.form['password']  # Assicurati di ottenere la password dal form HTML
+
+            nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
+            if nuovo_homechecker:
+                dipendenti_homechecker = show_homecheckerService()
+                return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker, nuovo_homechecker=nuovo_homechecker)
 
     return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
 

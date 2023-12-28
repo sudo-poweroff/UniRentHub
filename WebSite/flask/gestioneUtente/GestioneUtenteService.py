@@ -89,3 +89,9 @@ def accesso_admin(email, password):
         dao = DipendenteDAO()
         dipendente = dao.ricercaDip(email, password)
         return dipendente
+
+def elimina_dipendente_service(email):
+    dao = DipendenteDAO()
+    dipendente = dao.elimina_homechecker(email)
+    print("eliminato")
+    return dipendente

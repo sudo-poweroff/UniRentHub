@@ -5,19 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    .custom-service {
+        margin-bottom: 10px;
+    }
+
+    .custom-service label {
+        background-color: #fff; /* Sfondo bianco di default */
+        color: #000; /* Testo nero */
+        display: block; /* Imposta il display a blocco per occupare tutto lo spazio disponibile */
+        padding: 10px; /* Aggiunge spazio intorno al testo */
+        border: 1px solid #ccc; /* Aggiunge un bordo */
+        border-radius: 4px; /* Arrotonda gli angoli */
+        cursor: pointer; /* Mostra il cursore come puntatore al passaggio */
+        text-overflow: ellipsis; /* Aggiunge i puntini di sospensione quando il testo va oltre il limite */
+        white-space: nowrap; /* Impedisce il testo di andare a capo */
+        overflow: hidden; /* Nasconde il testo in eccesso */
+    }
+
+    .custom-service label:hover {
+        background-color: #f0f0f0; /* Cambia il colore al passaggio del mouse */
+    }
+
+    .custom-service label.selected {
+        background-color: #007bff; /* Sfondo blu quando è selezionato */
+        color: #fff; /* Testo bianco quando è selezionato */
+    }
+
+    @media (max-width: 768px) {
+        .custom-service label {
+            word-break: break-word; /* Abilita il testo a andare a capo in modo responsivo */
+        }
+    }
+</style>
+
 </head>
 <body>
+
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="col-md-6">
+        <h1>Inserisci Alloggio</h1>
+<br>
     <form method="post" action="/Carica">
+    <div class="row form">
     <div class="col-md-4 mb-3">
         <label for="titolo">Titolo</label>
             <input type="text" class="form-control" id="titolo" placeholder="Titolo" name="titolo">
     </div>
-    <div class="col-md-4 mb-3">
-    <label for="indirizzo">Indirizzo</label>
-    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" required>
     </div>
-
-    <div class="form-row">
+    <div class="row form">
     <div class="col-md-6 mb-3">
       <label for="citta">Città</label>
       <input type="text" class="form-control" id="citta" placeholder="Citta" name = citta required>
@@ -31,9 +68,21 @@
       <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" required>
     </div>
     </div>
+    <div class="row form">
+    <div class="col-md-4 mb-3">
+    <label for="indirizzo">Indirizzo</label>
+    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" required>
+    </div>
+    <div class="col-md-4 mb-3">
+    <label for="civico">Civico</label>
+      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" required>
+    </div>
+    </div>
+    <div class="row form">
+    <div class="col-md-6 mb-3">
     <label for="tipo">Tipo Appartamento:</label>
-    <div class="form-group">
-        <select id="tipo" name="tipo" class="custom-select" required>
+    <div class="form-group" >
+        <select id="tipo" name="tipo" class="custom-select  " required>
         <option value="villa">Villa</option>
         <option value="camera">Camera</option>
         <option value="bilocale">Bilocale</option>
@@ -42,10 +91,17 @@
         </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
+    </div>
+    </div>
+    <div class="col-md-6 mb-3">
+  <div class="row form">
   <div class="form-group">
     <label for="Descrizione">Descrizione</label>
-    <textarea class="form-control" id="Descrizione" rows="3"></textarea>
+    <textarea class="form-control" id="Descrizione" name="descrizione" rows="3"></textarea>
   </div>
+  </div>
+    </div>
+    <div class="row form">
             <div class="col-md-4 mb-3">
         <label for="num_bagni">Numero Bagni:</label>
         <input type="number" class= "form-control" id="num_bagni" name="num_bagni">
@@ -54,34 +110,50 @@
         <label for="num_camere">Numero Camere da letto:</label>
         <input type="number" id="num_camere" class="form-control" name="num_camere">
     </div>
+    </div>
 
+<div class="row form">
+    <div class="col-md-4">
         <div class="custom-control custom-checkbox">
-        <input type="checkbox" name="pannelli_solari" class="custom-control-input" id="PannelliSolari">
+            <input type="checkbox" name="pannelli_fotovoltaici" class="custom-control-input" id="PannelliFotovoltaici">
+            <label class="custom-control-label" for="PannelliFotovoltaici">Pannelli Fotovoltaici</label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" name="arredamento" class="custom-control-input" id="Arredamento">
+            <label class="custom-control-label" for="Arredamento">Arredamento</label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <!-- Terzo checkbox -->
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" name="pannelli_solari" class="custom-control-input" id="PannelliSolari">
         <label class="custom-control-label" for="PannelliSolari">Pannelli Solari</label>
-        </div>
-
-        <div class="custom-control custom-checkbox">
-        <input type="checkbox" name="pannelli_fotovoltaici" class="custom-control-input" id="PannelliFotovoltaici">
-        <label class="custom-control-label" for="PannelliFotovoltaici">Pannelli Fotovoltaici</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-        <input type="checkbox" name="arredamento" class="custom-control-input" id="Arredamento">
-        <label class="custom-control-label" for="Arredamento">Arredamento</label>
-        </div>
-
+    </div>
+</div>
+<br>
+    <br>
+    </div>
+<div class="row form">
+    <div class="col-md-6 mb-3">
         <label for="classe_energetica">Classe energetica:</label>
+
     <div class="form-group">
         <select id="classe_energetica" name="classee" class="custom-select" required>
-              <option value="A">A</option>
+
+            <option value="A++">A++</option>
+            <option value="A+">A+</option>
+            <option value="A">A</option>
         <option value="B">B</option>
         <option value="C">C</option>
         <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="G">G</option>
-      </select>
+        </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
+    </div>
+</div>
+    <div class="row form">
 <div class="col-md-4 mb-3">
         <label for="num_ospiti">Numero ospiti:</label>
         <input type="number" class="form-control" id="num_ospiti" name="num_ospiti">
@@ -90,28 +162,68 @@
     <label for="metri_quadri">Metri quadri:</label>
     <input type="number" class="form-control" id="metri_quadri" name="metri_quadri">
 </div>
-<div class="col-md-4 mb-3">
-      <label for="prezzo">Prezzo:</label>
-      <input type="number" class="form-control" id="prezzo" name="prezzo"><br><br>
-</div>
+    </div>
+<div class="row form">
 <div class="col-md-4 mb-3">
       <label for="periodo_minimo">Periodo minimo (in mesi):</label>
       <input type="number" class="form-control" id="periodo_minimo" name="periodo_minimo"><br><br>
 </div>
-      {% for servizio in servizi %}
-    <div class="custom-control custom-checkbox">
-        <input name="servizio_{{ loop.index }}" type="checkbox" class="custom-control-input" id="servizio_{{ loop.index }}">
-        <label class="custom-control-label" for="servizio_{{ loop.index }}">{{ servizio[0] }}</label>
-    </div>
-{% endfor %}
+<div class="col-md-4 mb-3">
+      <label for="prezzo">Prezzo:</label>
+      <input type="number" class="form-control" id="prezzo" name="prezzo"><br><br>
+</div>
+</div>
+<h2>Servizi:</h2><br>
 
-          <button type="submit">Pubblica</button>
+<div class="row">
+    {% for servizio in servizi %}
+        <div class="col-6 col-sm-4 col-md-3 mb-2">
+            <div class="custom-service" id="servizio_{{ loop.index }}" onclick="toggleService('servizio_{{ loop.index }}')">
+                <input type="hidden" id="check_servizio_{{ loop.index }}" name="servizio_{{ loop.index }}" value="{{ servizio[0] }}">
+                <label class="{% if servizio[2] %}selected{% endif %}" for="check_servizio_{{ loop.index }}">
+                    {{ servizio[0] }}
+                </label>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<input type="hidden" id="servizi_selezionati" name="servizi_selezionati" value="">
+
+
+          <button type="submit" class="btn btn-primary">Pubblica</button>
         </form>
-
+</div>
+    </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+function toggleService(serviceId) {
+        var service = document.getElementById(serviceId);
+        var hiddenInput = document.getElementById('servizi_selezionati');
+        var checkBox = document.getElementById('check_' + serviceId);
+
+        if (service.classList.contains('selected')) {
+            service.classList.remove('selected');
+            checkBox.removeAttribute('checked');
+        } else {
+            service.classList.add('selected');
+            checkBox.setAttribute('checked', 'checked');
+        }
+
+        // Cambia lo stile del blocco al clic
+        service.querySelector('label').classList.toggle('selected');
+
+        // Ottieni tutti gli ID dei servizi selezionati e li inserisci nel campo nascosto
+        var selectedServices = document.querySelectorAll('.custom-service.selected');
+        var selectedIds = Array.from(selectedServices).map(function (elem) {
+            return elem.id.split('_')[1];
+        });
+        hiddenInput.value = selectedIds.join(',');
+    }
+</script>
 </body>
 </html>
