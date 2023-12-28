@@ -85,29 +85,29 @@ def pubblicazione():
     mail = session["email"]
     servizi_selezionati = request.form.get("servizi_selezionati")
     servizi_selezionati_lista = servizi_selezionati.split(',')
-    pubblicazione_alloggio(titolo, indirizzo, cap, provincia, citta, tipo, descrizione, civico,
-                           num_bagni, num_camere, classe_energetica, num_ospiti,
-                           metri_quadri, prezzo, periodo_minimo, arredamento,
-                           pannelli_fotovoltaici, pannelli_solari, servizi_selezionati_lista, data,mail)
-    return render_template("Homepage.html")
-    # return render_template("boh.html",
-    # titolo=titolo,
-    # indirizzo=indirizzo,
-    # cap=cap,
-    # provincia=provincia,
-    # citta=citta,
-    # tipo=tipo,
-    # descrizione=descrizione,
-    # num_bagni=num_bagni,
-    # num_camere=num_camere,
-    # classe_energetica=classe_energetica,
-    # num_ospiti=num_ospiti,
-    # metri_quadri=metri_quadri,
-    # prezzo=prezzo,
-    # periodo_minimo=periodo_minimo,
-    #      arredamento=arredamento,
-    #   pannelli_fotovoltaici=pannelli_fotovoltaici,
-    #  pannelli_solari=pannelli_solari,
-    #   servizi_selezionati=servizi_selezionati_lista,
-    # data=data
-    # )
+    #pubblicazione_alloggio(titolo, indirizzo, cap, provincia, citta, tipo, descrizione, civico,
+     #                      num_bagni, num_camere, classe_energetica, num_ospiti,
+      #                     metri_quadri, prezzo, periodo_minimo, arredamento,
+       #                    pannelli_fotovoltaici, pannelli_solari, servizi_selezionati_lista, data,mail)
+    #return render_template("Homepage.html")
+    return render_template("boh.html",
+     titolo=titolo,
+     indirizzo=indirizzo,
+     cap=cap,
+     provincia=provincia,
+     citta=citta,
+     tipo=tipo,
+     descrizione=descrizione,
+     num_bagni=num_bagni,
+     num_camere=num_camere,
+     classe_energetica=classe_energetica,
+     num_ospiti=num_ospiti,
+     metri_quadri=metri_quadri,
+     prezzo=prezzo,
+     periodo_minimo=periodo_minimo,
+      arredamento=arredamento,
+       pannelli_fotovoltaici=pannelli_fotovoltaici,
+      pannelli_solari=pannelli_solari,
+       servizi_selezionati=servizi_selezionati_lista,
+     data=data
+     )

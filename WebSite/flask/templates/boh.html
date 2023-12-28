@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Parametri passati:</h1>
+    <p>Titolo: {{ titolo }}</p>
+    <p>Indirizzo: {{ indirizzo }}</p>
+    <p>CAP: {{ cap }}</p>
+    <p>Provincia: {{ provincia }}</p>
+    <p>Città: {{ citta }}</p>
+    <p>Tipo: {{ tipo }}</p>
+    <p>Descrizione: {{ descrizione }}</p>
+    <p>Numero Bagni: {{ num_bagni }}</p>
+    <p>Numero Camere: {{ num_camere }}</p>
+    <p>Classe Energetica: {{ classe_energetica }}</p>
+    <p>Numero Ospiti: {{ num_ospiti }}</p>
+    <p>Metri Quadri: {{ metri_quadri }}</p>
+    <p>Prezzo: {{ prezzo }}</p>
+    <p>Periodo Minimo: {{ periodo_minimo }}</p>
+
+    <p>Arredamento: {% if arredamento %} Selezionato {% else %} Non Selezionato {% endif %}</p>
+    <p>Pannelli Fotovoltaici: {% if pannelli_fotovoltaici %} Selezionato {% else %} Non Selezionato {% endif %}</p>
+    <p>Pannelli Solari: {% if pannelli_solari %} Selezionato {% else %} Non Selezionato {% endif %}</p>
+    <p>Data: {{ data }}</p>
+{% for servizio in servizi_selezionati %}
+{{ servizio }}
+{% endfor %}
+</body>
+
+</html>
