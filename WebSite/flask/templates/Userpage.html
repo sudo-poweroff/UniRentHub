@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+
+      <div class="container marketing">
+          <hr class="featurette-divider">
+
+      <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Dati utente</h4>
+          <form class="needs-validation" novalidate="">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">Nome</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                  È richiesto un nome valido.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Cognome</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                  È richiesto un cognome valido.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" placeholder="" required="">
+              <div class="invalid-feedback">
+                Inserisci la tua email.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email">Password</label>
+              <input type="password" class="form-control" placeholder="" required="">
+              <div class="invalid-feedback">
+                Inserisci la tua password.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-3">
+               <label id="l-uni" for="exampleFormControlSelect1">Università</label>
+                <select name="universita" class="form-control" id="exampleFormControlSelect1">
+                  <option value="Federico II">Federico II</option>
+                  <option value="Politecnico di Milano">Politecnico di Milano</option>
+                  <option value="Università Roma Tre">Università Roma Tre</option>
+                  <option value="Università degli Studi di Salerno">Università degli Studi di Salerno</option>
+                  <option value="La Sapienza">La Sapienza</option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <h4 class="mb-3">Pagamento</h4>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cc-number">Numero Carta</label>
+                <input type="text" class="form-control" id="cc-number" placeholder=""  maxlength="16" required="">
+                <div class="invalid-feedback">
+                  Numero Carta è richiesto.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="cc-expiration">Scadenza</label>
+                <input type="date" id="name" name="scadenza" placeholder="Data Scadenza" required="">
+                <div class="invalid-feedback">
+                  La data scadenza è richiesta.
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="cc-expiration">CVV</label>
+                <input type="text" class="form-control" id="cc-cvv" placeholder="" maxlength="3" required="">
+                <div class="invalid-feedback">
+                  Il CVV è richiesto.
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+
+            <button class="btn btn-primary btn-lg btn-block"
+            type="submit"
+            style="background-color: #688d51; border-color: #688d51;"
+            onmouseover="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#B5DCA5';"
+            onmouseout="this.style.backgroundColor='#688d51'; this.style.borderColor='#688d51';"
+            onmousedown="this.style.backgroundColor='#688d51'; this.style.borderColor='#688d51';"
+            onmouseup="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#B5DCA5';">
+              Modifica dati
+            </button>
+
+          </form>
+        </div>
+
+
+          <hr class="featurette-divider">
+
+          <h4 class="mb-3">I miei alloggi</h4>
+
+          <!-- INSERIRE CARDS QUI //TODO -->
+
+          <hr class="featurette-divider">
+
+
+      </div><!-- /.container -->
+
+
+</div>
+
+
+    {% include "footerNew.html" %}
+{% endblock %}
