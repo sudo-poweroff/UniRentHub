@@ -87,3 +87,11 @@ class DipendenteDAO:
             dipendenti_homechecker.append(dipendente)
         return dipendenti_homechecker
 
+    def elimina_homechecker(self, email):
+        query = """
+                DELETE FROM dipendente
+                WHERE email = %s
+                """
+        values = (email,)
+        self.__cursor.execute(query, values)
+        self.__connection.commit()
