@@ -28,7 +28,7 @@ def controlla_email_esistente(email):
     else:
         return True #se il cliente non esiste torni true
 
-#ciccioègay
+
 #Controlla campi
 def controlla_campi(nome, cognome, email):
     if not isinstance(nome, str) or not 0 < len(nome) <= 45:
@@ -51,6 +51,7 @@ def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, 
                     dao = ClienteDAO()
                     dao.createCliente(cliente)
                     return cliente
+
 #creazione nuovo homechecker
 def registra_homechecker_service(email, nome, cognome, password):
     if is_valid_email(email):
@@ -81,3 +82,10 @@ def iscrizione_universita(email, denominazione):
     dao.create_iscrizione(iscrizione)
     return iscrizione
 
+
+#accesso admin
+def accesso_admin(email, password):
+    if is_valid_email(email):
+        dao = DipendenteDAO()
+        dipendente = dao.ricercaDip(email, password)
+        return dipendente

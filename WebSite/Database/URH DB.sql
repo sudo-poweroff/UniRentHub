@@ -117,7 +117,7 @@ CREATE TABLE Alloggio (
     prezzo DOUBLE CHECK(prezzo >= 0) NOT NULL,
     n_ospiti INT DEFAULT 1 CHECK(n_ospiti > 0) NOT NULL,
     n_stanze INT CHECK(n_stanze >= 1) NOT NULL,
-    tasse BOOLEAN NOT NULL,
+    tasse DOUBLE NOT NULL DEFAULT '5',
     email_dip VARCHAR(255),
     email_loc VARCHAR(255),
     data_verifica DATE,
