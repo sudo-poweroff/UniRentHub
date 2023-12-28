@@ -157,11 +157,11 @@ INSERT INTO Messaggio (email, id_chat, contenuto) VALUES
 
 -- Popolamento della tabella Alloggio
 INSERT INTO Alloggio (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica) VALUES
-('Camera', TRUE, 'Camera singola in centro', 20, 1, 1, 'A', TRUE, '2023-01-10', TRUE, FALSE, 'Bellissima camera in pieno centro della città', TRUE, 50.00, 1, 1, 10.00, 'alexdeluca@gmail.com', 'kekkamancini@gmail.com', '2023-01-15'),
-('Monolocale', TRUE, 'Monolocale moderno', 40, 1, 1, 'B', TRUE, '2023-01-12', FALSE, TRUE, 'Monolocale con tutti i comfort', TRUE, 80.00, 2, 2, 15.00, 'alexdeluca@gmail.com', 'marcorossi@gmail.com', '2023-01-20'),
-('Stanza condivisa', TRUE, 'Stanza condivisa per studenti', 30, 2, 1, 'C', TRUE, '2023-02-01', FALSE, TRUE, 'Stanza condivisa in zona universitaria', TRUE, 40.00, 2, 2, 5.00, 'alessandramaione@gmail.com', 'sofybianchi@gmail.com', '2023-02-10'),
-('Villa', TRUE, 'Villa con piscina', 200, 4, 3, 'A+', TRUE, '2023-02-15', TRUE, TRUE, 'Villa di lusso con vista panoramica', TRUE, 300.00, 6, 5, 50.00, 'alessandramaione@gmail.com', 'lucaambruoso@gmail.com', '2023-03-01'),
-('Bilocale', TRUE, 'Bilocale vicino al campus', 50, 1, 1, 'B', TRUE, '2023-03-01', FALSE, FALSE, 'Bilocale ideale per studenti', TRUE, 60.00, 2, 2, 10.00, 'alexdeluca@gmail.com', 'giogioespo@gmail.com', '2023-03-10');
+('Camera', TRUE, 'Camera singola in centro', 20, 1, 1, 'A', TRUE, '2023-01-10', TRUE, FALSE, 'Bellissima camera in pieno centro della città', TRUE, 50.00, 1, 1, 22, 'alexdeluca@gmail.com', 'kekkamancini@gmail.com', '2023-01-15'),
+('Monolocale', TRUE, 'Monolocale moderno', 40, 1, 1, 'B', TRUE, '2023-01-12', FALSE, TRUE, 'Monolocale con tutti i comfort', FALSE, 80.00, 2, 2, 22, 'alexdeluca@gmail.com', 'marcorossi@gmail.com', '2023-01-20'),
+('Stanza condivisa', TRUE, 'Stanza condivisa per studenti', 30, 2, 1, 'C', TRUE, '2023-02-01', FALSE, TRUE, 'Stanza condivisa in zona universitaria', FALSE, 40.00, 2, 2, 22, 'alessandramaione@gmail.com', 'sofybianchi@gmail.com', '2023-02-10'),
+('Villa', TRUE, 'Villa con piscina', 200, 4, 3, 'A+', TRUE, '2023-02-15', TRUE, TRUE, 'Villa di lusso con vista panoramica', FALSE, 300.00, 6, 5, 22, 'alessandramaione@gmail.com', 'lucaambruoso@gmail.com', '2023-03-01'),
+('Bilocale', TRUE, 'Bilocale vicino al campus', 50, 1, 1, 'B', TRUE, '2023-03-01', FALSE, FALSE, 'Bilocale ideale per studenti', TRUE, 60.00, 2, 2, 22, 'alexdeluca@gmail.com', 'giogioespo@gmail.com', '2023-03-10');
 
 -- Popolamento della tabella Indirizzo
 INSERT INTO Indirizzo (id_alloggio, via, cap, civico, citta, provincia) VALUES
