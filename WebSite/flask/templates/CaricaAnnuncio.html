@@ -5,8 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    .my-custom-select {
+  font-size: 0.85rem; /* Modifica la dimensione del testo del menu */
+  padding: 0.2rem 0.5rem; /* Modifica il padding interno del menu */
+  height: calc(1.5em + 0.75rem + 2px); /* Regola l'altezza del menu */
+  max-width: 200px; /* Imposta la larghezza massima del menu */
+}
+/* Stile per i servizi selezionabili */
+.custom-service {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+/* Stile quando il servizio è selezionato */
+.custom-service.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+</style>
 </head>
 <body>
+<div class="container mx-auto">
     <form method="post" action="/Carica">
     <div class="col-md-4 mb-3">
         <label for="titolo">Titolo</label>
@@ -17,7 +42,7 @@
     <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" required>
     </div>
 
-    <div class="form-row">
+
     <div class="col-md-6 mb-3">
       <label for="citta">Città</label>
       <input type="text" class="form-control" id="citta" placeholder="Citta" name = citta required>
@@ -27,13 +52,15 @@
       <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia" required>
     </div>
     <div class="col-md-3 mb-3">
+        <label for="civico">CAP</label>
+      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" required>
       <label for="cap">CAP</label>
       <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" required>
     </div>
-    </div>
+    <div class="col-md-6 mb-3">
     <label for="tipo">Tipo Appartamento:</label>
-    <div class="form-group">
-        <select id="tipo" name="tipo" class="custom-select" required>
+    <div class="form-group" >
+        <select id="tipo" name="tipo" class="custom-select custom-select-sm my-custom-select" required>
         <option value="villa">Villa</option>
         <option value="camera">Camera</option>
         <option value="bilocale">Bilocale</option>
@@ -42,10 +69,13 @@
         </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
+    </div>
+    <div class="col-md-6 mb-3">
   <div class="form-group">
     <label for="Descrizione">Descrizione</label>
-    <textarea class="form-control" id="Descrizione" rows="3"></textarea>
+    <textarea class="form-control" id="Descrizione" name="descrizione" rows="3"></textarea>
   </div>
+    </div>
             <div class="col-md-4 mb-3">
         <label for="num_bagni">Numero Bagni:</label>
         <input type="number" class= "form-control" id="num_bagni" name="num_bagni">
@@ -54,7 +84,7 @@
         <label for="num_camere">Numero Camere da letto:</label>
         <input type="number" id="num_camere" class="form-control" name="num_camere">
     </div>
-
+    <div class="col-md-6 mb-3">
         <div class="custom-control custom-checkbox">
         <input type="checkbox" name="pannelli_solari" class="custom-control-input" id="PannelliSolari">
         <label class="custom-control-label" for="PannelliSolari">Pannelli Solari</label>
@@ -68,20 +98,23 @@
         <input type="checkbox" name="arredamento" class="custom-control-input" id="Arredamento">
         <label class="custom-control-label" for="Arredamento">Arredamento</label>
         </div>
+    </div>
 
         <label for="classe_energetica">Classe energetica:</label>
+    <div class="col-md-6 mb-3">
     <div class="form-group">
-        <select id="classe_energetica" name="classee" class="custom-select" required>
-              <option value="A">A</option>
+        <select id="classe_energetica" name="classee" class="custom-select custom-select-sm my-custom-select" required>
+
+            <option value="A++">A++</option>
+            <option value="A+">A+</option>
+            <option value="A">A</option>
         <option value="B">B</option>
         <option value="C">C</option>
         <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="G">G</option>
-      </select>
+        </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
+    </div>
 <div class="col-md-4 mb-3">
         <label for="num_ospiti">Numero ospiti:</label>
         <input type="number" class="form-control" id="num_ospiti" name="num_ospiti">
@@ -98,20 +131,43 @@
       <label for="periodo_minimo">Periodo minimo (in mesi):</label>
       <input type="number" class="form-control" id="periodo_minimo" name="periodo_minimo"><br><br>
 </div>
-      {% for servizio in servizi %}
-    <div class="custom-control custom-checkbox">
-        <input name="servizio_{{ loop.index }}" type="checkbox" class="custom-control-input" id="servizio_{{ loop.index }}">
-        <label class="custom-control-label" for="servizio_{{ loop.index }}">{{ servizio[0] }}</label>
-    </div>
-{% endfor %}
+<div class="col-md-6 mb-3">
+    {% for servizio in servizi %}
+        <div class="custom-service" id="servizio_{{ loop.index }}" onclick="toggleService('servizio_{{ loop.index }}')">
+            <label class="service">{{ servizio[0] }}</label>
+        </div>
+    {% endfor %}
+</div>
+<input type="hidden" id="servizi_selezionati" name="servizi_selezionati" value="">
 
-          <button type="submit">Pubblica</button>
+
+          <button type="submit" class="btn btn-primary">Pubblica</button>
         </form>
+</div>
 
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+function toggleService(serviceId) {
+    var service = document.getElementById(serviceId);
+    var hiddenInput = document.getElementById('servizi_selezionati');
+
+    if (service.classList.contains('selected')) {
+        service.classList.remove('selected');
+    } else {
+        service.classList.add('selected');
+    }
+
+    // Ottieni tutti gli ID dei servizi selezionati e li inserisci nel campo nascosto
+    var selectedServices = document.querySelectorAll('.custom-service.selected');
+    var selectedIds = Array.from(selectedServices).map(function(elem) {
+        return elem.id.split('_')[1];
+    });
+    hiddenInput.value = selectedIds.join(',');
+}
+</script>
 </body>
 </html>
