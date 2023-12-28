@@ -3,8 +3,8 @@ from datetime import datetime
 
 from numpy import double
 
-from .AnnuncioDAO import AnnuncioDAO
-from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio
+from .AlloggioDAO import AlloggioDAO
+from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -26,7 +26,7 @@ def creaPost():
 
 @gu2.route('/Catalogo.html')
 def catalogo():
-    dao = AnnuncioDAO()
+    dao = AlloggioDAO()
     alloggi = dao.visualizza()
     immagini = []
     for alloggio in alloggi:
@@ -38,7 +38,7 @@ def catalogo():
 
 @gu2.route('/Annuncio.html')
 def annuncio():
-    dao = AnnuncioDAO()
+    dao = AlloggioDAO()
     id_alloggio = request.args.get('id')
     alloggio = dao.visualizzaannuncio(id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
@@ -49,7 +49,7 @@ def annuncio():
 
 @gu2.route('/CaricaAnnuncio.html')
 def allservizi():
-    dao = AnnuncioDAO()
+    dao = AlloggioDAO()
     servizi = dao.visualizzaservizidisponibili()
     return render_template("CaricaAnnuncio.html", servizi=servizi)
 
@@ -111,3 +111,13 @@ def pubblicazione():
        servizi_selezionati=servizi_selezionati_lista,
      data=data
      )
+
+#Barra di ricerca
+@gu2.route('/search', methods=['POST', 'GET'])
+def search():
+    if request.method == 'POST':
+        citta = request.form["citta"]
+        alloggi = ricerca_alloggio(citta)
+        for alloggio in alloggi:
+            return render_template("output.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
+    return render_template("Homepage.html") #output per il get se non sono presenti alloggi

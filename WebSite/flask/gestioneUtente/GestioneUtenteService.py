@@ -95,3 +95,4 @@ def elimina_dipendente_service(email):
     dipendente = dao.elimina_homechecker(email)
     print("eliminato")
     return dipendente
+
