@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, session, redirect, url_fo
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
-    show_homecheckerService, iscrizione_universita
+    show_homecheckerService, iscrizione_universita, accesso_admin
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
@@ -76,12 +76,22 @@ def accessoU():
 
 @gu.route("/logout")
 def logout():
-    session.pop("nome", None)
-    session.pop("cognome", None)
-    session.pop("email", None)
-    session.pop("password", None)
-    session.pop("tipo", None)
-    return redirect(url_for('gu.main'))
+    if session.get("tipo") == "Studente" or session.get("tipo") == "Locatore":
+        session.pop("nome", None)
+        session.pop("cognome", None)
+        session.pop("email", None)
+        session.pop("password", None)
+        session.pop("tipo", None)
+        print("ciao sono CLIENTE")
+        return redirect(url_for('gu.main'))
+    elif session.get("tipo") == "Homechecker" or session.get("tipo") == "Admin":
+        print("ciao sono DIPENDENTE")
+        session.pop("nome", None)
+        session.pop("cognome", None)
+        session.pop("email", None)
+        session.pop("password", None)
+        session.pop("tipo", None)
+        return render_template("AccessoAdmin.html")
 
 
 @gu.route('/Homepage.html') #per il log-out, NON TOCCATE PATH
@@ -91,16 +101,15 @@ def show_output():
 
 @gu.route('/AccessoAdmin', methods=['GET', 'POST'])
 def reg():
-    session["messaggio"] = ""
+
     if request.method == "POST":
 
         email = request.form["email"]
         password = request.form["password"]
-        dipendente = Dipendente()
-        dao = DipendenteDAO()
-
-        dipendente = dao.ricercaDip(email, password)
+        dipendente = accesso_admin(email=email, password=password)
+        print("CIAO SONO FUORI")
         if dipendente:
+            print("CIAO SONO ENTRATO")
             session.permanent = True  # la sessione è permanente
             nomedip = dipendente.getNome()
             maildip = dipendente.getEmail()
@@ -110,7 +119,7 @@ def reg():
             session["email"] = maildip
             session["password"] = pwddip
             session["tipo"] = tipodip
-            return redirect(url_for('gu.show_output'))
+            return render_template("admin.html")
         else:
             session["messaggio"] = "Credenziali errate"
     return render_template("AccessoAdmin.html")

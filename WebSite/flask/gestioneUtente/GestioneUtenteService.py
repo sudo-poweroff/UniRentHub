@@ -83,3 +83,9 @@ def iscrizione_universita(email, denominazione):
     return iscrizione
 
 
+#accesso admin
+def accesso_admin(email, password):
+    if is_valid_email(email):
+        dao = DipendenteDAO()
+        dipendente = dao.ricercaDip(email, password)
+        return dipendente
