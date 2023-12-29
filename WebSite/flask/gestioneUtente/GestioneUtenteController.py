@@ -1,17 +1,20 @@
+from datetime import date
+
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
-    show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service
+    show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
+    cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
 
 @gu.route('/')
 def main():
-    #passiamo il tipo utente alla html per modificare l'header
+    # passiamo il tipo utente alla html per modificare l'header
     tipo_utente = session.get("tipo", "gest")
-    return render_template("Homepage.html", tipo = tipo_utente)
+    return render_template("Homepage.html", tipo=tipo_utente)
 
 
 @gu.route('/registrazione', methods=['GET', 'POST'])
@@ -30,7 +33,8 @@ def registrazione():
         cvv = request.form["cvv"]
         scadenza = request.form["scadenza"]
 
-        user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo, numero_carta = numero_carta, scadenza = scadenza)
+        user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo,
+                                numero_carta=numero_carta, scadenza=scadenza)
         if tipo == "Studente":
             iscrizione = iscrizione_universita(denominazione=denominazione, email=email)
 
@@ -53,6 +57,7 @@ def accessoU():
         password = request.form["password"]
 
         user = get_cliente_by_email_password(email, password)
+        uni = cerca_uni(email)
 
         if user:  # Se l'autenticazione ha successo
             session.permanent = True
@@ -61,11 +66,19 @@ def accessoU():
             mailcliente = user.getEmail()
             pwdcliente = user.getPassword()
             tipocliente = user.getTipo()
+            numcarta = user.getNumeroCarta()
+            scadenza = user.getDataScadenza()
+            cvv = user.getVerificato()
+
             session["nome"] = nomecliente
             session["cognome"] = cognomecliente
             session["email"] = mailcliente
             session["password"] = pwdcliente
             session["tipo"] = tipocliente
+            session["carta"] = numcarta
+            session["scadenza"] = scadenza
+            session["cvv"] = cvv
+            session["universita"] = uni
 
             return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
@@ -94,14 +107,13 @@ def logout():
         return render_template("AccessoAdmin.html")
 
 
-@gu.route('/Homepage.html') #per il log-out, NON TOCCATE PATH
+@gu.route('/Homepage.html')  # per il log-out, NON TOCCATE PATH
 def show_output():
     return render_template('Homepage.html')
 
 
 @gu.route('/AccessoAdmin', methods=['GET', 'POST'])
 def reg():
-
     if request.method == "POST":
 
         email = request.form["email"]
@@ -127,7 +139,6 @@ def reg():
 
 @gu.route('/admin', methods=['GET', 'POST'])
 def registra_homechecker():
-
     dipendenti_homechecker = show_homecheckerService()
 
     if request.method == 'POST':
@@ -150,11 +161,55 @@ def registra_homechecker():
             nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
             if nuovo_homechecker:
                 dipendenti_homechecker = show_homecheckerService()
-                return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker, nuovo_homechecker=nuovo_homechecker)
+                return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker,
+                                       nuovo_homechecker=nuovo_homechecker)
 
     return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
 
 
+@gu.route('/Userpage', methods=['GET', 'POST'])
+def userpage():
+    universita = cercatutteuni()
+    alloggi = []  # Inizializzazione della lista per memorizzare le case
+
+    if session["tipo"] == "Locatore":
+        alloggi = casep(session["email"])
+    else:
+        data_oggi = date.today().isoformat()
+        id_casa = idcasas(session["email"], data_oggi)
+        print(str(id_casa)+"Controller")
+        alloggio = cercacasastudente(id_casa)
+        print(alloggio.get_titolo()+"Controller")
+        alloggi.append(alloggio)
+        return render_template("Userpage.html",alloggi=alloggi, universita= universita)
+    return render_template('Userpage.html', universita=universita, alloggi=alloggi)
 
 
+@gu.route('/modifica', methods=['GET', 'POST'])
+def modifica():
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        cognome = request.form.get("cognome")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        tipo = session["tipo"]
+        denominazione = request.form.get("universita")
+        numero_carta = request.form.get("numeroc")
+        cvv = request.form.get("cvv")
+        scadenza = request.form.get("scadenza")
+        update_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo,
+                       numero_carta=numero_carta, scadenza=scadenza)
 
+        if tipo == "Studente":
+            if session["universita"] != denominazione:
+                iscrizione = iscrizione_universita(denominazione=denominazione, email=email)
+
+        session["nome"] = nome
+        session["cognome"] = cognome
+        session["email"] = email
+        session["password"] = password
+        session["carta"] = numero_carta
+        session["scadenza"] = scadenza
+        session["cvv"] = cvv
+        session["universita"] = denominazione
+    return redirect(url_for('gu.userpage'))

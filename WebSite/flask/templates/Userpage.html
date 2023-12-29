@@ -19,18 +19,18 @@
 
       <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Dati utente</h4>
-          <form class="needs-validation" novalidate="">
+          <form class="needs-validation" novalidate="" action="/modifica" METHOD="post">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <input type="text" name="nome" class="form-control" id="firstName" placeholder="" value="{{session["nome"] }}" required="">
                 <div class="invalid-feedback">
                   È richiesto un nome valido.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Cognome</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <input type="text" name="cognome" class="form-control" id="lastName" placeholder="" value="{{session["cognome"] }}" required="">
                 <div class="invalid-feedback">
                   È richiesto un cognome valido.
                 </div>
@@ -39,34 +39,36 @@
 
 
             <div class="mb-3">
-              <label for="email">Email</label>
-              <input type="text" class="form-control" placeholder="" required="">
-              <div class="invalid-feedback">
-                Inserisci la tua email.
-              </div>
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control" placeholder="" required="" id="email" value="{{ session["email"] }}" readonly>
+            <div class="invalid-feedback">
+            Inserisci la tua email.
+            </div>
             </div>
 
+
             <div class="mb-3">
-              <label for="email">Password</label>
-              <input type="password" class="form-control" placeholder="" required="">
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control" placeholder="" required="" value="{{session["password"] }}" id="password">
               <div class="invalid-feedback">
                 Inserisci la tua password.
               </div>
             </div>
-
+{% if session["tipo"] == "Studente" %}
             <div class="row">
               <div class="col-md-5 mb-3">
                <label id="l-uni" for="exampleFormControlSelect1">Università</label>
-                <select name="universita" class="form-control" id="exampleFormControlSelect1">
-                  <option value="Federico II">Federico II</option>
-                  <option value="Politecnico di Milano">Politecnico di Milano</option>
-                  <option value="Università Roma Tre">Università Roma Tre</option>
-                  <option value="Università degli Studi di Salerno">Università degli Studi di Salerno</option>
-                  <option value="La Sapienza">La Sapienza</option>
+                <select name="universita" class="form-control" id="exampleFormControlSelect1" >
+                  <option value="{{ session["universita"] }}">{{ session["universita"] }}</option>
+                    {% for uni in universita %}
+                        {% if uni != session["universita"]%}
+                        <option value="{{ uni }}">{{ uni }}</option>
+                        {% endif %}
+                    {% endfor %}
                 </select>
               </div>
             </div>
-
+{% endif %}
             <hr class="mb-4">
 
             <h4 class="mb-3">Pagamento</h4>
@@ -74,7 +76,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="cc-number">Numero Carta</label>
-                <input type="text" class="form-control" id="cc-number" placeholder=""  maxlength="16" required="">
+                <input type="text" name="numeroc" class="form-control" id="cc-number" placeholder=""  maxlength="16" required="" value="{{ session["carta"] }}">
                 <div class="invalid-feedback">
                   Numero Carta è richiesto.
                 </div>
@@ -82,15 +84,16 @@
             </div>
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Scadenza</label>
-                <input type="date" id="name" name="scadenza" placeholder="Data Scadenza" required="">
+                <label for="scadenza">Scadenza</label>
+                <input type="text" class="form-control" id="scadenza" name="scadenza" placeholder="MM/AA" value ="{{ session["scadenza"]}}"  required>
+
                 <div class="invalid-feedback">
                   La data scadenza è richiesta.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" maxlength="3" required="">
+                <label for="cc-cvv">CVV</label>
+                <input type="password" class="form-control" name="cvv" id="cc-cvv" placeholder="" maxlength="3" required="" value = "123">
                 <div class="invalid-feedback">
                   Il CVV è richiesto.
                 </div>
@@ -98,25 +101,80 @@
             </div>
             <hr class="mb-4">
 
-            <button class="btn btn-primary btn-lg btn-block"
+            <button id="modificaDatiBtn" class="btn btn-primary btn-lg btn-block"
             type="submit"
             style="background-color: #688d51; border-color: #688d51;"
             onmouseover="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#B5DCA5';"
             onmouseout="this.style.backgroundColor='#688d51'; this.style.borderColor='#688d51';"
             onmousedown="this.style.backgroundColor='#688d51'; this.style.borderColor='#688d51';"
-            onmouseup="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#B5DCA5';">
-              Modifica dati
-            </button>
-
+            onmouseup="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#B5DCA5';"
+            disabled>
+        Modifica dati
+    </button>
           </form>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var originalValues = {}; // Memorizza i valori originali dei campi del form
+
+        // Salva i valori originali dei campi del form all'avvio
+        $('form :input').each(function () {
+            var fieldName = $(this).attr('id');
+            originalValues[fieldName] = $(this).val();
+        });
+
+        // Funzione per controllare se i valori sono stati modificati
+        $('form :input').on('input', function () {
+            var formModified = false;
+
+            // Confronta i valori dei campi con i valori originali
+            $('form :input').each(function () {
+                var fieldName = $(this).attr('id');
+                var fieldValue = $(this).val();
+
+                if (fieldValue !== originalValues[fieldName]) {
+                    formModified = true;
+                    return false; // Esci dal ciclo se un campo è stato modificato
+                }
+            });
+
+            // Abilita/disabilita il pulsante in base alle modifiche
+            $('#modificaDatiBtn').prop('disabled', !formModified);
+        });
+    });
+</script>
         </div>
 
 
           <hr class="featurette-divider">
-
+        {% if session["tipo"] == "Locatore" %}
           <h4 class="mb-3">I miei alloggi</h4>
-
-          <!-- INSERIRE CARDS QUI //TODO -->
+        {% else %}
+          <h4 class="mb-3">La mia casa</h4>
+        {% endif %}
+          <div class="container">
+        <div class="row">
+        {% if alloggi %}
+            {% for alloggio in alloggi %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ alloggio.get_titolo() }}</h5>
+                            <p class="card-text">{{ alloggio.get_descrizione() }}</p>
+                            <a href="/Annuncio.html?id={{ alloggio.get_id_alloggio() }}" class="card-link">Dettagli</a>
+                        </div>
+                    </div>
+                </div>
+                {% if loop.index % 3 == 0 %} <!-- Chiudi la riga ogni 3 elementi -->
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Non ci sono alloggi disponibili.</p>
+        {% endif %}
+        </div>
+    </div>
 
           <hr class="featurette-divider">
 

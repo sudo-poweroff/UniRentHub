@@ -34,6 +34,7 @@ class AlloggioDAO:
             WHERE id_alloggio = %s
         """
         values = (id,)  # Assicurati che i valori siano in una tupla
+        print(str(id)+"DAO")
         print("DAO Join")
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
