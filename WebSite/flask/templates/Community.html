@@ -22,10 +22,10 @@
 
 
 {% block content %}
+    {% if session.get("tipo") == "Studente" %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
-{% if session.get("tipo") == "Studente" %}
 <div style="height: 2800px; margin-top: 150px">
 
 

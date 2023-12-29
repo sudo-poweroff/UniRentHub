@@ -72,7 +72,8 @@ def accessoU():
             pwdcliente = user.getPassword()
             tipocliente = user.getTipo()
             numcarta = user.getNumeroCarta()
-            scadenza = user.getDataScadenza()
+            mese = user.getMeseScadenza()
+            anno = user.getAnnoScadenza()
             cvv = user.getVerificato()
 
             session["nome"] = nomecliente
@@ -81,7 +82,8 @@ def accessoU():
             session["password"] = pwdcliente
             session["tipo"] = tipocliente
             session["carta"] = numcarta
-            session["scadenza"] = scadenza
+            session["mese"] = mese
+            session["anno"] = anno
             session["cvv"] = cvv
 
             return redirect(url_for("gu.main"))
