@@ -1,4 +1,5 @@
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
+from WebSite.flask.gestioneAnnunci.Indirizzo import Indirizzo
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 
 
@@ -192,4 +193,26 @@ class AlloggioDAO:
             )
             alloggi.append(alloggio)
         return alloggi
+
+    def visualizzaindirizzo(self, id_alloggio):
+        query = "SELECT * FROM indirizzo WHERE id_alloggio = %s"
+        values = (id_alloggio,)
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchall()
+
+        if result:
+            # Assume che result contenga solo una riga
+            indirizzo = Indirizzo(
+                id_alloggio=id_alloggio,
+                via=result[0][1],
+                cap=result[0][2],
+                civico=result[0][3],
+                citta=result[0][4],
+                provincia=result[0][5]
+            )
+            print(indirizzo.get_via())
+            return indirizzo
+
+
+        
 

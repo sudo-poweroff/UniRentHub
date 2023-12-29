@@ -2,7 +2,10 @@
 {% block title %} Homepage {% endblock %}
 
 {% block style %}
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #mappa { height: 550px; }
+    </style>
 {% endblock %}
 
 
@@ -50,30 +53,30 @@
 
           <!-- INIZIO DATI ANNUNCIO -->
 
-          <h1 class="mb-1"><b>Titolo dell'annuncio</b></h1>
-          <h6 class="mb-0"><span style="margin-left: 3px;"></span>Città</h6>
+          <h1 class="mb-1"><b>{{ alloggio.get_titolo() }}</b></h1>
+          <h6 class="mb-0"><span style="margin-left: 3px;"></span> {{ indirizzo.get_citta()}}</h6>
           <br>
-          <h5 class="mb-0">65 m2 <span style="margin-left: 10px;"></span> | <span style="margin-left: 10px;"></span> 3 stanze<span style="margin-left: 10px;"> </span>| </h5>
+          <h5 class="mb-0">{{ alloggio.get_mq() }} m2 <span style="margin-left: 10px;"></span> | <span style="margin-left: 10px;"></span>{{ alloggio.get_n_stanze() }}<span style="margin-left: 10px;"> </span>| </h5>
+          {% if alloggio.get_verifica() == 1 %}
           <span class="badge badge-pill badge-success" style="background-color: #5c8e48;">Verificata</span>
+          {% endif %}
           <br>
           <br>
-          <h4 class="mb-0"><b>600</b>€/mese</h4>
+          <h4 class="mb-0"><b>{{ alloggio.get_prezzo() }}</b>€/mese</h4>
           <br>
-          <a href="ListaPreferiti.html" class="btn btn-outline-danger">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.060.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
-            </svg>
-              Salva preferito
-          </a>
+          <button type="button" class="btn btn-outline-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
+                </svg>
+                Salva preferito
+              </button>
 
-
-          <a href="#" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
-            <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"></path>
-            </svg>
-            Condividi
-          </a>
-
+          <button type="button" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48;" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"></path>
+                </svg>
+                Condividi
+              </button>
 
 
           <br>
@@ -82,20 +85,24 @@
           <h3 class="mb-1"><b>Descrizione</b></h3>
           <br>
           <p style="font-size: 19px;">
-          Questo spazioso appartamento è situato vicino allo Stadio di San Siro. Il soggiorno affaccia sul primo terrazzo arredato con divanetti e tavolini. La cucina abitabile è completa di tutti i principali elettrodomestici e affaccia su un terrazzino. La prima camera da letto è dotata di letto matrimoniale a baldacchino e bagno privato. Anche la seconda camera da letto matrimoniale ha il proprio bagno in stanza. La terza camera da letto è dotata di due letti singoli unibili in un matrimoniale e anche quest'ultima ha al proprio interno il bagno privato. <br><br>Puoi affittare questo appartamento per poche notti (come una casa vacanze) o per periodi più lunghi (con un contratto transitorio). <br><br>Il prezzo dell'appartamento è in formula residence e include: utenze (luce e gas entro un massimo giornaliero per evitare sprechi e tutelare l'ambiente) internet Wi-Fi, la nostra assistenza durante il soggiorno. NO Spese condominiali - NO Spese d'agenzia. <br><br>Nota importante: Il prezzo mensile sopra indicato è soggetto a stagionalità. Per maggiori informazioni sul prezzo giornaliero, settimanale o mensile, contattaci.<br><br>APPARTAMENTI SANIFICATI. Utilizziamo prodotti e procedure professionali per la sanificazione degli appartamenti. Certificato di sanificazione professionale. ? SEI INTERESSATO A QUESTO APPARTAMENTO?<br><br>Contattaci!<br> - CIR: 015146-CIM-00587<br><br>Sei proprietario di un appartamento a Milano?<br>Affittalo per Brevi Periodi: Guadagni senza fare nulla, ottieni pagamenti sicuri e puntuali, puoi utilizzarlo durante il mandato. Contattaci subito per una Consulenza Gratuita allo.
+          {{ alloggio.get_descrizione() }}
           </p>
 
           <hr class="featurette-divider">
 
           <h3 class="mb-1"><b>Servizi inclusi</b></h3>
           <br>
-
+        <div class="row justify-content-between px-3">
+          {% for x in servizi %}
           <div class="fs-4 mb-3" style="font-size: 1.3em;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#5c8e48" class="bi bi-check-square-fill" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"></path>
             </svg>
-            Servizio
+
+                  {{ x[0] }}
           </div>
+      {% endfor %}
+        </div>
 
           <hr class="featurette-divider">
 
@@ -106,13 +113,39 @@
           <h3 class="mb-1"><b>Posizione</b></h3>
           <br>
           <p style="font-size: 19px;">
-              Via del Contaldo, 75 <br>
-              Milano - MI <br>
-              00154
+              {{ indirizzo.get_via() + ", " + indirizzo.get_civico() }} <br>
+              {{ indirizzo.get_citta() + ", " + indirizzo.get_provincia() }} <br>
+                {{ indirizzo.get_cap() }}
           </p>
           <br>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.7314057229446!2d14.597970877364071!3d40.811895731491845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133bb9c8aae41bd7%3A0x404091cd7752b140!2sPresidio%20ospedaliero%20%22Villa%20Malta%22%20di%20Sarno!5e0!3m2!1sit!2sit!4v1703846745061!5m2!1sit!2sit" width="1110" height="550" style="border:10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div id="mappa"></div>
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var address = "{{ indirizzo.get_via() }}, {{ indirizzo.get_civico() }}, {{ indirizzo.get_citta() }}, {{ indirizzo.get_provincia() }}, {{ indirizzo.get_cap() }}";
+
+        // Utilizza Nominatim per ottenere le coordinate geografiche dall'indirizzo
+        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + address)
+            .then(response => response.json())
+            .then(data => {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+
+                // Inizializza la mappa Leaflet centrata sulle coordinate ottenute
+                var mappa = L.map('mappa').setView([lat, lon], 16);
+
+                // Aggiungi la mappa OSM come layer
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(mappa);
+
+                // Aggiungi un marker alla posizione
+                L.marker([lat, lon]).addTo(mappa).bindPopup(address).openPopup();
+            })
+            .catch(error => {
+                console.log('Errore:', error);
+            });
+    </script>
           <!-- FINE MAPPA -->
           <hr class="featurette-divider">
       </div><!-- /.container -->
