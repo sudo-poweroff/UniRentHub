@@ -93,11 +93,11 @@ INSERT INTO Segnalazione (email, emailS, stato, motivo) VALUES
 
 -- Popolamento della tabella Università
 INSERT INTO Università (denominazione, email, indirizzo) VALUES
-('Università di Napoli Federico II', 'urp@pec.unina.it', 'C.so Umberto I, 40'),
-('Politecnico di Milano - Sede Leonardo', 'pecateneo@cert.polimi.it', 'Piazza Leonardo Da Vinci, 32'),
-('Università Roma Tre', 'uniRoma@example.com', 'Viale Gugliemo Marconi, 446'),
-('Università degli Studi di Salerno', 'ammicent@pec.unisa.it', 'Via Giovanni Paolo II, 132'),
-('Università La Sapienza', 'urp@uniroma1.it', 'Piazzale Aldo Moro, 5');
+('Università di Napoli Federico II', 'urp@pec.unina.it', 'Corso Nicolangelo Protopisani, San Giovanni a Teduccio, Municipalità 6, Marianella, Napoli, Campania, 80146, Italia'),
+('Politecnico di Milano - Sede Leonardo', 'pecateneo@cert.polimi.it', 'Via Nicola Antonio Porpora, Città Studi, Municipio 3, Milano, Lombardia, 20133, Italia'),
+('Università Roma Tre', 'uniRoma@example.com', '133, Via Ostiense, Municipio Roma VIII, Roma, Lazio, 00154, Italia'),
+('Università degli Studi di Salerno', 'ammicent@pec.unisa.it', 'Via Salvador Allende, Sava, Baronissi, Salerno, Campania, 84081, Italia'),
+('Università La Sapienza', 'urp@uniroma1.it', 'Piazzale del Verano, San Lorenzo, Municipio Roma II, Roma, Lazio, 00161, Italia');
 
 -- Popolamento della tabella Iscrizione
 INSERT INTO Iscrizione (denominazione, email) VALUES
