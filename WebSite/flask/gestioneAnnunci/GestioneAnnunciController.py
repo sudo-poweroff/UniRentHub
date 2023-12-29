@@ -121,3 +121,27 @@ def search():
         for alloggio in alloggi:
             return render_template("output.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
     return render_template("Homepage.html") #output per il get se non sono presenti alloggi
+
+
+@gu2.route('/Homecheck', methods=['GET', 'POST'])
+def homechecker():
+    if request.method == 'POST':
+        id_alloggio = request.form.get('id_alloggio')
+
+
+        if id_alloggio is not None and id_alloggio.isdigit():  # Verifica se id_alloggio è un numero intero
+            dao = AlloggioDAO()
+            dao.homecheckgood(int(id_alloggio))
+            return redirect(url_for('gu2.homechecker'))
+        else:
+            return 'Invalid data received for id_alloggio', 400
+
+    else:
+        dao = AlloggioDAO()
+        alloggi = dao.homecheck()
+        immagini = []
+        for alloggio in alloggi:
+            id_alloggio = alloggio.get_id_alloggio()
+            immagine = dao.visualizzaimg(id_alloggio)
+            immagini.append(immagine)
+        return render_template("Homecheck.html", immagini=immagini, alloggi=alloggi)

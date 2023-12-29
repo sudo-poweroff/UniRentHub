@@ -143,3 +143,52 @@ class AlloggioDAO:
         values = (id_alloggio, indirizzo, cap, citta, provincia, civico)
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchall()
+
+
+    def homecheckgood(self, id_alloggio):
+        query = """
+                     UPDATE alloggio
+                     SET verifica = 1
+                     WHERE id_alloggio = %s
+                     """
+        self.__cursor.execute(query, (id_alloggio,))
+        self.__connection.commit()
+
+
+
+
+    def homecheck(self):
+        query = """
+                   SELECT * FROM alloggio
+                   WHERE verifica=0
+                   """
+        self.__cursor.execute(query)
+        result = self.__cursor.fetchall()  # Ottieni tutti i risultati della query
+        alloggi = []
+        for r in result:
+            alloggio = Alloggio(
+                id_alloggio=r[0],
+                tipo_alloggio=r[1],
+                disponibilita=r[2],
+                titolo=r[3],
+                mq=r[4],
+                n_camere_letto=r[5],
+                n_bagni=r[6],
+                classe_energetica=r[7],
+                arredamenti=r[8],
+                data_publicazione=r[9],
+                pannelli_solari=r[10],
+                pannelli_fotovoltaici=r[11],
+                descrizione=r[12],
+                verifica=r[13],
+                prezzo=r[14],
+                n_ospiti=r[15],
+                n_stanze=r[16],
+                tasse=r[17],
+                email_dip=r[18],
+                email_loc=r[19],
+                data_verifica=r[20]
+            )
+            alloggi.append(alloggio)
+        return alloggi
+
