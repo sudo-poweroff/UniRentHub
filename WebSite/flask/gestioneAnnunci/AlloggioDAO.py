@@ -145,6 +145,7 @@ class AlloggioDAO:
         result = self.__cursor.fetchall()
 
 
+
     def homecheckgood(self, id_alloggio):
         query = """
                      UPDATE alloggio

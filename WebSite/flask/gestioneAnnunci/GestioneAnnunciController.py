@@ -122,7 +122,6 @@ def search():
             return render_template("output.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
     return render_template("Homepage.html") #output per il get se non sono presenti alloggi
 
-
 @gu2.route('/Homecheck', methods=['GET', 'POST'])
 def homechecker():
     if request.method == 'POST':
