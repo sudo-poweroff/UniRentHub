@@ -135,11 +135,33 @@
             }).addTo(mappa);
 
             L.marker([lat, lon]).addTo(mappa).bindPopup(address).openPopup();
+
+            // Ottenere l'indirizzo dalla sessione e creare la mappa con il secondo indirizzo
+            var secondAddress = "{{ session['universita'] }}";
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + secondAddress)
+                .then(response => response.json())
+                .then(data => {
+                    var lat2 = data[0].lat;
+                    var lon2 = data[0].lon;
+
+                    L.marker([lat2, lon2]).addTo(mappa).bindPopup(secondAddress).openPopup();
+
+                    var line = [
+                        [lat, lon],
+                        [lat2, lon2]
+                    ];
+                    L.polyline(line, { color: 'red' }).addTo(mappa);
+                })
+                .catch(error => {
+                    console.log('Errore nel caricamento dei dati del secondo indirizzo:', error);
+                });
         })
         .catch(error => {
-            console.log('Errore:', error);
+            console.log('Errore nel caricamento dei dati del primo indirizzo:', error);
         });
 </script>
+
 
           <!-- FINE MAPPA -->
           <hr class="featurette-divider">
