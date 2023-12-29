@@ -53,13 +53,13 @@ def controlla_campi(nome, cognome, email):
     return False
 
 
-def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, scadenza):
+def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, mese_scadenza, anno_scadenza):
     if controlla_campi(nome, cognome, email):
         if is_valid_email(email):
             if is_valid_password(password):
                 if controlla_email_esistente(email):
                     cliente = Cliente(nome=nome, cognome=cognome, email=email, password=password,
-                                      tipo_utente=tipo_utente, numero_carta=numero_carta, data_scadenza=scadenza)
+                                      tipo_utente=tipo_utente, numero_carta=numero_carta, mese_scadenza=mese_scadenza, anno_scadenza=anno_scadenza)
                     dao = ClienteDAO()
                     dao.createCliente(cliente)
                     return cliente

@@ -31,10 +31,11 @@ def registrazione():
         tipo = request.form.get("locatore2", "Studente")
         numero_carta = request.form["numero_carta"]
         cvv = request.form["cvv"]
-        scadenza = request.form["scadenza"]
+        mese = request.form["mese-scadenza"]
+        anno = request.form["anno-scadenza"]
 
         user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo,
-                                numero_carta=numero_carta, scadenza=scadenza)
+                                numero_carta=numero_carta, mese_scadenza=mese, anno_scadenza=anno)
         if tipo == "Studente":
             iscrizione = iscrizione_universita(denominazione=denominazione, email=email)
 

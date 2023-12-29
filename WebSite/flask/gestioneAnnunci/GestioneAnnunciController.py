@@ -9,22 +9,6 @@ from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, 
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
-
-@gu2.route('/CreatePost', methods=['POST', 'GET'])
-def creaPost():
-    if request.method == 'POST':
-        email = session["email"]
-        titolo = request.form["titolo"]
-        descrizione = request.form["descrizione"]
-
-        post = pubblicazione_post(email=email, titolo=titolo, descrizione=descrizione)
-        if post:
-            return render_template("output.html", descrizione=descrizione, email=email)
-    elif request.method == "GET":
-        return render_template("CreatePost.html")
-    return render_template("LoginCliente.html", message="Metodo di richiesta non valido")
-
-
 @gu2.route('/Catalogo.html')
 def catalogo():
     dao = AlloggioDAO()
@@ -121,7 +105,7 @@ def search():
         citta = request.form["citta"]
         alloggi = ricerca_alloggio(citta)
         for alloggio in alloggi:
-            return render_template("output.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
+            return render_template("Catalogo.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
     return render_template("Homepage.html") #output per il get se non sono presenti alloggi
 
 @gu2.route('/Homecheck', methods=['GET', 'POST'])

@@ -7,6 +7,7 @@
 
 
 {% block content %}
+    {% if session.get("tipo") == "Studente" %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
@@ -62,4 +63,8 @@
 
 
     {% include "footerNew.html" %}
+    {% endif %}
+    {% if session.get("tipo") != "Studente" %}
+    {% include "error.html" %}
+    {% endif %}
 {% endblock %}

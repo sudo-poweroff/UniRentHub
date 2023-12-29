@@ -11,13 +11,13 @@ class ClienteDAO:
 
     def createCliente(self, cliente):
         query= """
-            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, data_scadenza, verificato, password)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (
             cliente.getEmail(), cliente.getNome(), cliente.getCognome(),
             cliente.getTipo(), cliente.getDataNascita(),
-            cliente.getNumeroCarta(), cliente.getDataScadenza(),
+            cliente.getNumeroCarta(), cliente.getMeseScadenza(), cliente.getAnnoScadenza(),
             0,  # Aggiunto il valore per verificato
             cliente.getPassword()
         )
