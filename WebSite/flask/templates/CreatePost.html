@@ -1,37 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="../static/css/post.css" rel="stylesheet">
+{% block style %}
+
+{% endblock %}
 
 
-</head>
-<body>
-
+{% block content %}
     {% include "header.html" %}
-<div class="content-container">
+    <h1>{{ tipo_utente }}</h1>
 
-    <h3 style="font-family: 'Open Sans', sans-serif;"> UniRentHub Community Post</h3>
-    <br>
-    <form method="post" action="/CreatePost">
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Titolo</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Titolo" name="titolo">
-      </div>
 
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Descrizione</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descrizione" placeholder="Descrizione..."></textarea>
-      </div>
+<div style="height: 2800px">
 
-      <button type="submit">Pubblica</button>
-    </form>
 
-  </div>
-    {% include "footer.html" %}
+      <div class="container marketing">
 
-</body>
-</html>
+          <h2 class="mb-1" style="margin-top: 15px;"><b>Crea il tuo Post</b></h2>
+          <h6 class="mb-0" style="margin-top: 20px;"><span style="margin-left: 3px;"></span>Ti preghiamo prima di pubblicare (per evitare alcun tipo di segnalazione o ban) di rispettare le linee guida di UniRentHub.</h6>
+
+          <hr class="featurette-divider">
+
+          <!--CREATE POST START -->
+
+         <div class="card" style="width: 800px; margin-left: 180px">
+
+          <div class="card-body" style="font-size: 24px;">
+            <label for="exampleFormControlInput1" class="form-label">Titolo</label>
+             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Inserici il titolo">
+
+            <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label" style="margin-top: 10px">Descrizione</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descrivi agli altri di cosa cerchi o di cosa hai bisogno"></textarea>
+            </div>
+            <a href="CommunityPosts.html" class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-plus-fill" viewBox="0 0 16 16">
+            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"></path>
+            <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"></path>
+            </svg>
+            Pubblica
+            </a>
+
+
+              </div>
+          </div>
+        </div>
+
+
+
+
+        </div>
+
+
+        <!--CREATE POST FINISH -->
+
+          <hr class="featurette-divider">
+
+
+      </div><!-- /.container -->
+
+
+</div>
+
+
+    {% include "footerNew.html" %}
+{% endblock %}
