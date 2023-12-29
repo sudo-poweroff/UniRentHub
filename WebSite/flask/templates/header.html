@@ -26,6 +26,40 @@
   position: relative; / Assicura che il position e il z-index funzionino correttamente /
   z-index: 1; / Imposta il livello dell'header a 1 /
 }
+
+       @media (max-width: 767px) {
+    /* Stili da applicare solo quando la larghezza dello schermo è inferiore a 768px (mobile) */
+
+    /* Resetta la larghezza del menu a tendina */
+    .navbar-collapse {
+        width: auto;
+        margin-left: 250px;
+    }
+           .bi-heart{
+               margin-top: 15px;
+           }
+
+           .bi-person-circle{
+               margin-top: 10px;
+           }
+
+    /* Stili per gli elementi del menu a tendina */
+    .navbar-nav {
+        width: 100%; /* Occupa l'intera larghezza del menu a tendina */
+        margin: 10px 0; /* Aggiungi spazio sopra e sotto gli elementi del menu */
+        text-align: center; /* Allinea gli elementi al centro */
+    }
+
+    .navbar-nav li {
+        margin-left: 0 !important; /* Resetta il margine sinistro degli elementi del menu */
+    }
+
+    /* Rimuovi il display: block; per gli elementi del menu a tendina */
+    .navbar-nav a {
+        /* display: block; */ /* Commentato per mantenere gli elementi inline */
+        margin-bottom: 10px;
+    }
+}
     </style>
 </head>
 <body>
@@ -39,16 +73,19 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown" style="width:1000px">
     <ul class="navbar-nav">
-      <li style="margin-left: 400px" class="nav-item active" id="community">
-        <a style="font-size: 20px" class="nav-link" href="#">Community <span class="sr-only">(current)</span></a>
+    {% if session["tipo"] == "Studente" %}
+      <li  class="nav-item active" id="community">
+        <a id="news" style="font-size: 20px; margin-right: 50px" class="nav-link" href="/community">Community <span class="sr-only">(current)</span></a>
       </li>
-      <li style="margin-left: 30px" class="nav-item active" id="servizi">
-        <a style="font-size: 20px; margin-right: 330px;" class="nav-link" href="#">Servizi</a>
+    {% elif session["tipo"] != "Studente"  %}
+      <li class="nav-item active" id="servizi">
+        <a id="news" style="font-size: 20px; margin-right: 30px" class="nav-link" href="/servizi">Servizi</a>
       </li>
+    {% endif %}
         <li>
         {% if 'tipo' in session %}
-                <a href="/logout" class="btn btn-primary" style="border-radius: 20px; background-color: #556b2f; border-color: #556b2f !important;  box-shadow: none;">
-                    Log-out
+                <a href="/logout" class="btn btn-primary" style=" border-radius: 20px; background-color: #556b2f; border-color: #556b2f !important;  box-shadow: none;">
+                    Log out
                 </a>
             {% else%}
                  <button  style="border-radius: 20px; background-color: #5c8e48; border-color: #5c8e48 !important;  box-shadow: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -57,7 +94,7 @@
         {% endif %}
         </li>
         <li>
-            <a href="Userpage.html" style="text-decoration: none; margin-top: 7px; margin-left: 20px; cursor: pointer; color: black;">
+            <a id="svg" href="Userpage.html" style="text-decoration: none; margin-top: 7px; margin-left: 20px; cursor: pointer; color: black;">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -65,7 +102,7 @@
             </a>
         </li>
         <li>
-            <a href="ListaPreferiti.html" style="text-decoration: none; margin-top: 7px; margin-left: 20px; cursor: pointer; color: black;">
+            <a id="svg" href="ListaPreferiti.html" style="text-decoration: none; margin-top: 7px; margin-left: 20px; cursor: pointer; color: black;">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
             </svg>
@@ -108,7 +145,5 @@
 </nav>
     </header>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

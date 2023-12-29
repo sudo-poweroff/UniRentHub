@@ -4,7 +4,8 @@ from datetime import datetime
 from numpy import double
 
 from .AlloggioDAO import AlloggioDAO
-from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio
+from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
+    creazione_post
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -145,3 +146,45 @@ def homechecker():
             immagine = dao.visualizzaimg(id_alloggio)
             immagini.append(immagine)
         return render_template("Homecheck.html", immagini=immagini, alloggi=alloggi)
+
+
+@gu2.route('/community_post', methods=['GET', 'POST'])
+def community_post():
+    print("SONO QUI")
+    if request.method == 'POST':
+        print("SONO DENTRO")
+        hidden = request.form["button"]
+        session["citta"] = hidden
+        print("VALUE: " + str(hidden))
+        return redirect(url_for("gu2.post"))
+    return render_template("CommunityPosts.html")
+
+
+@gu2.route('/community_post_view', methods=['GET', 'POST'])
+def post():
+    if request.method == 'GET':
+        hidden = session["citta"]
+        posts = ricerca_post_studente(hidden)
+        for post in posts:
+            print("Email: " + str(post.get_email()))
+        return render_template("CommunityPosts.html", posts = posts, hidden = hidden)
+
+
+@gu2.route('/community_crea_post', methods=['GET', 'POST'])
+def crea_post():
+    if request.method == 'GET':
+        return render_template("CreatePost.html")
+    if request.method == 'POST':
+
+        titolo = request.form["titolo"]
+        descrizione = request.form["descrizione"]
+        print("\n" + titolo +"\n\n")
+        print(descrizione)
+        email = session["email"]
+        hidden = session["citta"]
+        creazione_post(titolo, descrizione, email)
+
+        return redirect(url_for("gu2.post"))
+
+
+

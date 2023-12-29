@@ -87,3 +87,13 @@ def ricerca_alloggio(citta):
         alloggi.append(alloggio)
 
     return alloggi
+
+def ricerca_post_studente(value):
+    dao = PostDAO()
+    posts = dao.ricerca_post(value)
+    return posts
+
+def creazione_post(titolo, descrizione, email):
+    dao = PostDAO()
+    post = Post(titolo=titolo, descrizione=descrizione, email=email)
+    dao.createPost(post=post)

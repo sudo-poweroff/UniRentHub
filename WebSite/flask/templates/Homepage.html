@@ -4,29 +4,56 @@
 {% block style %}
     <style>
 
-        .esplora-block {
-            width: 1440px;
-            height: 500px;
-            background-color: #688d51;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-        }
+/* Stile di base per il blocco "esplora" */
+.esplora-block {
+    width: 100%;
+    max-width: 100%; /* Limita la larghezza massima al 90% della larghezza dello schermo */
+    height: 500px;
+    background-color: #688d51;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 20px; /* Aggiungi spaziatura interna per contenuto */
+    box-sizing: border-box; /* Evita che il padding influenzi la larghezza totale */
+}
 
-        .esplora-text {
-            font-size: 66px;
-            font-weight: bolder;
-            text-align: center;
-            margin-bottom: 60px;
-        }
+.esplora-text {
+    font-size: 4vw; /* Utilizza la dimensione del testo in termini di viewport width */
+    font-weight: bolder;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .sottotesto {
-            font-size: 30px;
-            text-align: center;
-            margin-top: -70px;
-        }
+.sottotesto {
+    font-size: 2vw; /* Utilizza la dimensione del testo in termini di viewport width */
+    text-align: center;
+    margin-top: -20px;
+}
+
+
+/* Media query per dimensioni dello schermo più piccole */
+@media screen and (max-width: 767px) {
+    .form-control {
+        width: 100%; /* Larghezza massima del 100% su schermi più piccoli */
+        max-width: none; /* Rimuove la larghezza massima */
+    }
+
+    #nutton{
+        margin-top: 20px;
+    }
+    .esplora-text {
+        font-size: 7vw; /* Aumenta la dimensione del testo su schermi più piccoli */
+        margin-bottom: 10px; /* Modifica margine per migliorare la disposizione */
+    }
+
+    .sottotesto {
+        font-size: 4vw; /* Aumenta la dimensione del testo su schermi più piccoli */
+        margin-top: -10px; /* Modifica margine per migliorare la disposizione */
+    }
+}
+
     </style>
 
 {% endblock %}
@@ -46,8 +73,8 @@
     <div class="sottotesto">dove il tuo percorso di studio si fonde con la tua casa ideale</div>
           <br>
           <form class="form-inline" action="/search" method="post">
-    <input class="form-control mr-sm-2" type="search" name="citta" placeholder="Vorrei studiare a..." aria-label="Search" style="width:400px">
-    <button type="submit" class="btn btn-success" style="background-color: #688d51; border: 2px solid #fff;"
+    <input id="search" class="form-control mr-sm-2" type="search" name="citta" placeholder="Vorrei studiare a..." aria-label="Search" >
+    <button id="nutton" type="submit" class="btn btn-success" style="background-color: #688d51; border: 2px solid #fff;"
         onmouseover="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#fff';"
         onmouseout="this.style.backgroundColor='#688d51'; this.style.borderColor='#fff';"
         onmousedown="this.style.backgroundColor='#688d51'; this.style.borderColor='#fff';"

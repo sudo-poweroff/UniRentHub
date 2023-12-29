@@ -20,3 +20,27 @@ class PostDAO:
         )
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def ricerca_post(self, parola_chiave):
+        query = """
+            SELECT *
+            FROM post
+            WHERE descrizione LIKE %s
+        """
+        values = ('%' + parola_chiave + '%',)
+
+        self.__cursor.execute(query, values)
+        risultati = self.__cursor.fetchall()
+
+        posts = []
+
+        for row in risultati:
+            post = Post(
+                titolo= row[1],
+                descrizione= row[2],
+                email=row[3]
+            )
+            posts.append(post)
+        return posts
+
+

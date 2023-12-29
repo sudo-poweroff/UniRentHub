@@ -57,10 +57,14 @@ def accessoU():
         password = request.form["password"]
 
         user = get_cliente_by_email_password(email, password)
-        uni = cerca_uni(email)
 
         if user:  # Se l'autenticazione ha successo
             session.permanent = True
+
+            if user.getTipo() == "Studente":
+                uni = cerca_uni(email)
+                session["universita"] = uni
+
             nomecliente = user.getNome()
             cognomecliente = user.getCognome()
             mailcliente = user.getEmail()
@@ -78,7 +82,6 @@ def accessoU():
             session["carta"] = numcarta
             session["scadenza"] = scadenza
             session["cvv"] = cvv
-            session["universita"] = uni
 
             return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
@@ -216,3 +219,12 @@ def modifica():
         session["cvv"] = cvv
         session["universita"] = denominazione
     return redirect(url_for('gu.userpage'))
+
+
+@gu.route("/servizi")
+def servizi():
+    return render_template("Servizi.html")
+
+@gu.route("/community")
+def community():
+    return render_template("Community.html")

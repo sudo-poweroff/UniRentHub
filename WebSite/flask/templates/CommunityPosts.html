@@ -16,35 +16,35 @@
 
       <div class="container marketing">
 
-          <h1 class="mb-1" style="margin-top: 15px;"><b>Thread riguardo Politecnico di Scampia</b></h1> <!-- VA PASSATA L'UNIVERSITÀ -->
+          <h1 class="mb-1" style="margin-top: 15px;"><b>Thread riguardo {{hidden}}</b></h1> <!-- VA PASSATA L'UNIVERSITÀ -->
           <h6 class="mb-0" style="margin-top: 20px;"><span style="margin-left: 3px;"></span>Sei interessato a pubblicato in questo Thread?</h6>
 
-          <a href="CreatePost.html" class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; display: inline-block;">
+          <a href="/community_crea_post" class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; display: inline-block;">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sticky-fill" viewBox="0 0 16 16">
         <path d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1zm6 8.5a1 1 0 0 1 1-1h4.396a.25.25 0 0 1 .177.427l-5.146 5.146a.25.25 0 0 1-.427-.177z"></path>
         </svg>
         New Post
         </a>
 
-
+{% for post in posts %}
           <hr class="featurette-divider">
 
           <!--POSTS START -->
 
          <div class="card" style="width: 1000px; margin-left: 50px">
           <div class="card-header">
-            Iliano Fasolino
+              {{post.get_email()}}
           </div>
           <div class="card-body" style="font-size: 24px;">
             <a href="#" class="card-link" style="color: black !important;">
-                <h5 class="card-title">Coinquilino per monolocale in zona Scampia</h5>
+                <h5 class="card-title">{{post.get_titolo()}}</h5>
                 </a>
-            <p class="card-text" style="font-size: 19px;">Salve a tutti, cerco un coinquilino con cui condividere un monolocale abusivo occupato in zona Case Celesti a Scampia, mi sono trasferito da poco per la magistrale in Ingegneria Aereospaziale, <br> per ogni info contattatemi.</p>
+            <p class="card-text" style="font-size: 19px;">{{ post.get_descrizione() }}</p>
             <a href="#" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48 !important;">Contatta</a>
           </div>
         </div>
 
-
+{% endfor %}
 
 
         </div>

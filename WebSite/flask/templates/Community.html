@@ -2,7 +2,22 @@
 {% block title %} Homepage {% endblock %}
 
 {% block style %}
+<style>
 
+    /* Aggiungi questo stile per rimuovere i bordi dal pulsante */
+    form button {
+        border: none;
+        padding: 0;
+        background: none;
+        cursor: pointer;
+    }
+
+    /* Aggiungi questo stile per evidenziare il pulsante al passaggio del mouse */
+    form button:hover {
+        opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
+    }
+
+</style>
 {% endblock %}
 
 
@@ -11,7 +26,7 @@
     <h1>{{ tipo_utente }}</h1>
 
 
-<div style="height: 2800px">
+<div style="height: 2800px; margin-top: 150px">
 
 
       <div class="container marketing">
@@ -21,7 +36,11 @@
          <div class="row row-cols-1 row-cols-md-3 g-4">
           <div class="col">
             <div class="card h-100">
-              <img src="..." class="card-img-top" alt="...">
+                <form method="post" action="/community_post">
+                <button type="submit" value="Federico II" name="button">
+                    <img src="../static/img/FedericoII.jpeg" class="card-img-top" alt="" >
+                </button>
+                </form>
               <div class="card-body">
                 <a href="#" class="card-link" style="color: black !important;">
                 <h5 class="card-title">Federico II</h5>
@@ -35,9 +54,13 @@
           </div>
           <div class="col">
             <div class="card h-100">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <a href="#" class="card-link" style="color: black !important;">
+                <form method="post" action="/community_post">
+                <button name="button" type="submit" value="Milano">
+                    <img src="../static/img/Milano.jpg" class="card-img-top" alt="...">
+                </button>
+                    </form>
+                <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;" data-hidden="Milano">
                 <h5 class="card-title">Politecnico di Milano</h5>
                 </a>
                 <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -49,7 +72,11 @@
           </div>
           <div class="col">
             <div class="card h-100">
-              <img src="..." class="card-img-top" alt="...">
+            <form method="post" action="/community_post">
+                <button type="submit" value="Roma Tre" name="button">
+                    <img src="../static/img/Roma-Tre_3.jpg" class="card-img-top" alt="...">
+                </button>
+            </form>
               <div class="card-body">
                 <a href="#" class="card-link" style="color: black !important;">
                 <h5 class="card-title">Università Roma Tre</h5>
@@ -68,7 +95,11 @@
           <div class="row row-cols-1 row-cols-md-3 g-4">
           <div class="col">
             <div class="card h-100">
-              <img src="..." class="card-img-top" alt="...">
+                <form method="post" action="/community_post">
+                <button type="submit" name="button" value="Unisa">
+                     <img src="../static/img/unisa_venue.jpg" class="card-img-top" alt="...">
+                </button>
+                </form>
               <div class="card-body">
                 <a href="#" class="card-link" style="color: black !important;">
                 <h5 class="card-title">Università degli Studi di Salerno</h5>
@@ -82,8 +113,12 @@
           </div>
           <div class="col">
             <div class="card h-100">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
+            <form method="post" action="/community_post">
+            <button type="submit" name="button" value="Sapienza">
+                <img src="../static/img/Sapienza.jpg" class="card-img-top" alt="...">
+            </button>
+            </form>
+            <div class="card-body">
                 <a href="#" class="card-link" style="color: black !important;">
                 <h5 class="card-title">La Sapienza</h5>
                 </a>
@@ -97,7 +132,9 @@
 
         </div>
 
-
+        <form>
+            <input type="hidden" value="">
+        </form>
 
 
         </div>
