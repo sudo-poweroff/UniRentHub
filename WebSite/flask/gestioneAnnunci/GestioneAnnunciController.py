@@ -135,7 +135,7 @@ def homechecker():
         else:
             return 'Invalid data received for id_alloggio', 400
 
-    else:
+    if request.method == 'GET':
         dao = AlloggioDAO()
         alloggi = dao.homecheck()
         immagini = []

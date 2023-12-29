@@ -131,7 +131,10 @@ def reg():
             session["email"] = maildip
             session["password"] = pwddip
             session["tipo"] = tipodip
-            return render_template("admin.html")
+            if dipendente.getTipo() == "Admin":
+                return redirect(url_for('gu.registra_homechecker'))
+            elif dipendente.getTipo() == "Homechecker":
+                return redirect(url_for('gu2.homechecker'))
         else:
             session["messaggio"] = "Credenziali errate"
     return render_template("AccessoAdmin.html")
