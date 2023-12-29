@@ -9,7 +9,7 @@ CREATE TABLE Cliente (
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     tipo_utente ENUM('Studente', 'Locatore') NOT NULL,
-    data_nascita DATE NOT NULL,
+    data_nascita DATE,
     numero_carta VARCHAR(16) CHECK(numero_carta >= 16),
     data_scadenza DATE,
     verificato BOOLEAN,

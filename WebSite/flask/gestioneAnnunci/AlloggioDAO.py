@@ -1,8 +1,8 @@
+from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 
 
-class AnnuncioDAO:
-    # ciccioègay
+class AlloggioDAO:
     def __init__(self):
         self.__gestioneConnessione = GestioneConnessione()
         self.__connection = self.__gestioneConnessione.getConnessione()
@@ -28,15 +28,44 @@ class AnnuncioDAO:
         result = self.__cursor.fetchone()
         return result
 
-    def visualizzaannuncio(self, id_alloggio):
+    def visualizzaannuncio(self, id):
         query = """
-        SELECT * FROM alloggio
-        WHERE id_alloggio = %s
+            SELECT * FROM alloggio
+            WHERE id_alloggio = %s
         """
-        values = (id_alloggio,)
+        values = (id,)  # Assicurati che i valori siano in una tupla
+        print("DAO Join")
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
-        return result
+
+        if result:
+            print("Result from query:", result)  # Aggiungi questa linea per stampare i valori ottenuti dalla query
+            alloggio = Alloggio(
+                id_alloggio=result[0],
+                tipo_alloggio=result[1],
+                disponibilita=result[2],
+                titolo=result[3],
+                mq=result[4],
+                n_camere_letto=result[5],
+                n_bagni=result[6],
+                classe_energetica=result[7],
+                arredamenti=result[8],
+                data_publicazione=result[9],
+                pannelli_solari=result[10],
+                pannelli_fotovoltaici=result[11],
+                descrizione=result[12],
+                verifica=result[13],
+                prezzo=result[14],
+                n_ospiti=result[15],
+                n_stanze=result[16],
+                tasse=result[17],
+                email_dip=result[18],
+                email_loc=result[19],
+                data_verifica=result[20]
+            )
+            return alloggio
+        else:
+            return None
 
     def visualizzaservizi(self, id_alloggio):
         query = """
@@ -47,7 +76,9 @@ class AnnuncioDAO:
         values = (id_alloggio,)
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchall()
+
         return result
+
 
     def visualizzaimmagini(self, id_alloggio):
         query = """
@@ -111,4 +142,3 @@ class AnnuncioDAO:
         values = (id_alloggio, indirizzo, cap, citta, provincia, civico)
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchall()
-#aa

@@ -158,10 +158,13 @@ INSERT INTO Messaggio (email, id_chat, contenuto) VALUES
 -- Popolamento della tabella Alloggio
 INSERT INTO Alloggio (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica) VALUES
 ('Camera', TRUE, 'Camera singola in centro', 20, 1, 1, 'A', TRUE, '2023-01-10', TRUE, FALSE, 'Bellissima camera in pieno centro della città', TRUE, 50.00, 1, 1, 22, 'alexdeluca@gmail.com', 'kekkamancini@gmail.com', '2023-01-15'),
-('Monolocale', TRUE, 'Monolocale moderno', 40, 1, 1, 'B', TRUE, '2023-01-12', FALSE, TRUE, 'Monolocale con tutti i comfort', FALSE, 80.00, 2, 2, 22, 'alexdeluca@gmail.com', 'marcorossi@gmail.com', '2023-01-20'),
-('Stanza condivisa', TRUE, 'Stanza condivisa per studenti', 30, 2, 1, 'C', TRUE, '2023-02-01', FALSE, TRUE, 'Stanza condivisa in zona universitaria', FALSE, 40.00, 2, 2, 22, 'alessandramaione@gmail.com', 'sofybianchi@gmail.com', '2023-02-10'),
-('Villa', TRUE, 'Villa con piscina', 200, 4, 3, 'A+', TRUE, '2023-02-15', TRUE, TRUE, 'Villa di lusso con vista panoramica', FALSE, 300.00, 6, 5, 22, 'alessandramaione@gmail.com', 'lucaambruoso@gmail.com', '2023-03-01'),
-('Bilocale', TRUE, 'Bilocale vicino al campus', 50, 1, 1, 'B', TRUE, '2023-03-01', FALSE, FALSE, 'Bilocale ideale per studenti', TRUE, 60.00, 2, 2, 22, 'alexdeluca@gmail.com', 'giogioespo@gmail.com', '2023-03-10');
+('Monolocale', TRUE, 'Monolocale moderno', 40, 1, 1, 'B', TRUE, '2023-01-12', FALSE, TRUE, 'Monolocale con tutti i comfort', FALSE, 80.00, 2, 2, 22, 'alexdeluca@gmail.com', 'marcorossi@gmail.com', NULL),
+('Stanza condivisa', TRUE, 'Stanza condivisa per studenti', 30, 2, 1, 'C', TRUE, '2023-02-01', FALSE, TRUE, 'Stanza condivisa in zona universitaria', FALSE, 40.00, 2, 2, 22, 'alessandramaione@gmail.com', 'sofybianchi@gmail.com', NULL),
+('Villa', TRUE, 'Villa con piscina', 200, 4, 3, 'A+', TRUE, '2023-02-15', TRUE, TRUE, 'Villa di lusso con vista panoramica', FALSE, 300.00, 6, 5, 22, 'alessandramaione@gmail.com', 'lucaambruoso@gmail.com', NULL),
+('Bilocale', TRUE, 'Bilocale vicino al campus', 50, 1, 1, 'B', TRUE, '2023-03-01', FALSE, FALSE, 'Bilocale ideale per studenti', TRUE, 60.00, 2, 2, 22, 'alexdeluca@gmail.com', 'giogioespo@gmail.com', '2023-03-10'),
+('Monolocale', TRUE, 'Monolocale a Napoli', 40, 1, 1, 'B', TRUE, '2023-12-01', FALSE, FALSE, 'Monolocale nella provincia di Napoli adatto per uno studente universitario', FALSE, 500.00, 2, 2, 22, 'stefdecaro@gmail.com', 'marticosta@gmail.com', NULL),
+('Trilocale', TRUE, 'Trilocale in affitto vicino "La Sapienza"', 25, 2, 1, 'C', TRUE, '2023-10-09', FALSE, FALSE, 'Monolocale nei pressi dell\'università di Roma La Sapienza, arredata e perfetta per un gruppo di studenti universitari.', TRUE, 1100.00, 3, 4, 22, 'mariomuratore@gmail.com', 'chiararusso@gmail.com', '2023-11-22'),
+('Bilocale', TRUE, 'Bilocale nei pressi dell\'università di Fisciano', 20, 2, 1, 'B', TRUE, '2023-10-10', FALSE, FALSE, 'Bilocale arredato e confortevole e vicino al campus.', TRUE, 450.00, 3, 3, 22, 'alessandramaione@gmail.com', 'andreaconti@gmail.com', '2023-10-29');
 
 -- Popolamento della tabella Indirizzo
 INSERT INTO Indirizzo (id_alloggio, via, cap, civico, citta, provincia) VALUES
@@ -169,7 +172,10 @@ INSERT INTO Indirizzo (id_alloggio, via, cap, civico, citta, provincia) VALUES
 (2, 'Via Moderna', 56789, '34B', 'Milano', 'MI'),
 (3, 'Via Universitaria', 34567, '45', 'Roma', 'RM'),
 (4, 'Via Panoramica', 10123, '78', 'Napoli', 'NA'),
-(5, 'Via Campus', 54321, '56', 'Milano', 'MI');
+(5, 'Via Campus', 54321, '56', 'Milano', 'MI'),
+(6, 'Via San Giuliano', '75483', '22', 'Napoli', 'NA'),
+(7, 'Via Francesco Crispi', '47391', '34', 'Roma', 'RM'),
+(8, 'Via Alcide De Gasperi', '56373', '10', 'Fisciano', 'SA');
 
 -- Popolamento della tabella Immagine
 INSERT INTO Immagine (id_alloggio, path) VALUES
@@ -205,26 +211,26 @@ INSERT INTO Recensione (id_alloggio, email, titolo, voto, descrizione, data_rece
 
 -- Popolamento della tabella Servizi
 INSERT INTO Servizi (descrizione) VALUES
-('Wi-Fi'), 
-('TV'), 
-('Parcheggio'), 
-('Giardino'), 
-('Cucina attrezzata'), 
-('Utensili per la pulizia'), 
-('Utensili per la cucina'), 
-('Forno'), 
-('Lavatrice'), 
-('Lavastoviglie'), 
-('Asciugatrice'), 
-('Riscaldamento centralizzato'), 
-('Aria condizionata'), 
-('Armadio'), 
-('Cassettiera'), 
-('Scrivania'), 
-('Letto'), 
-('Ascensore'), 
-('Piscina'), 
-('Balcone con vista panoramica'); 
+('Wi-Fi'),
+('TV'),
+('Parcheggio'),
+('Giardino'),
+('Cucina attrezzata'),
+('Utensili per la pulizia'),
+('Utensili per la cucina'),
+('Forno'),
+('Lavatrice'),
+('Lavastoviglie'),
+('Asciugatrice'),
+('Riscaldamento centralizzato'),
+('Aria condizionata'),
+('Armadio'),
+('Cassettiera'),
+('Scrivania'),
+('Letto'),
+('Ascensore'),
+('Piscina'),
+('Balcone con vista panoramica');
 
 -- Popolamento della tabella Possedimento
 INSERT INTO Possedimento (id_servizio, id_alloggio) VALUES
@@ -249,6 +255,11 @@ INSERT INTO Possedimento (id_servizio, id_alloggio) VALUES
 (15, 2),
 (16, 2),
 (17, 2),
+(1, 3),
+(14, 3),
+(15, 3),
+(16, 3),
+(17, 3),
 (1, 4),
 (2, 4),
 (3, 4),
@@ -278,4 +289,30 @@ INSERT INTO Possedimento (id_servizio, id_alloggio) VALUES
 (14, 5),
 (15, 5),
 (16, 5),
-(17, 5);
+(17, 5),
+(1, 6),
+(12, 6),
+(13, 6),
+(15, 6),
+(16, 6),
+(17, 6),
+(1, 7),
+(2, 7),
+(3, 7),
+(5, 7),
+(7, 7),
+(9, 7),
+(12, 7),
+(13, 7),
+(14, 7),
+(16, 7),
+(17, 7),
+(1, 8),
+(2, 8),
+(5, 8),
+(7, 8),
+(8, 8),
+(12, 8),
+(13, 8),
+(16, 8),
+(17, 8);

@@ -6,8 +6,9 @@
 </head>
 <body>
 
-<h1>Bentornato {{email}}</h1>
-<h1>{{ descrizione }}</h1>
+<h1> {% for alloggio in alloggi %}</h1>
+<h1>{{ alloggio.get_titolo() }}</h1>
+{% endfor %}
 
 </body>
 </html>
