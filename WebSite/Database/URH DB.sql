@@ -9,9 +9,10 @@ CREATE TABLE Cliente (
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     tipo_utente ENUM('Studente', 'Locatore') NOT NULL,
-    data_nascita DATE,
+    data_nascita DATE NOT NULL,
     numero_carta VARCHAR(16) CHECK(numero_carta >= 16),
-    data_scadenza DATE,
+    mese_scadenza INT NOT NULL,
+    anno_scadenza INT NOT NULL,
     verificato BOOLEAN,
     password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL
 );
@@ -60,7 +61,7 @@ CREATE TABLE Segnalazione (
 
 -- Creazione della tabella Università
 CREATE TABLE Università (
-    denominazione ENUM('Federico II', 'Politecnico di Milano', 'Università Roma Tre', 'Università degli Studi di Salerno', 'La Sapienza') PRIMARY KEY,
+    denominazione ENUM('Università di Napoli Federico II', 'Politecnico di Milano - Sede Leonardo', 'Università Roma Tre', 'Università degli Studi di Salerno', 'Università La Sapienza') PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     indirizzo VARCHAR(255) NOT NULL
 );
@@ -68,7 +69,7 @@ CREATE TABLE Università (
 
 -- Creazione della tabella Iscrizione
 CREATE TABLE Iscrizione (
-    denominazione ENUM('Federico II', 'Politecnico di Milano', 'Università Roma Tre', 'Università degli Studi di Salerno', 'La Sapienza'),
+    denominazione ENUM('Università di Napoli Federico II', 'Politecnico di Milano - Sede Leonardo', 'Università Roma Tre', 'Università degli Studi di Salerno', 'Università La Sapienza'),
     email VARCHAR(255),
     FOREIGN KEY (denominazione) REFERENCES Università(denominazione) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (email) REFERENCES Cliente(email) ON DELETE CASCADE ON UPDATE CASCADE
@@ -153,7 +154,8 @@ CREATE TABLE Affittare (
     data_inizio DATE NOT NULL,
     data_fine DATE NOT NULL,
     numero_carta VARCHAR(16) CHECK(numero_carta >= 16) NOT NULL,
-    data_scadenza DATE NOT NULL,
+    mese_scadenza INT,
+    anno_scadenza INT,
     prezzo DOUBLE DEFAULT 0 CHECK(prezzo >= 0) NOT NULL,
     FOREIGN KEY (id_alloggio) REFERENCES Alloggio(id_alloggio) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (email) REFERENCES Cliente(email) ON DELETE CASCADE ON UPDATE CASCADE
