@@ -2,10 +2,8 @@
 {% block title %} Homepage {% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <style>
-        #mappa { height: 550px; }
-    </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
 {% endblock %}
 
 
@@ -118,40 +116,38 @@
                 {{ indirizzo.get_cap() }}
           </p>
           <br>
-          <div id="mappa"></div>
-
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<div id="mappa" style="height: 400px;">
     <script>
-        var address = "{{ indirizzo.get_via() }}, {{ indirizzo.get_civico() }}, {{ indirizzo.get_citta() }}, {{ indirizzo.get_provincia() }}, {{ indirizzo.get_cap() }}";
+    var mapElement = document.getElementById('mappa');
+    var address = `{{ indirizzo.get_via() }}, {{ indirizzo.get_civico() }}, {{ indirizzo.get_citta() }}, {{ indirizzo.get_provincia() }}, {{ indirizzo.get_cap() }}`;
 
-        // Utilizza Nominatim per ottenere le coordinate geografiche dall'indirizzo
-        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + address)
-            .then(response => response.json())
-            .then(data => {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + address)
+        .then(response => response.json())
+        .then(data => {
+            var lat = data[0].lat;
+            var lon = data[0].lon;
 
-                // Inizializza la mappa Leaflet centrata sulle coordinate ottenute
-                var mappa = L.map('mappa').setView([lat, lon], 16);
+            var mappa = L.map(mapElement).setView([lat, lon], 16);
 
-                // Aggiungi la mappa OSM come layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(mappa);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(mappa);
 
-                // Aggiungi un marker alla posizione
-                L.marker([lat, lon]).addTo(mappa).bindPopup(address).openPopup();
-            })
-            .catch(error => {
-                console.log('Errore:', error);
-            });
-    </script>
+            L.marker([lat, lon]).addTo(mappa).bindPopup(address).openPopup();
+        })
+        .catch(error => {
+            console.log('Errore:', error);
+        });
+</script>
+
           <!-- FINE MAPPA -->
           <hr class="featurette-divider">
       </div><!-- /.container -->
 
-
+      </div>
 </div>
+
 
 
     {% include "footerNew.html" %}
