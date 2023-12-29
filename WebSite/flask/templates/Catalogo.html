@@ -1,50 +1,185 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+{% block title %} Risultati Ricerca {% endblock %}
+
+{% block style %}
     <title>Catalogo</title>
     <!-- Includi il link al CSS di Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Stile personalizzato per il documento -->
     <style>
+         .title {
+            text-align: center;
+            margin: auto;
+            position: absolute;
+             padding-bottom: 30px;
+            top: 80px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+          .custom-btn-color-homechecker {
+            background-color: #556b2f;
+            color: white;
+            /* Aggiungi altre proprietà per personalizzare ulteriormente il pulsante */
+        }
+
+        /* Stato al passaggio del mouse */
+        .custom-btn-color-homechecker:hover {
+            background-color: #556b2f; /* Mantieni il colore verde */
+            filter: brightness(110%); /* Aumenta leggermente la luminosità */
+            box-shadow: none; /* Rimuovi l'ombra */
+        }
+
+        /* Stato al click */
+        .custom-btn-color-homechecker:active {
+            box-shadow: none; /* Rimuovi l'ombra al click */
+        }
+
+        .custom-btn-color-homechecker {
+            background-color: #556b2f;
+            color: white;
+            /* Aggiungi altre proprietà per personalizzare ulteriormente il pulsante */
+        }
+
+
+
+
+
         .card {
+            display: flex;
+            flex-direction: column;
             width: 20rem; /* Larghezza della card */
             margin-bottom: 20px; /* Spazio tra le card */
-            height: 100%; /* Altezza fissa per tutte le card */
+            margin-top: 30px;
+            /* Altezza leggermente maggiore */
+            height: 25rem; /* Altezza fissa per tutte le card */
+            border-radius: 20px; /* Arrotonda i bordi delle cards */
+            cursor: pointer; /* Mostra il cursore come puntatore al passaggio */
+            transition: transform 0.3s ease-in-out; /* Effetto transizione */
+            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
+
+
+
+
+
+        }
+
+
+        .card:hover {
+            transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
         }
 
         .card-body {
+            margin-top: auto;
+            position: relative; /* Posizione relativa per consentire sovrapposizioni */
             height: 100%; /* Altezza fissa per il corpo della card */
             display: flex; /* Imposta il display a flex */
             flex-direction: column; /* Imposta la direzione della flessione a colonna */
+            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
         }
 
-        .card-title {
-            flex-grow: 1; /* Fai crescere il titolo per occupare lo spazio rimanente */
+
+        .card-text {
+            position: relative; /* Posizione relativa per consentire z-index */
+            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
+            color: #000000; /* Colore del testo */
         }
 
-        .card-text,
-        .card-link {
-            margin-top: auto; /* Sposta il testo e il link in basso */
+        .card-img-overlay {
+            position: absolute; /* Posiziona l'elemento in modo assoluto */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-size: cover; /* Copertura completa dell'immagine */
+            opacity: 0.6; /* Opacità per l'immagine di sfondo */
+            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
         }
-        .title {
-            text-align: center;
-            margin-bottom: 20px;
+
+.cards-row {
+        margin-top: 30px; /* Aggiungi un margine superiore */
+    }  .card {
+            display: flex;
+            flex-direction: column;
+            width: 20rem; /* Larghezza della card */
+            margin-bottom: 20px; /* Spazio tra le card */
+            margin-top: 30px;
+            /* Altezza leggermente maggiore */
+            height: 25rem; /* Altezza fissa per tutte le card */
+            border-radius: 20px; /* Arrotonda i bordi delle cards */
+            cursor: pointer; /* Mostra il cursore come puntatore al passaggio */
+            transition: transform 0.3s ease-in-out; /* Effetto transizione */
+            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
+
+
+
+
+
         }
+
+
+        .card:hover {
+            transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
+        }
+
+        .card-body {
+            margin-top: auto;
+            position: relative; /* Posizione relativa per consentire sovrapposizioni */
+            height: 100%; /* Altezza fissa per il corpo della card */
+            display: flex; /* Imposta il display a flex */
+            flex-direction: column; /* Imposta la direzione della flessione a colonna */
+            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
+        }
+
+
+        .card-text {
+            position: relative; /* Posizione relativa per consentire z-index */
+            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
+            color: #000000; /* Colore del testo */
+        }
+
+        .card-img-overlay {
+            position: absolute; /* Posiziona l'elemento in modo assoluto */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-size: cover; /* Copertura completa dell'immagine */
+            opacity: 0.6; /* Opacità per l'immagine di sfondo */
+            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
+        }
+
+.cards-row {
+        margin-top: 30px; /* Aggiungi un margine superiore */
+    }
+
     </style>
-</head>
+{% endblock %}
+
+{% block content %}
+    {% include "header_admin.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+
+
 <body>
-    <h1 class="title"> Catalogo</h1>
-    <div class="container">
-        <div class="row">
+     <div class="container">
+         <div class="row justify-content-center mt-5">
+            <h1 class="title">Catalogo</h1>
+
+
             {% for alloggio in alloggi %}
                 <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img class="card-img-top" src="..." alt="Card image cap">
+                    <!-- Tutto il contenuto della card viene avvolto in un link -->
+                    <div class="card" onclick="redirectTo('{{ alloggio[0] }}')">
+                        <img class="card-img-top card-img-overlay" src="path_to_your_image.jpg" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">{{ alloggio[3] }}</h5>
+                            <h5 class="card-title"style="margin-top: auto; text-align: center;margin-bottom: 20px">{{ alloggio[3] }}</h5>
                             <p class="card-text">{{ alloggio[12] }}</p>
-                            <a href="/Annuncio.html?id={{ alloggio[0] }}" class="card-link">Dettagli</a>
+                            <!-- Il resto del contenuto della card -->
                         </div>
                     </div>
                 </div>
@@ -53,9 +188,25 @@
                 {% endif %}
             {% endfor %}
         </div>
-    </div>
+     </div>
+
+        <button type="button" class="btn custom-btn-color-homechecker" style="position: fixed; bottom: 20px; right: 20px; max-width: 200px; padding: 15px 15px; border-radius: 20px;" onclick="scrollToTop()">
+        Torna Su
+    </button>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
     <!-- Includi il JavaScript di Bootstrap (opzionale) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function redirectTo(id) {
+            window.location.href = '/Alloggio.html?id=' + id;
+        }
+    </script>
 </body>
-</html>
+{% endblock %}
+</div>

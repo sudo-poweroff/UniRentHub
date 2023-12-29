@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+
+      <div class="container marketing">
+
+          <!--CARDS START -->
+
+         <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Federico II</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 3 min fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Politecnico di Milano</h5>
+                </a>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 1 ora fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Università Roma Tre</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 30 min fa</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <br>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Università degli Studi di Salerno</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 5 ore fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">La Sapienza</h5>
+                </a>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 22 ore fa</small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+        </div>
+
+          <!--METTI QUI ALTRE -->
+        <!--CARDS FINISH -->
+
+          <hr class="featurette-divider">
+
+
+      </div><!-- /.container -->
+
+
+</div>
+
+
+    {% include "footerNew.html" %}
+{% endblock %}

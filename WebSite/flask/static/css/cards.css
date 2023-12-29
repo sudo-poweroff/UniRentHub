@@ -1,0 +1,59 @@
+  .card {
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            width: 20rem; /* Larghezza della card */
+            margin-bottom: 20px; /* Spazio tra le card */
+            margin-top: 30px;
+            /* Altezza leggermente maggiore */
+            height: 25rem; /* Altezza fissa per tutte le card */
+            border-radius: 20px; /* Arrotonda i bordi delle cards */
+
+            transition: transform 0.3s ease-in-out; /* Effetto transizione */
+            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
+
+
+
+
+
+        }
+
+
+
+
+        .card-body {
+            margin-top: auto;
+            position: relative; /* Posizione relativa per consentire sovrapposizioni */
+            height: 100%; /* Altezza fissa per il corpo della card */
+            display: flex; /* Imposta il display a flex */
+            flex-direction: column; /* Imposta la direzione della flessione a colonna */
+            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
+        }
+
+
+        .card-text {
+            position: relative; /* Posizione relativa per consentire z-index */
+            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
+            color: #000000; /* Colore del testo */
+        }
+
+        .card-img-overlay {
+            position: absolute; /* Posiziona l'elemento in modo assoluto */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-size: cover; /* Copertura completa dell'immagine */
+            opacity: 0.6; /* Opacità per l'immagine di sfondo */
+            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
+        }
+
+.cards-row {
+        margin-top: 30px; /* Aggiungi un margine superiore */
+    }
+ .card-body h5:hover {
+    text-decoration: underline;
+}
+.cards-wrapper {
+    padding-top: 20px;
+}

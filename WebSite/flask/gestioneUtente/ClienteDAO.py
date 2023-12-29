@@ -1,6 +1,6 @@
 from .Cliente import Cliente
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
-
+from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 
 class ClienteDAO:
 
@@ -103,5 +103,86 @@ class ClienteDAO:
         else:
             return None
 
+    def universitabystudente(self, email):
+        query ="""
+            SELECT iscrizione.denominazione
+            FROM iscrizione
+            WHERE email = %s
+        """
+
+        values = (email,)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            return result
+        else:
+            return None
+
+    def cercacaseproprietario(self, email):
+        query="""
+        SELECT * FROM alloggio
+        WHERE email_loc = %s
+        """
+        values = (email,)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchall()
+        alloggi = []
+        for r in result:
+            alloggio = Alloggio(
+                id_alloggio=r[0],
+                tipo_alloggio=r[1],
+                disponibilita=r[2],
+                titolo=r[3],
+                mq=r[4],
+                n_camere_letto=r[5],
+                n_bagni=r[6],
+                classe_energetica=r[7],
+                arredamenti=r[8],
+                data_publicazione=r[9],
+                pannelli_solari=r[10],
+                pannelli_fotovoltaici=r[11],
+                descrizione=r[12],
+                verifica=r[13],
+                prezzo=r[14],
+                n_ospiti=r[15],
+                n_stanze=r[16],
+                tasse=r[17],
+                email_dip=r[18],
+                email_loc=r[19],
+                data_verifica=r[20]
+            )
+            alloggi.append(alloggio)
+        return alloggi
+
+    def cercacasastudente(self, email, data):
+        query="""
+        SELECT id_alloggio FROM affittare
+        WHERE affittare.email = %s
+        AND data_fine > %s
+        """
+        values = (email, data)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            return result[0]
+        else:
+            return None
 
 
+
+    def aggiornaCliente(self, nome, cognome, email, password, tipo_utente, numero_carta, scadenza):
+        query = """
+                    UPDATE cliente
+                    SET nome =%s, cognome=%s, password =%s, numero_carta =%s, data_scadenza =%s
+                    WHERE email =%s
+                """
+
+        values = (nome, cognome, password, numero_carta, scadenza, email)
+
+        self.__cursor.execute(query, values)
+        self.__connection.commit()

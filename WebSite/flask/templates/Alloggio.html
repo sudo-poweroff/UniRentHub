@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+
+      <div class="container marketing">
+
+          <!-- CAROSELLO START -->
+
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+          <hr class="featurette-divider">
+          <!-- CAROSELLO FINISH -->
+
+          <!-- INIZIO DATI ANNUNCIO -->
+
+          <h1 class="mb-1"><b>{{ alloggio.get_titolo() }}</b></h1>
+          <h6 class="mb-0"><span style="margin-left: 3px;"></span> {{ indirizzo.get_citta()}}</h6>
+          <br>
+          <h5 class="mb-0">{{ alloggio.get_mq() }} m2 <span style="margin-left: 10px;"></span> | <span style="margin-left: 10px;"></span>{{ alloggio.get_n_stanze() }}<span style="margin-left: 10px;"> </span>| </h5>
+          {% if alloggio.get_verifica() == 1 %}
+          <span class="badge badge-pill badge-success" style="background-color: #5c8e48;">Verificata</span>
+          {% endif %}
+          <br>
+          <br>
+          <h4 class="mb-0"><b>{{ alloggio.get_prezzo() }}</b>€/mese</h4>
+          <br>
+          <button type="button" class="btn btn-outline-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
+                </svg>
+                Salva preferito
+              </button>
+
+          <button type="button" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48;" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"></path>
+                </svg>
+                Condividi
+              </button>
+
+
+          <br>
+          <hr class="featurette-divider">
+
+          <h3 class="mb-1"><b>Descrizione</b></h3>
+          <br>
+          <p style="font-size: 19px;">
+          {{ alloggio.get_descrizione() }}
+          </p>
+
+          <hr class="featurette-divider">
+
+          <h3 class="mb-1"><b>Servizi inclusi</b></h3>
+          <br>
+        <div class="row justify-content-between px-3">
+          {% for x in servizi %}
+          <div class="fs-4 mb-3" style="font-size: 1.3em;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#5c8e48" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"></path>
+            </svg>
+
+                  {{ x[0] }}
+          </div>
+      {% endfor %}
+        </div>
+
+          <hr class="featurette-divider">
+
+          <!-- FINE DATI ANNUNCIO -->
+
+          <!-- INIZIO MAPPA -->
+
+          <h3 class="mb-1"><b>Posizione</b></h3>
+          <br>
+          <p style="font-size: 19px;">
+              {{ indirizzo.get_via() + ", " + indirizzo.get_civico() }} <br>
+              {{ indirizzo.get_citta() + ", " + indirizzo.get_provincia() }} <br>
+                {{ indirizzo.get_cap() }}
+          </p>
+          <br><br>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<div id="mappa" style="height: 400px;">
+    <script>
+    var mapElement = document.getElementById('mappa');
+    var address = `{{ indirizzo.get_via() }}, {{ indirizzo.get_civico() }}, {{ indirizzo.get_citta() }}, {{ indirizzo.get_provincia() }}, {{ indirizzo.get_cap() }}`;
+
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + address)
+        .then(response => response.json())
+        .then(data => {
+            var lat = data[0].lat;
+            var lon = data[0].lon;
+
+            var mappa = L.map(mapElement).setView([lat, lon], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(mappa);
+
+            L.marker([lat, lon]).addTo(mappa).bindPopup(address).openPopup();
+
+            // Ottenere l'indirizzo dalla sessione e creare la mappa con il secondo indirizzo
+            var secondAddress = "{{ session['universita'] }}";
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + secondAddress)
+                .then(response => response.json())
+                .then(data => {
+                    var lat2 = data[0].lat;
+                    var lon2 = data[0].lon;
+
+                    L.marker([lat2, lon2]).addTo(mappa).bindPopup(secondAddress).openPopup();
+
+                    var line = [
+                        [lat, lon],
+                        [lat2, lon2]
+                    ];
+                    L.polyline(line, { color: 'red' }).addTo(mappa);
+                })
+                .catch(error => {
+                    console.log('Errore nel caricamento dei dati del secondo indirizzo:', error);
+                });
+        })
+        .catch(error => {
+            console.log('Errore nel caricamento dei dati del primo indirizzo:', error);
+        });
+</script>
+
+
+          <!-- FINE MAPPA -->
+          <hr class="featurette-divider">
+      </div><!-- /.container -->
+
+      </div>
+</div>
+
+
+
+    {% include "footerNew.html" %}
+{% endblock %}
