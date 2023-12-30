@@ -171,4 +171,45 @@ def crea_post():
         return redirect(url_for("gu2.post"))
 
 
+@gu2.route('/ListaPreferiti.html',methods=['GET', 'POST'])
+def lista():
+    alloggi=[]
+    for num in session['case_preferite']:
+        print(num)
+        dao = AlloggioDAO()
+        alloggio = dao.visualizzaannuncio(num)
+        alloggi.append(alloggio)
+
+    return render_template("ListaPreferiti.html",alloggi=alloggi)
+
+
+@gu2.route('/Preferiti',methods=['GET', 'POST'])
+def preferiti():
+    if 'case_preferite' not in session:
+        session['case_preferite'] = []
+    id_alloggio = request.args.get('id')
+    print("IDALLOGGIO: " + str(id_alloggio))
+
+    if id_alloggio:
+        case_preferite = session['case_preferite']
+        case_preferite.append(id_alloggio)
+        session['case_preferite'] = case_preferite
+        print("Inserito")
+
+        print("Inserito")
+    source_url = request.referrer  # Ottieni l'URL della pagina precedente
+    if source_url:
+        return redirect(source_url)
+
+
+@gu2.route('/RimuoviP',methods=['GET', 'POST'])
+def rimuovip():
+    id_alloggio = request.args.get('id')
+    if id_alloggio:
+        case_preferite = session['case_preferite']
+        case_preferite.remove(id_alloggio)
+        session['case_preferite'] = case_preferite
+    source_url = request.referrer  # Ottieni l'URL della pagina precedente
+    if source_url:
+        return redirect(source_url)
 

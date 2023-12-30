@@ -17,8 +17,11 @@
       <div class="container marketing">
 
            <h1 class="mb-1" style="margin-top: 15px;"><b>Lista Preferiti</b></h1>
+
           <h6 class="mb-0" style="margin-top: 20px;"><span style="margin-left: 3px;"></span>Ecco la tua lista degli alloggi che hai contrassegnato come preferiti.</h6>
           <br>
+          {% for alloggio in alloggi %}
+          {% if alloggio %}
           <div class="card mb-3" style="max-width: 1100px;">
         <div class="row g-0">
         <div class="col-md-4">
@@ -26,7 +29,7 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h3 class="card-title">Titolo</h3>
+            <h3 class="card-title">{{ alloggio.get_titolo() }}</h3>
             <h5 class="mb-0"><b>600</b>€/mese</h5>
               <h6 class="mb-0" style="margin-top: 10px;">70 m2 <span style="margin-left: 5px;"></span> | <span style="margin-left: 5px;"></span>2 stanze<span style="margin-left: 5px;"> </span>| </h6>
           </div>
@@ -75,6 +78,8 @@
 
       </div>
     </div>
+    {% endif %}
+      {% endfor %}
 
 
 
