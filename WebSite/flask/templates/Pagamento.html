@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+
+{% endblock %}
+}
+{% block content %}
+
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+
+      <div class="container marketing">
+
+          <div class="container">
+      <div class="py-5 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" fill="black" class="bi bi-credit-card-2-front-fill" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm0 3a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+</svg>
+
+        <h2>Completa il Pagamento</h2>
+        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      </div>
+
+      <div class="row"> <!-- PARTE DI DESTRA -->
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Il tuo alloggio</span>
+          </h4>
+          <div class="card">
+    <img class="card-img-top" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Titolo alloggio</h5>
+        <li class="list-group-item d-flex justify-content-between">
+              <span style="margin-top:7px">Check In</span>
+              <input placeholder="Select date" type="date" id="example" class="form-control" style="width: 150px">
+            </li>
+        <li class="list-group-item d-flex justify-content-between">
+              <span style="margin-top:7px">Check Out</span>
+              <input placeholder="Select date" type="date" id="example" class="form-control" style="width: 150px">
+            </li>
+
+    </div>
+    <div class="card-footer">
+      <li class="list-group-item d-flex justify-content-between">
+              <span>Totale</span>
+              <strong>€500</strong>
+            </li>
+    </div>
+  </div>
+
+
+        </div>
+          <!-- FINE PARTE DESTRA -->
+          <!-- INIZIO FORM -->
+        <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Dati utente</h4>
+          <form class="needs-validation" novalidate="" action="/modifica" METHOD="post">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">Nome</label>
+                <input type="text" name="nome" class="form-control" id="firstName" placeholder="" value="{{session["nome"] }}" required="">
+                <div class="invalid-feedback">
+                  È richiesto un nome valido.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Cognome</label>
+                <input type="text" name="cognome" class="form-control" id="lastName" placeholder="" value="{{session["cognome"] }}" required="">
+                <div class="invalid-feedback">
+                  È richiesto un cognome valido.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control" placeholder="" required="" id="email" value="{{ session["email"] }}" readonly>
+            <div class="invalid-feedback">
+            Inserisci la tua email.
+            </div>
+            </div>
+
+
+            <hr class="mb-4">
+
+            <h4 class="mb-3">Pagamento</h4>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cc-number">Numero Carta</label>
+                <input type="text" name="numeroc" class="form-control" id="cc-number" placeholder=""  maxlength="16" required="" value="{{ session["carta"] }}">
+                <div class="invalid-feedback">
+                  Numero Carta è richiesto.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="scadenza">Mese</label>
+                <select class="custom-select d-block w-100" id="mese_scadenza" required="">
+                  <option value="">Mese</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+
+                </select>
+
+                <div class="invalid-feedback">
+                  Il mese di scadenza è richiesto.
+                </div>
+              </div>
+
+                <div class="col-md-3 mb-3">
+                <label for="scadenza">Anno</label>
+                <select class="custom-select d-block w-100" id="anno_scadenza" required="">
+                  <option value="">Anno</option>
+                    <option>2024</option>
+                    <option>2025</option>
+                    <option>2026</option>
+                    <option>2027</option>
+                    <option>2028</option>
+                    <option>2029</option>
+                    <option>2030</option>
+                </select>
+
+                <div class="invalid-feedback">
+                  Il mese di scadenza è richiesto.
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label for="cc-cvv">CVV</label>
+                <input type="password" class="form-control" name="cvv" id="cc-cvv" placeholder="" maxlength="3" required="" value = "123">
+                <div class="invalid-feedback">
+                  Il CVV è richiesto.
+                </div>
+              </div>
+            </div>
+
+            <hr class="mb-4">
+            <a href="Homepage.html" class="btn btn-primary btn-lg btn-block"
+   style="background-color: #688d51; border-color: #688d51; text-decoration: none; color: white;"
+   onmouseover="this.style.backgroundColor='#6eb150'; this.style.borderColor='#6eb150';"
+   onmouseout="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
+   onmousedown="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
+   onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
+   disabled>
+    Conferma Pagamento
+</a>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+
+
+
+
+
+
+          <hr class="featurette-divider">
+
+
+
+      </div><!-- /.container -->
+
+
+</div>
+
+
+    {% include "footerNew.html" %}
+{% endblock %}
