@@ -191,12 +191,14 @@ def preferiti():
     print("IDALLOGGIO: " + str(id_alloggio))
 
     if id_alloggio:
-        case_preferite = session['case_preferite']
-        case_preferite.append(id_alloggio)
-        session['case_preferite'] = case_preferite
-        print("Inserito")
+        if id_alloggio in session['case_preferite']:
+            print("Gia inserito")
+        else:
+            case_preferite = session['case_preferite']
+            case_preferite.append(id_alloggio)
+            session['case_preferite'] = case_preferite
+            print("Inserito")
 
-        print("Inserito")
     source_url = request.referrer  # Ottieni l'URL della pagina precedente
     if source_url:
         return redirect(source_url)
