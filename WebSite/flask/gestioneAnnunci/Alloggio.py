@@ -1,8 +1,10 @@
 class Alloggio:
 
-    def __init__(self, id_alloggio, tipo_alloggio, disponibilita, titolo, mq, n_camere_letto, n_bagni, classe_energetica,
-                 arredamenti, data_publicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo,
-                 n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica):
+    def __init__(self, id_alloggio=None, tipo_alloggio=None, disponibilita=None, titolo=None, mq=None,
+                 n_camere_letto=None, n_bagni=None, classe_energetica=None, arredamenti=None,
+                 data_publicazione=None, pannelli_solari=None, pannelli_fotovoltaici=None,
+                 descrizione=None, verifica=None, prezzo=None, n_ospiti=None, n_stanze=None,
+                 tasse=None, email_dip=None, email_loc=None, data_verifica=None):
         self.__id_alloggio = id_alloggio
         self.__tipo_alloggio = tipo_alloggio
         self.__disponibilita = disponibilita

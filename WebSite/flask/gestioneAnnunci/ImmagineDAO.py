@@ -2,34 +2,22 @@ from .Immagine import Immagine
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 
 
-def convertToBinaryData(filename):
-    # Convert digital data to binary format
-    with open(filename, 'rb') as file:
-        binaryData = file.read()
-    return binaryData
-
-def write_file(data, filename):
-    # Convert binary data to proper format and write it on Hard Disk
-    with open(filename, 'wb') as file:
-        file.write(data)
-
-
 class ImmagineDAO:
+
     def __init__(self):
         self.__gestioneConnessione = GestioneConnessione()
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-    def inserisci_immagine(self, immagine):
-        query="""
+    def inserisci_immagine(self, id_immagine, id_alloggio, path):
+        directory_salvataggio = 'static/img'
+        query= """
              INSERT INTO immagine
-            (id_immagine, id_alloggio, path) VALUES (%s,%s,%s)
-        """
-        empPicture = convertToBinaryData(immagine.get_path())
-        print("VALUEEEEEE" + str(empPicture))
-        values = (
-            immagine.get_id_immagine(), immagine.get_id_alloggio(), empPicture
-        )
+            (id_immagine, id_alloggio, path) 
+            VALUES (%s,%s,%s)
+               """
+
+        values = (id_immagine, id_alloggio, path)
 
         self.__cursor.execute(query, values)
         self.__connection.commit()

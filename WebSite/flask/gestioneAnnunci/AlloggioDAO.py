@@ -1,5 +1,6 @@
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 from WebSite.flask.gestioneAnnunci.Indirizzo import Indirizzo
+from WebSite.flask.gestioneAnnunci.Servizi import Servizi
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 
 
@@ -77,9 +78,16 @@ class AlloggioDAO:
         """
         values = (id_alloggio,)
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchall()
+        results = self.__cursor.fetchall()
 
-        return result
+        servizi = []
+
+        for row in results:
+            servizio = Servizi(
+                descrizione=row[0]
+            )
+            servizi.append(servizio)
+        return servizi
 
 
     def visualizzaimmagini(self, id_alloggio):
@@ -89,14 +97,6 @@ class AlloggioDAO:
         """
         values = (id_alloggio,)
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchall()
-        return result
-
-    def visualizzaservizidisponibili(self):
-        query = """
-        SELECT descrizione FROM servizi
-        """
-        self.__cursor.execute(query)
         result = self.__cursor.fetchall()
         return result
 
@@ -156,9 +156,6 @@ class AlloggioDAO:
         self.__cursor.execute(query, (id_alloggio,))
         self.__connection.commit()
 
-
-
-
     def homecheck(self):
         query = """
                    SELECT * FROM alloggio
@@ -194,25 +191,34 @@ class AlloggioDAO:
             alloggi.append(alloggio)
         return alloggi
 
-    def visualizzaindirizzo(self, id_alloggio):
-        query = "SELECT * FROM indirizzo WHERE id_alloggio = %s"
-        values = (id_alloggio,)
+    def create_alloggio(self, alloggio):
+        query = """
+            INSERT INTO alloggio
+            (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        values = (
+            alloggio.get_tipo_alloggio(),  # tipo_alloggio
+            1,  # disponibilità
+            alloggio.get_titolo(),  # titolo
+            alloggio.get_mq(),  # mq
+            alloggio.get_n_camere_letto(),  # n_camere_letto
+            alloggio.get_n_bagni(),  # n_bagni
+            alloggio.get_classe_energetica(),  # classe_energetica
+            alloggio.get_arredamenti(),  # arredamenti
+            alloggio.get_data_publicazione(),  # data_pubblicazione
+            alloggio.get_pannelli_solari(),  # pannelli_solari
+            alloggio.get_pannelli_fotovoltaici(),  # pannelli_fotovoltaici
+            alloggio.get_descrizione(),  # descrizione
+            1,  # verifica
+            alloggio.get_prezzo(),  # prezzo
+            alloggio.get_n_ospiti(),  # n_ospiti
+            alloggio.get_n_stanze(),  # n_stanze
+            alloggio.get_tasse(),  # tasse
+            None,  # email_dip
+            alloggio.get_email_loc(),  # email_loc
+            None  # data_verifica
+        )
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchall()
-
-        if result:
-            # Assume che result contenga solo una riga
-            indirizzo = Indirizzo(
-                id_alloggio=id_alloggio,
-                via=result[0][1],
-                cap=result[0][2],
-                civico=result[0][3],
-                citta=result[0][4],
-                provincia=result[0][5]
-            )
-            print(indirizzo.get_via())
-            return indirizzo
-
-
-        
+        self.__connection.commit()
 

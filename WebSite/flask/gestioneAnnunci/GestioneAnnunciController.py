@@ -5,7 +5,12 @@ from numpy import double
 
 from .AlloggioDAO import AlloggioDAO
 from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
-    creazione_post
+    creazione_post, inserisci_immagini, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
+    visualizza_annuncio
+from .Indirizzo import Indirizzo
+from .IndirizzoDAO import IndirizzoDAO
+from .Possedimento import Possedimento
+from .ServiziDAO import ServiziDAO
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -23,80 +28,85 @@ def catalogo():
 
 @gu2.route('/Alloggio.html')
 def annuncio():
+
     dao = AlloggioDAO()
+    dao2 = ServiziDAO()
+    dao3 = IndirizzoDAO()
+
     id_alloggio = request.args.get('id')
-    alloggio = dao.visualizzaannuncio(id_alloggio)
+    alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
-    immagini = dao.visualizzaimmagini(id_alloggio)
-    indirizzo = dao.visualizzaindirizzo(id_alloggio)
+   # immagini = dao.visualizzaimmagini(id_alloggio)
+    indirizzo = dao3.visualizzaindirizzo(id_alloggio)
 
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, immagini=immagini,indirizzo=indirizzo)
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo)
 
-
-@gu2.route('/CaricaAnnuncio.html')
+@gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
-    dao = AlloggioDAO()
-    servizi = dao.visualizzaservizidisponibili()
-    return render_template("CaricaAnnuncio.html", servizi=servizi)
+    if request.method == 'GET':
+        servizi = visualizza_servizi()
+        return render_template("CaricaAnnuncio.html", servizi=servizi)
+    elif request.method == 'POST':
+        titolo = request.form.get("titolo")
+        indirizzo = request.form.get("indirizzo")
+        cap = int(request.form.get("cap", 0))
+        provincia = request.form.get("provincia")
+        citta = request.form.get("citta")
+        tipo = request.form.get("tipo")
+        descrizione = request.form.get("descrizione")
+        num_bagni = int(request.form.get("num_bagni", 0))
+        num_camere = int(request.form.get("num_camere", 0))
+        classe_energetica = request.form.get("classee")
+        num_ospiti = int(request.form.get("num_ospiti", 0))
+        metri_quadri = int(request.form.get("metri_quadri", 0))
+        prezzo = float(request.form.get("prezzo", 0.0))
+        periodo_minimo = int(request.form.get("periodo_minimo", 0))
+        pannelli_fotovoltaici = 1 if request.form.get("pannelli_fotovoltaici") else 0
+        pannelli_solari = 1 if request.form.get("pannelli_solari") else 0
+        arredamento = 1 if request.form.get("arredamento") else 0
+        civico = request.form.get("civico")
+        data = datetime.now().strftime("%Y-%m-%d")
+        mail = session.get("email")
+        servizi_selezionati = request.form.getlist('checkboxGroup')
+
+        print("titolo:" + titolo)
+        print("indirizzo:" + indirizzo)
+        print("cap:" + str(cap))
+        print("provincia:" + provincia)
+        print("citta:" + citta)
+        print("tipo:" + tipo)
+        print("descrizione:" + descrizione)
+        print("num_bagni:" + str(num_bagni))
+        print("num_camere:" + str(num_camere))
+        print("classe_energetica:" + classe_energetica)
+        print("num_ospiti:" + str(num_ospiti))
+        print("metri_quadri:" + str(metri_quadri))
+        print("prezzo:" + str(prezzo))
+        print("periodo_minimo:" + str(periodo_minimo))
+        print("pannelli_fotovoltaici:" + str(pannelli_fotovoltaici))
+        print("pannelli_solari:" + str(pannelli_solari))
+        print("arredamento:" + str(arredamento))
+        print("civico:" + civico)
+        print("data:" + data)
+        print("mail:" + mail)
+        print("servizi_selezionati:" + str(servizi_selezionati))
 
 
-@gu2.route('/Carica', methods=['POST'])
-def pubblicazione():
-    titolo = request.form.get("titolo")
-    indirizzo = request.form.get("indirizzo")
-    cap = request.form.get("cap")
-    cap = int(cap)
-    provincia = request.form.get("provincia")
-    citta = request.form.get("citta")
-    tipo = request.form.get("tipo")
-    descrizione = request.form.get("descrizione")
-    num_bagni = request.form.get("num_bagni")
-    num_bagni = int(num_bagni)
-    num_camere = request.form.get("num_camere")
-    num_camere = int(num_camere)
-    classe_energetica = request.form.get("classee")
-    num_ospiti = request.form.get("num_ospiti")
-    num_ospiti = int(num_ospiti)
-    metri_quadri = request.form.get("metri_quadri")
-    metri_quadri = int(metri_quadri)
-    prezzo = request.form.get("prezzo")
-    prezzo = double(prezzo)
-    periodo_minimo = request.form.get("periodo_minimo")
-    periodo_minimo = int(periodo_minimo)
-    pannelli_fotovoltaici = 1 if request.form.get("pannelli_fotovoltaici") else 0
-    pannelli_solari = 1 if request.form.get("pannelli_solari") else 0
-    arredamento = 1 if request.form.get("arredamento") else 0
-    civico = request.form.get("civico")
-    data = datetime.now().strftime("%Y-%m-%d")
-    mail = session["email"]
-    servizi_selezionati = request.form.get("servizi_selezionati")
-    servizi_selezionati_lista = servizi_selezionati.split(',')
-    #pubblicazione_alloggio(titolo, indirizzo, cap, provincia, citta, tipo, descrizione, civico,
-     #                      num_bagni, num_camere, classe_energetica, num_ospiti,
-      #                     metri_quadri, prezzo, periodo_minimo, arredamento,
-       #                    pannelli_fotovoltaici, pannelli_solari, servizi_selezionati_lista, data,mail)
-    #return render_template("Homepage.html")
-    return render_template("boh.html",
-     titolo=titolo,
-     indirizzo=indirizzo,
-     cap=cap,
-     provincia=provincia,
-     citta=citta,
-     tipo=tipo,
-     descrizione=descrizione,
-     num_bagni=num_bagni,
-     num_camere=num_camere,
-     classe_energetica=classe_energetica,
-     num_ospiti=num_ospiti,
-     metri_quadri=metri_quadri,
-     prezzo=prezzo,
-     periodo_minimo=periodo_minimo,
-      arredamento=arredamento,
-       pannelli_fotovoltaici=pannelli_fotovoltaici,
-      pannelli_solari=pannelli_solari,
-       servizi_selezionati=servizi_selezionati_lista,
-     data=data
-     )
+        alloggio = pubblicazione_alloggio(tipo_alloggio=tipo, titolo=titolo, mq=metri_quadri, n_camere_letto= num_camere, n_bagni=num_bagni, classe_energetica=classe_energetica,
+                               arredamenti=arredamento, data_pubblicazione=data, pannelli_solari=pannelli_solari, pannelli_fotovoltaici=pannelli_fotovoltaici, descrizione=descrizione, prezzo=prezzo,
+                               n_ospiti=num_ospiti, n_stanze=num_camere, tasse=prezzo-20, email_loc=mail)
+
+        val_id = max_id_casa()
+        print("ID: " + str(val_id))
+
+        indirizzo2 = Indirizzo(id_alloggio=val_id, via=indirizzo, cap=cap, citta=citta, civico=civico, provincia=provincia)
+        indirizzo_crea(indirizzo2)
+
+        for row in servizi_selezionati:
+            possedimento = Possedimento(id_alloggio=val_id, id_servizio=row)
+            crea_possedimento(possedimento)
+
+        return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2)
 
 
 #Barra di ricerca

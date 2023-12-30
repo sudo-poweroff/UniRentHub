@@ -1,11 +1,16 @@
+import os
 import re
 from flask import Flask, flash
 
+from .Alloggio import Alloggio
 from .AlloggioDAO import AlloggioDAO
+from .ImmagineDAO import ImmagineDAO
 from .IndirizzoDAO import IndirizzoDAO
+from .PossidimentoDAO import PossedimentoDAO
 from .Post import Post
 from .PostDAO import PostDAO
 from WebSite.flask.gestioneUtente.ClienteDAO import ClienteDAO
+from .ServiziDAO import ServiziDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -49,22 +54,31 @@ def verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_os
         return False
 
 
-def pubblicazione_alloggio(titolo, indirizzo, cap, provincia, citta, tipo, descrizione, civico,
-                           num_bagni, num_camere, classe_energetica, num_ospiti,
-                           metri_quadri, prezzo, periodo_minimo, arredamento,
-                           pannelli_fotovoltaici, pannelli_solari, servizi_selezionati, data, mail):
-    if verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_ospiti, metri_quadri, prezzo,
-                      periodo_minimo):
-        dao = AlloggioDAO()
-        stanze = num_camere + num_bagni
-        dao.inseriscicasa(titolo, tipo, descrizione, num_bagni, num_camere, classe_energetica, num_ospiti, metri_quadri,
-                          prezzo, periodo_minimo, arredamento, pannelli_fotovoltaici, pannelli_solari, data, stanze, mail)
-        id_alloggio = dao.cercaidcasa()
-
-        for servizio_id in servizi_selezionati:
-            dao.inseriscipossedimento(id_alloggio, servizio_id)
-        dao.inserisciindirizzo(id_alloggio, indirizzo, cap, citta, provincia, civico)
-
+def pubblicazione_alloggio(tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
+                           classe_energetica, arredamenti, data_pubblicazione,
+                           pannelli_solari, pannelli_fotovoltaici, descrizione,
+                           prezzo, n_ospiti, n_stanze, tasse, email_loc):
+    alloggio = Alloggio(
+        tipo_alloggio=tipo_alloggio,
+        titolo=titolo,
+        mq=mq,
+        n_camere_letto=n_camere_letto,
+        n_bagni=n_bagni,
+        classe_energetica=classe_energetica,
+        arredamenti=arredamenti,
+        data_publicazione=data_pubblicazione,
+        pannelli_solari=pannelli_solari,
+        pannelli_fotovoltaici=pannelli_fotovoltaici,
+        descrizione=descrizione,
+        prezzo=prezzo,
+        n_ospiti=n_ospiti,
+        n_stanze=n_stanze,
+        tasse=tasse,
+        email_loc=email_loc,
+    )
+    dao = AlloggioDAO()
+    dao.create_alloggio(alloggio=alloggio)
+    return alloggio
 
 def ricerca_alloggio(citta):
     dao1 = IndirizzoDAO()
@@ -97,3 +111,70 @@ def creazione_post(titolo, descrizione, email):
     dao = PostDAO()
     post = Post(titolo=titolo, descrizione=descrizione, email=email)
     dao.createPost(post=post)
+
+def inserisci_immagini(lista_immagini):
+    dao1 = AlloggioDAO()
+    dao2 = ImmagineDAO()
+    id_cartella = dao1.cercaidcasa() + 1   #incremento per prendere l'id dell'alloggio che sta per essere creato
+    path_cartella = f"static/alloggi/{id_cartella}" #istanzio il path della cartella dell'alloggio in una variabile
+
+    if not os.path.isdir(path_cartella): #controllo esistenza path
+        os.mkdir(path_cartella) #creo la cartella con la variabile path
+
+    nomi_immagini = []  # Lista per memorizzare i nomi dei file delle immagini caricate
+    count = 0
+
+    for immagine in lista_immagini:
+        if count < 3:
+            path_immagine = os.path.join(path_cartella, immagine.filename)
+            immagine.save(path_immagine) #salva l'immagine
+            dao2.inserisci_immagine(immagine.get_id_immagine(), id_cartella, path_immagine)
+            nomi_immagini.append(immagine.filename)  # Ottieni il nome del file e aggiungilo alla lista
+            count += 1
+        else:
+            break
+
+#non toccare fondamentale Alloggio
+def max_id_casa():
+    dao = AlloggioDAO()
+    val = dao.cercaidcasa()
+    return val
+
+#non toccare fondamentale Alloggio
+def indirizzo_crea(indirizzo):
+    dao = IndirizzoDAO()
+    dao.crea_indirizzo(indirizzo)
+
+#non toccare per Alloggio
+def crea_possedimento(possedimento):
+    dao = PossedimentoDAO()
+    dao.inserisci_possedimento(possedimento)
+
+#non toccare Alloggio
+def visualizza_servizi():
+    dao = ServiziDAO()
+    servizi = dao.visualizzaservizidisponibili()
+    return servizi
+
+#non toccare Alloggio
+def visualizza_annuncio(id_alloggio):
+    dao = AlloggioDAO()
+    alloggio = dao.visualizzaannuncio(id_alloggio)
+    return alloggio
+
+#non toccare
+def visualizza_indirizzo(id_alloggio):
+    dao = IndirizzoDAO()
+    indirizzo = dao.visualizzaindirizzo(id_alloggio=id_alloggio)
+    return indirizzo
+
+#non toccare Alloggio
+def visualizza_servizi_alloggio(id_servizio):
+    dao = ServiziDAO()
+    servizio = dao.visualizza_servizio_by_id(id_servizio=id_servizio)
+    return servizio
+
+def visualizza_servizi_possedimento_byid(id_alloggio):
+    dao = PossedimentoDAO()
+    id_possedimento = dao.ricerca_by_id_alloggio(id_alloggio=id_alloggio)
+    return id_possedimento

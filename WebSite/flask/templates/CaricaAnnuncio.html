@@ -23,6 +23,22 @@
         overflow: hidden; /* Nasconde il testo in eccesso */
     }
 
+    .form-check {
+  margin-bottom: 10px; /* Aggiunge spazio tra i checkbox */
+}
+
+/* Personalizza l'aspetto della checkbox stessa */
+.form-check-input {
+  margin-right: 5px; /* Aggiunge spazio tra la checkbox e l'etichetta */
+}
+
+/* Personalizza l'aspetto dell'etichetta della checkbox */
+.form-check-label {
+  display: inline-block; /* Permette di regolare il margine tra le etichette */
+  margin-left: 2px;
+    margin-right: 10px/* Aggiunge spazio a sinistra dell'etichetta */
+}
+
     .custom-service label:hover {
         background-color: #f0f0f0; /* Cambia il colore al passaggio del mouse */
     }
@@ -41,13 +57,13 @@
 
 </head>
 <body>
-
+{% if session.get("tipo") == "Locatore" %}
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center vh-100">
         <div class="col-md-6">
         <h1>Inserisci Alloggio</h1>
 <br>
-    <form method="post" action="/Carica">
+    <form method="post" action="/CaricaAnnuncio">
     <div class="row form">
     <div class="col-md-4 mb-3">
         <label for="titolo">Titolo</label>
@@ -176,16 +192,86 @@
 <h2>Servizi:</h2><br>
 
 <div class="row">
-    {% for servizio in servizi %}
-        <div class="col-6 col-sm-4 col-md-3 mb-2">
-            <div class="custom-service" id="servizio_{{ loop.index }}" onclick="toggleService('servizio_{{ loop.index }}')">
-                <input type="hidden" id="check_servizio_{{ loop.index }}" name="servizio_{{ loop.index }}" value="{{ servizio[0] }}">
-                <label class="{% if servizio[2] %}selected{% endif %}" for="check_servizio_{{ loop.index }}">
-                    {{ servizio[0] }}
-                </label>
-            </div>
-        </div>
-    {% endfor %}
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="1" id="wifiCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="wifiCheckbox">Wi-Fi</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="2" id="tvCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="tvCheckbox">TV</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="3" id="parkingCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="parkingCheckbox">Parcheggio</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="4" id="gardenCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="gardenCheckbox">Giardino</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="5" id="kitchenCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="kitchenCheckbox">Cucina attrezzata</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="6" id="cleaningCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="cleaningCheckbox">Utensili per la pulizia</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="7" id="kitchenToolsCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="kitchenToolsCheckbox">Utensili per la cucina</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="8" id="ovenCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="ovenCheckbox">Forno</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="9" id="washingMachineCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="washingMachineCheckbox">Lavatrice</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="10" id="dishwasherCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="dishwasherCheckbox">Lavastoviglie</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="11" id="dryerCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="dryerCheckbox">Asciugatrice</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="12" id="centralHeatingCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="centralHeatingCheckbox">Riscaldamento centralizzato</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="13" id="airConditioningCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="airConditioningCheckbox">Aria condizionata</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="14" id="wardrobeCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="wardrobeCheckbox">Armadio</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="15" id="chestCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="chestCheckbox">Cassettiera</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="16" id="deskCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="deskCheckbox">Scrivania</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="17" id="bedCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="bedCheckbox">Letto</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="18" id="elevatorCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="elevatorCheckbox">Ascensore</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="19" id="poolCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="poolCheckbox">Piscina</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="20" id="balconyCheckbox" name="checkboxGroup">
+    <label class="form-check-label" for="balconyCheckbox">Balcone con vista</label>
+  </div>
 </div>
 <input type="hidden" id="servizi_selezionati" name="servizi_selezionati" value="">
 
@@ -196,34 +282,14 @@
     </div>
 </div>
 
+{% endif %}
+    {% if session.get("tipo") != "Locatore" %}
+    {% include "error.html" %}
+    {% endif %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script>
-function toggleService(serviceId) {
-        var service = document.getElementById(serviceId);
-        var hiddenInput = document.getElementById('servizi_selezionati');
-        var checkBox = document.getElementById('check_' + serviceId);
 
-        if (service.classList.contains('selected')) {
-            service.classList.remove('selected');
-            checkBox.removeAttribute('checked');
-        } else {
-            service.classList.add('selected');
-            checkBox.setAttribute('checked', 'checked');
-        }
-
-        // Cambia lo stile del blocco al clic
-        service.querySelector('label').classList.toggle('selected');
-
-        // Ottieni tutti gli ID dei servizi selezionati e li inserisci nel campo nascosto
-        var selectedServices = document.querySelectorAll('.custom-service.selected');
-        var selectedIds = Array.from(selectedServices).map(function (elem) {
-            return elem.id.split('_')[1];
-        });
-        hiddenInput.value = selectedIds.join(',');
-    }
-</script>
 </body>
 </html>
