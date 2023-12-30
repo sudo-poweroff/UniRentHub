@@ -142,5 +142,5 @@ def idcasas(email, data):
 def cercacasastudente(id_alloggio):
     dao = AlloggioDAO()
     alloggio = dao.visualizzaannuncio(id_alloggio)
-    print(alloggio.get_titolo())
+    print("titolo: " + alloggio.get_titolo())
     return alloggio

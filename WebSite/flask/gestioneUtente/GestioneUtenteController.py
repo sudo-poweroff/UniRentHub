@@ -178,20 +178,23 @@ def registra_homechecker():
 
 @gu.route('/Userpage', methods=['GET', 'POST'])
 def userpage():
-    universita = cercatutteuni()
-    alloggi = []  # Inizializzazione della lista per memorizzare le case
+    if session.get("tipo") == "Locatore" or session.get("tipo") == "Studente":
+        universita = cercatutteuni()
+        alloggi = []  # Inizializzazione della lista per memorizzare le case
 
-    if session["tipo"] == "Locatore":
-        alloggi = casep(session["email"])
-    else:
-        data_oggi = date.today().isoformat()
-        id_casa = idcasas(session["email"], data_oggi)
-        print(str(id_casa)+"Controller")
-        alloggio = cercacasastudente(id_casa)
-        print(alloggio.get_titolo()+"Controller")
-        alloggi.append(alloggio)
-        return render_template("Userpage.html",alloggi=alloggi, universita= universita)
-    return render_template('Userpage.html', universita=universita, alloggi=alloggi)
+        if session.get("tipo") == "Locatore":
+            alloggi = casep(session["email"])
+        else:
+            data_oggi = date.today().isoformat()
+            id_casa = idcasas(session["email"], data_oggi)
+            if id_casa != None:
+                print("ID_CASA: " + str(id_casa))
+                alloggio = cercacasastudente(id_casa)
+                alloggi.append(alloggio)
+                return render_template("Userpage.html",alloggi=alloggi, universita= universita)
+            return render_template("Userpage.html", universita=universita)
+        return render_template('Userpage.html', universita=universita, alloggi=alloggi)
+    return render_template("error.html")
 
 
 @gu.route('/modifica', methods=['GET', 'POST'])

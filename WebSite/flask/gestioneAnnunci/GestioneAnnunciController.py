@@ -98,6 +98,7 @@ def pubblicazione():
      data=data
      )
 
+
 #Barra di ricerca
 @gu2.route('/search', methods=['POST', 'GET'])
 def search():
@@ -108,11 +109,11 @@ def search():
             return render_template("Catalogo.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
     return render_template("Homepage.html") #output per il get se non sono presenti alloggi
 
+
 @gu2.route('/Homecheck', methods=['GET', 'POST'])
 def homechecker():
     if request.method == 'POST':
         id_alloggio = request.form.get('id_alloggio')
-
 
         if id_alloggio is not None and id_alloggio.isdigit():  # Verifica se id_alloggio è un numero intero
             dao = AlloggioDAO()
