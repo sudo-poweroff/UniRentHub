@@ -157,6 +157,7 @@
 {% endblock %}
 
 {% block content %}
+    {% if session.get("tipo") == "Studente" or session.get("tipo") == "gestS" %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
@@ -207,6 +208,11 @@
             window.location.href = '/Alloggio.html?id=' + id;
         }
     </script>
+    {% include "footerNew.html" %}
+    {% endif %}
+    {% if session.get("tipo") == "Locatore" %}
+    {% include "error.html" %}
+    {% endif %}
 </body>
 {% endblock %}
 </div>

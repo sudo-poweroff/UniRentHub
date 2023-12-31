@@ -4,9 +4,10 @@ from datetime import datetime
 from numpy import double
 
 from .AlloggioDAO import AlloggioDAO
-from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
-    creazione_post,max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
-    visualizza_annuncio, inserisci_immagini_service
+from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
+    creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
+    visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio
+from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
@@ -30,16 +31,24 @@ def catalogo():
 def annuncio():
 
     dao = AlloggioDAO()
-    dao2 = ServiziDAO()
+    dao2 = ImmagineDAO()
     dao3 = IndirizzoDAO()
 
     id_alloggio = request.args.get('id')
     alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
-    immagini = dao.visualizzaimmagini(id_alloggio)
+    immagini = dao2.recupera_path(id_alloggio=id_alloggio)
+
+    path = []
+    for im in immagini:
+        path.append(im.get_path())
+
+    for p in path:
+        print("PATH:    " + p)
+
     indirizzo = dao3.visualizzaindirizzo(id_alloggio)
 
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = immagini)
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
@@ -91,7 +100,6 @@ def allservizi():
         print("mail:" + mail)
         print("servizi_selezionati:" + str(servizi_selezionati))
 
-
         alloggio = pubblicazione_alloggio(tipo_alloggio=tipo, titolo=titolo, mq=metri_quadri, n_camere_letto= num_camere, n_bagni=num_bagni, classe_energetica=classe_energetica,
                                arredamenti=arredamento, data_pubblicazione=data, pannelli_solari=pannelli_solari, pannelli_fotovoltaici=pannelli_fotovoltaici, descrizione=descrizione, prezzo=prezzo,
                                n_ospiti=num_ospiti, n_stanze=num_camere, tasse=prezzo-20, email_loc=mail)
@@ -106,6 +114,8 @@ def allservizi():
             possedimento = Possedimento(id_alloggio=val_id, id_servizio=row)
             crea_possedimento(possedimento)
 
+        servizi = visualizza_servizi_alloggio(val_id)
+
 
         lista_immagini = request.files.getlist("lista_immagini[]")
         nomi_immagini = []
@@ -113,11 +123,9 @@ def allservizi():
         if lista_immagini:
             nomi_immagini = inserisci_immagini_service(lista_immagini)
 
-
-
         for im in nomi_immagini:
             print(im)
-        return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2, immagini = nomi_immagini)
+        return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2, immagini = nomi_immagini, servizi=servizi)
 
 
 #Barra di ricerca

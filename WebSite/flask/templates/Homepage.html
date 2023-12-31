@@ -73,6 +73,14 @@
     <div class="sottotesto">dove il tuo percorso di studio si fonde con la tua casa ideale</div>
           <br>
           <form class="form-inline" action="/search" method="post">
+              {% if session.get("tipo") == "Locatore" %}
+                    <input id="search" class="form-control mr-sm-2" type="search" name="citta" placeholder="Crea il tuo annuncio..." aria-label="Search"
+                    style="padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 20px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    transition: box-shadow 0.3s ease-in-out;">
+              {% else %}
     <input id="search" class="form-control mr-sm-2" type="search" name="citta" placeholder="Vorrei studiare a..." aria-label="Search" >
     <button id="nutton" type="submit" class="btn btn-success" style="background-color: #688d51; border: 2px solid #fff;"
         onmouseover="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#fff';"
@@ -81,6 +89,14 @@
         onmouseup="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#fff';">
           Search
         </button>
+              {% endif %}
+
+<script>
+    document.getElementById('search').addEventListener('click', function() {
+        // Sostituisci 'URL_DELLA_TUA_PAGINA_CREAZIONE_ANNUNCIO' con l'effettivo URL della tua pagina di creazione annuncio
+        window.location.href = '/CaricaAnnuncio';
+    });
+</script>
 
 
   </form>

@@ -28,17 +28,7 @@ def controlla_email_esistente(email):
     else:
         return False  # se il cliente non esiste torni False
 
-
-def pubblicazione_post(email, titolo, descrizione):
-    if is_valid_email(email):
-        if controlla_email_esistente(email):
-            post = Post(email=email, titolo=titolo, descrizione=descrizione)
-            dao = PostDAO()
-
-            dao.createPost(post)
-            return post
-
-
+#verifica campi alloggio
 def verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_ospiti, metri_quadri, prezzo,
                    periodo_minimo):
     if 30 > len(titolo) > 5:
@@ -54,6 +44,7 @@ def verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_os
         return False
 
 
+#pubblicazione alloggio
 def pubblicazione_alloggio(tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
                            classe_energetica, arredamenti, data_pubblicazione,
                            pannelli_solari, pannelli_fotovoltaici, descrizione,
@@ -95,19 +86,22 @@ def inserisci_immagini_service(lista_immagini):
 
     nomi_immagini = []
     count = 0
+    path = []
     for immagine in lista_immagini:
         if count < 3:
             path_immagine = os.path.join(path_cartella, immagine.filename)
+            path.append(path_immagine)
             immagine.save(path_immagine)
             dao2.inserisci_immagine(id_cartella, path_immagine)
             nomi_immagini.append(immagine.filename)
             count += 1
         else:
             break
-    print(nomi_immagini)
-    return nomi_immagini
+    print(path)
+    return path
 
 
+#ricerca di un alloggio
 def ricerca_alloggio(citta):
     dao1 = IndirizzoDAO()
     dao2 = AlloggioDAO()
@@ -130,58 +124,73 @@ def ricerca_alloggio(citta):
 
     return alloggi
 
+#ricerca di un post studente UniRentHubCommunity
 def ricerca_post_studente(value):
     dao = PostDAO()
     posts = dao.ricerca_post(value)
     return posts
 
+#creazione di un post studente UniRentHubCommunity
 def creazione_post(titolo, descrizione, email):
     dao = PostDAO()
     post = Post(titolo=titolo, descrizione=descrizione, email=email)
     dao.createPost(post=post)
 
 
-#non toccare fondamentale Alloggio
+#restituisce il MAX id alloggio
 def max_id_casa():
     dao = AlloggioDAO()
     val = dao.cercaidcasa()
     return val
 
-#non toccare fondamentale Alloggio
+#Crea un indirizzo utilizzando la logica dei DAO
 def indirizzo_crea(indirizzo):
     dao = IndirizzoDAO()
     dao.crea_indirizzo(indirizzo)
 
-#non toccare per Alloggio
+#crea un possedimento id_alloggio - id_servizio
 def crea_possedimento(possedimento):
     dao = PossedimentoDAO()
     dao.inserisci_possedimento(possedimento)
 
-#non toccare Alloggio
+#Permette di visualizzare i servizi
 def visualizza_servizi():
     dao = ServiziDAO()
     servizi = dao.visualizzaservizidisponibili()
     return servizi
 
-#non toccare Alloggio
+#Permette di visualizzare un annuncio
 def visualizza_annuncio(id_alloggio):
     dao = AlloggioDAO()
     alloggio = dao.visualizzaannuncio(id_alloggio)
     return alloggio
 
-#non toccare
+#permette di visualizzare un indirizzo
 def visualizza_indirizzo(id_alloggio):
     dao = IndirizzoDAO()
     indirizzo = dao.visualizzaindirizzo(id_alloggio=id_alloggio)
     return indirizzo
 
-#non toccare Alloggio
-def visualizza_servizi_alloggio(id_servizio):
+#Permette di visualizzare i servizi presenti in un alloggio
+def visualizza_servizi_alloggio(id_alloggio):
     dao = ServiziDAO()
-    servizio = dao.visualizza_servizio_by_id(id_servizio=id_servizio)
-    return servizio
+    servizi = dao.visualizza_servizi(id_alloggio=id_alloggio)
+    for s in servizi:
+        print ("SERVICE: " + s.get_descrizione())
+    return servizi
 
+#permette di visualizzare i servizi-possedimento di un id_alloggio
 def visualizza_servizi_possedimento_byid(id_alloggio):
     dao = PossedimentoDAO()
     id_possedimento = dao.ricerca_by_id_alloggio(id_alloggio=id_alloggio)
     return id_possedimento
+
+#preleva immagine dal DB
+def preleva_immagini(id_alloggio):
+    dao = ImmagineDAO()
+    immagini = dao.recupera_path(id_alloggio=id_alloggio)
+
+    path = []
+    for im in immagini:
+        path.append(im.get_path())
+    return path

@@ -26,12 +26,41 @@ class ServiziDAO:
 
     def visualizza_servizio_by_id(self, id_servizio):
         query = """
-        SELECT descrizione
+        SELECT *
         FROM servizi
         WHERE id_servizio = %s
         """
         values = (id_servizio,)
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchone()
+        result = self.__cursor.fetchall()
 
-        return result
+        servizi = []
+
+        for row in result:
+            servizo = Servizi(
+                id_servizio=row[0],
+                descrizione=row[1]
+            )
+            servizi.append(servizo)
+
+        return servizi
+
+    def visualizza_servizi(self, id_alloggio):
+        query = """
+        SELECT descrizione FROM servizi,possedimento
+        WHERE servizi.id_servizio = possedimento.id_servizio
+        and possedimento.id_alloggio = %s
+        """
+        values = (id_alloggio,)
+        self.__cursor.execute(query, values)
+        results = self.__cursor.fetchall()
+
+        servizi = []
+
+        for row in results:
+            servizio = Servizi(
+                descrizione=row[0]
+            )
+            servizi.append(servizio)
+        return servizi
+

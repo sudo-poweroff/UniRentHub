@@ -22,7 +22,7 @@ class ImmagineDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def recupera_immagine(self, id_alloggio):
+    def recupera_path(self, id_alloggio):
         query="""
             SELECT * from immagine WHERE id_alloggio = %s
         """
@@ -38,3 +38,4 @@ class ImmagineDAO:
             )
             immagine.append(imm)
         return immagine
+
