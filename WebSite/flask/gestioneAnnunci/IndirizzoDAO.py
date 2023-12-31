@@ -46,3 +46,25 @@ class IndirizzoDAO:
             )
             print(indirizzo.get_via())
             return indirizzo
+
+    def modifica_indirizzo(self, id_alloggio, indirizzo):
+        query = """
+                UPDATE indirizzo
+                SET via = %s,
+                    cap = %s,
+                    civico = %s,
+                    citta = %s,
+                    provincia = %s
+                WHERE id_alloggio = %s
+                """
+        values = (
+            indirizzo.get_via(),
+            indirizzo.get_cap(),
+            indirizzo.get_civico(),
+            indirizzo.get_citta(),
+            indirizzo.get_provincia(),
+            id_alloggio
+        )
+        self.__cursor.execute(query, values)
+        self.__connection.commit()
+

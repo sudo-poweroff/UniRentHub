@@ -198,6 +198,9 @@
                             <h5 class="card-title">{{ alloggio.get_titolo() }}</h5>
                             <p class="card-text">{{ alloggio.get_descrizione() }}</p>
                             <a href="{{ url_for('gu2.annuncio', id=alloggio.get_id_alloggio()) }}" class="card-link">Dettagli</a>
+                            {% if session.get("tipo") == "Locatore" %}
+                            <a href="{{ url_for('gu2.modifica_annuncio', id=alloggio.get_id_alloggio()) }}" class="card-link">Modifica</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

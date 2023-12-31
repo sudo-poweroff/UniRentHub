@@ -194,3 +194,40 @@ def preleva_immagini(id_alloggio):
     for im in immagini:
         path.append(im.get_path())
     return path
+
+#modifica_annuncio
+def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
+                           classe_energetica, arredamenti, data_pubblicazione,
+                           pannelli_solari, pannelli_fotovoltaici, descrizione,
+                           prezzo, n_ospiti, n_stanze, tasse):
+    alloggio = Alloggio(
+        tipo_alloggio=tipo_alloggio,
+        titolo=titolo,
+        mq=mq,
+        n_camere_letto=n_camere_letto,
+        n_bagni=n_bagni,
+        classe_energetica=classe_energetica,
+        arredamenti=arredamenti,
+        data_publicazione=data_pubblicazione,
+        pannelli_solari=pannelli_solari,
+        pannelli_fotovoltaici=pannelli_fotovoltaici,
+        descrizione=descrizione,
+        prezzo=prezzo,
+        n_ospiti=n_ospiti,
+        n_stanze=n_stanze,
+        tasse=tasse
+    )
+    print("sono nel service")
+    dao = AlloggioDAO()
+    dao.modifica_alloggio(id_alloggio=id_allogio, alloggio=alloggio)
+    return alloggio
+
+#modifica indirizzo
+def modifica_indirizzo_byid(id_alloggio, indirizzo):
+    dao = IndirizzoDAO()
+    dao.modifica_indirizzo(id_alloggio=id_alloggio, indirizzo=indirizzo)
+
+#elimina alloggio
+def elimina_alloggio_byid(id_alloggio):
+    dao = AlloggioDAO()
+    dao.elimina_alloggio(id_alloggio=id_alloggio)

@@ -210,7 +210,7 @@ class AlloggioDAO:
             alloggio.get_pannelli_solari(),  # pannelli_solari
             alloggio.get_pannelli_fotovoltaici(),  # pannelli_fotovoltaici
             alloggio.get_descrizione(),  # descrizione
-            1,  # verifica
+            0,  # verifica
             alloggio.get_prezzo(),  # prezzo
             alloggio.get_n_ospiti(),  # n_ospiti
             alloggio.get_n_stanze(),  # n_stanze
@@ -222,3 +222,54 @@ class AlloggioDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
+    def modifica_alloggio(self, id_alloggio, alloggio):
+        query = """
+            UPDATE alloggio
+            SET
+                tipo_alloggio = %s,
+                titolo = %s,
+                mq = %s,
+                n_camere_letto = %s,
+                n_bagni = %s,
+                classe_energetica = %s,
+                arredamenti = %s,
+                pannelli_solari = %s,
+                pannelli_fotovoltaici = %s,
+                descrizione = %s,
+                prezzo = %s,
+                n_ospiti = %s,
+                n_stanze = %s,
+                tasse = %s
+            WHERE
+                id_alloggio = %s
+        """
+        values = (
+            alloggio.get_tipo_alloggio(),  # tipo_alloggio
+            alloggio.get_titolo(),  # titolo
+            alloggio.get_mq(),  # mq
+            alloggio.get_n_camere_letto(),  # n_camere_letto
+            alloggio.get_n_bagni(),  # n_bagni
+            alloggio.get_classe_energetica(),  # classe_energetica
+            alloggio.get_arredamenti(),  # arredamenti
+            alloggio.get_pannelli_solari(),  # pannelli_solari
+            alloggio.get_pannelli_fotovoltaici(),  # pannelli_fotovoltaici
+            alloggio.get_descrizione(),  # descrizione
+            alloggio.get_prezzo(),  # prezzo
+            alloggio.get_n_ospiti(),  # n_ospiti
+            alloggio.get_n_stanze(),  # n_stanze
+            alloggio.get_tasse(),  # tasse
+            id_alloggio  # id_alloggio
+        )
+        print("MODIFCO DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        result = self.__cursor.execute(query, values)
+        self.__connection.commit()
+        if result:
+            print("FATTO: " + result)
+        else:
+            print("NONEEEE")
+
+    def elimina_alloggio(self, id_alloggio):
+        query = "DELETE FROM alloggio WHERE id_alloggio = %s"
+        values = (id_alloggio,)
+        self.__cursor.execute(query, values)
+        self.__connection.commit()
