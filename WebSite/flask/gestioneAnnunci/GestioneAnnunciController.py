@@ -133,8 +133,10 @@ def allservizi():
 def search():
     if request.method == 'POST':
         citta = request.form["citta"]
+        print("Sono del POST")
         alloggi = ricerca_alloggio(citta)
         for alloggio in alloggi:
+            print("Sono nel for POST")
             return render_template("Catalogo.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
     return render_template("Homepage.html") #output per il get se non sono presenti alloggi
 

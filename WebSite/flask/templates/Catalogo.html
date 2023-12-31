@@ -157,7 +157,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if session.get("tipo") == "Studente" or session.get("tipo") == "gestS" %}
+    {% if session.get("tipo") != "Locatore" %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 

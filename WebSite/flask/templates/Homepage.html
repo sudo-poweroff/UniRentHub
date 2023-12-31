@@ -74,7 +74,7 @@
           <br>
           <form class="form-inline" action="/search" method="post">
               {% if session.get("tipo") == "Locatore" %}
-                    <input id="search" class="form-control mr-sm-2" type="search" name="citta" placeholder="Crea il tuo annuncio..." aria-label="Search"
+                    <input id="search2" class="form-control mr-sm-2" type="search" name="citta" placeholder="Crea il tuo annuncio..." aria-label="Search"
                     style="padding: 10px;
                     border: 1px solid #ccc;
                     border-radius: 20px;
@@ -92,7 +92,7 @@
               {% endif %}
 
 <script>
-    document.getElementById('search').addEventListener('click', function() {
+    document.getElementById('search2').addEventListener('click', function() {
         // Sostituisci 'URL_DELLA_TUA_PAGINA_CREAZIONE_ANNUNCIO' con l'effettivo URL della tua pagina di creazione annuncio
         window.location.href = '/CaricaAnnuncio';
     });
