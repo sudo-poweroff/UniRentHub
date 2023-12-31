@@ -63,13 +63,47 @@
         <div class="col-md-6">
         <h1>Inserisci Alloggio</h1>
 <br>
-    <form method="post" action="/CaricaAnnuncio">
+    <form method="post" action="/CaricaAnnuncio" enctype="multipart/form-data">
     <div class="row form">
     <div class="col-md-4 mb-3">
         <label for="titolo">Titolo</label>
             <input type="text" class="form-control" id="titolo" placeholder="Titolo" name="titolo">
     </div>
     </div>
+
+
+
+
+  <div class="form-group">
+        <h2>Carica immagini (max 3)</h2>
+        <input type="file" class="form-control-file" id="lista_immagini" name="lista_immagini[]" multiple accept="image/*" required>
+        <small id="fileHelp" class="form-text text-muted">Carica massimo 3 immagini.</small>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row form">
     <div class="col-md-6 mb-3">
       <label for="citta">Città</label>

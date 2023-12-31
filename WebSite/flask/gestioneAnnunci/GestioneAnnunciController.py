@@ -5,8 +5,8 @@ from numpy import double
 
 from .AlloggioDAO import AlloggioDAO
 from .GestioneAnnunciService import pubblicazione_post, pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
-    creazione_post, inserisci_immagini, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
-    visualizza_annuncio
+    creazione_post,max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
+    visualizza_annuncio, inserisci_immagini_service
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
@@ -36,10 +36,10 @@ def annuncio():
     id_alloggio = request.args.get('id')
     alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
-   # immagini = dao.visualizzaimmagini(id_alloggio)
+    immagini = dao.visualizzaimmagini(id_alloggio)
     indirizzo = dao3.visualizzaindirizzo(id_alloggio)
 
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo)
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = immagini)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
@@ -106,7 +106,18 @@ def allservizi():
             possedimento = Possedimento(id_alloggio=val_id, id_servizio=row)
             crea_possedimento(possedimento)
 
-        return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2)
+
+        lista_immagini = request.files.getlist("lista_immagini[]")
+        nomi_immagini = []
+
+        if lista_immagini:
+            nomi_immagini = inserisci_immagini_service(lista_immagini)
+
+
+
+        for im in nomi_immagini:
+            print(im)
+        return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2, immagini = nomi_immagini)
 
 
 #Barra di ricerca

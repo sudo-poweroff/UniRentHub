@@ -9,15 +9,15 @@ class ImmagineDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-    def inserisci_immagine(self, id_immagine, id_alloggio, path):
+    def inserisci_immagine(self,id_alloggio, path):
         directory_salvataggio = 'static/img'
         query= """
              INSERT INTO immagine
-            (id_immagine, id_alloggio, path) 
-            VALUES (%s,%s,%s)
+            ( id_alloggio, path) 
+            VALUES (%s,%s)
                """
 
-        values = (id_immagine, id_alloggio, path)
+        values = (id_alloggio, path)
 
         self.__cursor.execute(query, values)
         self.__connection.commit()

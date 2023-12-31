@@ -80,6 +80,34 @@ def pubblicazione_alloggio(tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
     dao.create_alloggio(alloggio=alloggio)
     return alloggio
 
+
+
+
+#funzione di inserimento immagini tramite la creazione di una cartella con nome = all'id_alloggio associato all'immagine
+def inserisci_immagini_service(lista_immagini):
+    dao1 = AlloggioDAO()
+    dao2 = ImmagineDAO()
+    id_cartella = dao1.cercaidcasa()
+    path_cartella = f"static/alloggi/{id_cartella}"
+
+    if not os.path.isdir(path_cartella):  # controllo esistenza cartella
+        os.makedirs(path_cartella)  # creazione cartella
+
+    nomi_immagini = []
+    count = 0
+    for immagine in lista_immagini:
+        if count < 3:
+            path_immagine = os.path.join(path_cartella, immagine.filename)
+            immagine.save(path_immagine)
+            dao2.inserisci_immagine(id_cartella, path_immagine)
+            nomi_immagini.append(immagine.filename)
+            count += 1
+        else:
+            break
+    print(nomi_immagini)
+    return nomi_immagini
+
+
 def ricerca_alloggio(citta):
     dao1 = IndirizzoDAO()
     dao2 = AlloggioDAO()
@@ -112,27 +140,6 @@ def creazione_post(titolo, descrizione, email):
     post = Post(titolo=titolo, descrizione=descrizione, email=email)
     dao.createPost(post=post)
 
-def inserisci_immagini(lista_immagini):
-    dao1 = AlloggioDAO()
-    dao2 = ImmagineDAO()
-    id_cartella = dao1.cercaidcasa() + 1   #incremento per prendere l'id dell'alloggio che sta per essere creato
-    path_cartella = f"static/alloggi/{id_cartella}" #istanzio il path della cartella dell'alloggio in una variabile
-
-    if not os.path.isdir(path_cartella): #controllo esistenza path
-        os.mkdir(path_cartella) #creo la cartella con la variabile path
-
-    nomi_immagini = []  # Lista per memorizzare i nomi dei file delle immagini caricate
-    count = 0
-
-    for immagine in lista_immagini:
-        if count < 3:
-            path_immagine = os.path.join(path_cartella, immagine.filename)
-            immagine.save(path_immagine) #salva l'immagine
-            dao2.inserisci_immagine(immagine.get_id_immagine(), id_cartella, path_immagine)
-            nomi_immagini.append(immagine.filename)  # Ottieni il nome del file e aggiungilo alla lista
-            count += 1
-        else:
-            break
 
 #non toccare fondamentale Alloggio
 def max_id_casa():
