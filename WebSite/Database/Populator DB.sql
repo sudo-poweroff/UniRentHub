@@ -175,11 +175,21 @@ INSERT INTO Indirizzo (id_alloggio, via, cap, civico, citta, provincia) VALUES
 
 -- Popolamento della tabella Immagine
 INSERT INTO Immagine (id_alloggio, path) VALUES
-(1, '/images/camera.jpg'),
-(2, '/images/monolocale.jpg'),
-(3, '/images/stanza.jpg'),
-(4, '/images/villa.jpg'),
-(5, '/images/bilocale.jpg');
+(1, 'static/alloggi/1/GaiaBrunello_1.jpg'),
+(1, 'static/alloggi/1/GaiaBrunello_2_500x500.jpg'),
+(1, 'static/alloggi/1/GaiaBrunello_3_500x500.jpg'),
+(2, 'static/alloggi/2/GaiaBrunello_1.jpg'),
+(2, 'static/alloggi/2/GaiaBrunello_2_500x500.jpg'),
+(2, 'static/alloggi/2/GaiaBrunello_3_500x500.jpg'),
+(3, 'static/alloggi/3/GaiaBrunello_1.jpg'),
+(3, 'static/alloggi/3/GaiaBrunello_2_500x500.jpg'),
+(3, 'static/alloggi/3/GaiaBrunello_3_500x500.jpg'),
+(4, 'static/alloggi/4/GaiaBrunello_1.jpg'),
+(4, 'static/alloggi/4/GaiaBrunello_2_500x500.jpg'),
+(4, 'static/alloggi/4/GaiaBrunello_3_500x500.jpg'),
+(5, 'static/alloggi/5/GaiaBrunello_1.jpg'),
+(5, 'static/alloggi/5/GaiaBrunello_2_500x500.jpg'),
+(5, 'static/alloggi/5/GaiaBrunello_3_500x500.jpg');
 
 -- Popolamento della tabella Affittare
 INSERT INTO Affittare (id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza, prezzo) VALUES
