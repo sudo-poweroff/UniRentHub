@@ -197,7 +197,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ alloggio.get_titolo() }}</h5>
                             <p class="card-text">{{ alloggio.get_descrizione() }}</p>
-                            <a href="/Annuncio.html?id={{ alloggio.get_id_alloggio() }}" class="card-link">Dettagli</a>
+                            <a href="{{ url_for('gu2.annuncio', id=alloggio.get_id_alloggio()) }}" class="card-link">Dettagli</a>
                         </div>
                     </div>
                 </div>
