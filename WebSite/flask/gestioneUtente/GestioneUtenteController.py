@@ -6,6 +6,7 @@ from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
     cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente
+from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
@@ -181,19 +182,40 @@ def userpage():
     if session.get("tipo") == "Locatore" or session.get("tipo") == "Studente":
         universita = cercatutteuni()
         alloggi = []  # Inizializzazione della lista per memorizzare le case
-
+        immagini=[] #inizializzazione della lista per memorizzare le immagini
         if session.get("tipo") == "Locatore":
             alloggi = casep(session["email"])
+            id_alloggi = []
+            #non toccare questa sequenza di for e if, è una logica implementativa per ritornarci la prima immagine del DB di un Locatore
+            for row in alloggi:
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
         else:
             data_oggi = date.today().isoformat()
             id_casa = idcasas(session["email"], data_oggi)
+            count = 0
+            path = preleva_immagini(id_casa)
+            for p in path:
+                if count == 0:
+                    print("path:     " + p)
+                    immagini.append(p)
+                    count = 1
             if id_casa != None:
                 print("ID_CASA: " + str(id_casa))
                 alloggio = cercacasastudente(id_casa)
                 alloggi.append(alloggio)
-                return render_template("Userpage.html",alloggi=alloggi, universita= universita)
-            return render_template("Userpage.html", universita=universita)
-        return render_template('Userpage.html', universita=universita, alloggi=alloggi)
+                return render_template("Userpage.html",alloggi=alloggi, universita= universita, immagini=immagini) #se l'utente ha case in affitto
+            return render_template("Userpage.html", universita=universita) #se l'utente non ha case in affitto
+        return render_template('Userpage.html', universita=universita, alloggi=alloggi, immagini = immagini) #se l'utente LOCATORE ha postato case
     return render_template("error.html")
 
 

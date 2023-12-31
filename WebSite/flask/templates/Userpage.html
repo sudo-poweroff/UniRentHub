@@ -193,7 +193,7 @@
             {% for alloggio in alloggi %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <img class="card-img-top" src="../{{ immagini[loop.index0] }}" alt="Card image cap" style="width: 338px; height: 338px">
                         <div class="card-body">
                             <h5 class="card-title">{{ alloggio.get_titolo() }}</h5>
                             <p class="card-text">{{ alloggio.get_descrizione() }}</p>
