@@ -60,6 +60,7 @@
 
 
 {% block content %}
+ {% if session.get("tipo") != "Homechecker" and session.get("tipo") != "Admin"%}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
@@ -218,4 +219,8 @@
 
 
     {% include "footerNew.html" %}
+    {% endif %}
+    {% if session.get("tipo") == "Homechecker" %}
+        {% include "error.html" %}
+    {% endif %}
 {% endblock %}
