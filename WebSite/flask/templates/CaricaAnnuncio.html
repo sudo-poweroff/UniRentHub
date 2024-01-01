@@ -144,7 +144,7 @@
     </div>
     <div class="col-md-4 mb-3">
     <label for="civico">Civico</label>
-      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" required>
+      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" min="1" required>
     </div>
     </div>
     <div class="row form">
@@ -158,7 +158,7 @@
         <option value="monolocale">Monolocale</option>
         <option value="stanza condivisa">Stanza Condivisa</option>
         </select>
-    <div class="invalid-feedback">Example invalid custom select feedback</div>
+    <div class="invalid-feedback">Seleziona un elemeneto</div>
   </div>
     </div>
     </div>
@@ -174,11 +174,11 @@
     <div style="margin-top: 60px" class="row form">
             <div class="col-md-4 mb-3">
         <label for="num_bagni">Numero Bagni:</label>
-        <input type="number" class= "form-control" id="num_bagni" name="num_bagni">
+        <input type="number" class= "form-control" id="num_bagni" name="num_bagni" min="1">
     </div>
     <div class="col-md-4 mb-3">
         <label for="num_camere">Numero Camere da letto:</label>
-        <input type="number" id="num_camere" class="form-control" name="num_camere">
+        <input type="number" id="num_camere" class="form-control" name="num_camere" min="1">
     </div>
     </div>
 
@@ -219,28 +219,28 @@
         <option value="C">C</option>
         <option value="D">D</option>
         </select>
-    <div class="invalid-feedback">Example invalid custom select feedback</div>
+    <div class="invalid-feedback">Seleziona un elemento</div>
   </div>
     </div>
 </div>
     <div class="row form">
 <div class="col-md-4 mb-3">
         <label for="num_ospiti">Numero ospiti:</label>
-        <input type="number" class="form-control" id="num_ospiti" name="num_ospiti">
+        <input type="number" class="form-control" id="num_ospiti" name="num_ospiti" min="1">
     </div>
 <div class="col-md-4 mb-3">
     <label for="metri_quadri">Metri quadri:</label>
-    <input type="number" class="form-control" id="metri_quadri" name="metri_quadri">
+    <input type="number" class="form-control" id="metri_quadri" name="metri_quadri" min="1">
 </div>
     </div>
 <div class="row form">
 <div class="col-md-4 mb-3">
       <label for="periodo_minimo">Periodo minimo (in mesi):</label>
-      <input type="number" class="form-control" id="periodo_minimo" name="periodo_minimo"><br><br>
+      <input type="number" class="form-control" id="periodo_minimo" name="periodo_minimo" min="0"><br><br>
 </div>
 <div class="col-md-4 mb-3">
       <label for="prezzo">Prezzo:</label>
-      <input type="number" class="form-control" id="prezzo" name="prezzo"><br><br>
+      <input type="number" class="form-control" id="prezzo" name="prezzo" min="1"><br><br>
 </div>
 </div>
         <div class="linea-sfocata-orizzontale"></div>

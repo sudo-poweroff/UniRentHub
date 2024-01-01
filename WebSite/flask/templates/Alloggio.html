@@ -54,7 +54,7 @@
           <h1 class="mb-1"><b>{{ alloggio.get_titolo() }}</b></h1>
           <h6 class="mb-0"><span style="margin-left: 3px;"></span> {{ indirizzo.get_citta()}}</h6>
           <br>
-          <h5 class="mb-0">{{ alloggio.get_mq() }} m2 <span style="margin-left: 10px;"></span> | <span style="margin-left: 10px;"></span>{{ alloggio.get_n_stanze() }}<span style="margin-left: 10px;"> </span>| </h5>
+          <h5 class="mb-0">{{ alloggio.get_mq() }} m2 <span style="margin-left: 10px;"></span> | <span style="margin-left: 10px;"></span>{{ alloggio.get_n_stanze() }} stanza/e <span style="margin-left: 10px;"> </span>| </h5>
           {% if alloggio.get_verifica() == 1 %}
           <span class="badge badge-pill badge-success" style="background-color: #5c8e48;">Verificata</span>
           {% endif %}

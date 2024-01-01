@@ -46,6 +46,10 @@ def registrazione():
             session["email"] = user.getEmail()
             session["password"] = user.getPassword()
             session["tipo"] = user.getTipo()
+            session["carta"] = user.getNumeroCarta()
+            session["mese"] = user.getMeseScadenza()
+            session["anno"] = user.getAnnoScadenza()
+            session["universita"] = denominazione
 
             return redirect(url_for("gu.main"))
 
@@ -75,7 +79,6 @@ def accessoU():
             numcarta = user.getNumeroCarta()
             mese = user.getMeseScadenza()
             anno = user.getAnnoScadenza()
-            cvv = user.getVerificato()
 
             session["nome"] = nomecliente
             session["cognome"] = cognomecliente
@@ -85,7 +88,7 @@ def accessoU():
             session["carta"] = numcarta
             session["mese"] = mese
             session["anno"] = anno
-            session["cvv"] = cvv
+            session["universita"] = uni
 
             return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
