@@ -1,163 +1,12 @@
 {% extends "base.html" %}
-{% block title %} Risultati Ricerca {% endblock %}
+{% block title %} House {% endblock %}
 
 {% block style %}
-    <title>Catalogo</title>
-    <!-- Includi il link al CSS di Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Stile personalizzato per il documento -->
-    <style>
-         .title {
-            text-align: center;
-            margin: auto;
-            position: absolute;
-             padding-bottom: 30px;
-            top: 80px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-          .custom-btn-color-homechecker {
-            background-color: #556b2f;
-            color: white;
-            /* Aggiungi altre proprietà per personalizzare ulteriormente il pulsante */
-        }
 
-        /* Stato al passaggio del mouse */
-        .custom-btn-color-homechecker:hover {
-            background-color: #556b2f; /* Mantieni il colore verde */
-            filter: brightness(110%); /* Aumenta leggermente la luminosità */
-            box-shadow: none; /* Rimuovi l'ombra */
-        }
-
-        /* Stato al click */
-        .custom-btn-color-homechecker:active {
-            box-shadow: none; /* Rimuovi l'ombra al click */
-        }
-
-        .custom-btn-color-homechecker {
-            background-color: #556b2f;
-            color: white;
-            /* Aggiungi altre proprietà per personalizzare ulteriormente il pulsante */
-        }
-
-
-
-
-
-        .card {
-            display: flex;
-            flex-direction: column;
-            width: 20rem; /* Larghezza della card */
-            margin-bottom: 20px; /* Spazio tra le card */
-            margin-top: 30px;
-            /* Altezza leggermente maggiore */
-            height: 25rem; /* Altezza fissa per tutte le card */
-            border-radius: 20px; /* Arrotonda i bordi delle cards */
-            cursor: pointer; /* Mostra il cursore come puntatore al passaggio */
-            transition: transform 0.3s ease-in-out; /* Effetto transizione */
-            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
-
-
-
-
-
-        }
-
-
-        .card:hover {
-            transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
-        }
-
-        .card-body {
-            margin-top: auto;
-            position: relative; /* Posizione relativa per consentire sovrapposizioni */
-            height: 100%; /* Altezza fissa per il corpo della card */
-            display: flex; /* Imposta il display a flex */
-            flex-direction: column; /* Imposta la direzione della flessione a colonna */
-            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
-        }
-
-
-        .card-text {
-            position: relative; /* Posizione relativa per consentire z-index */
-            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
-            color: #000000; /* Colore del testo */
-        }
-
-        .card-img-overlay {
-            position: absolute; /* Posiziona l'elemento in modo assoluto */
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-size: cover; /* Copertura completa dell'immagine */
-            opacity: 0.6; /* Opacità per l'immagine di sfondo */
-            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
-        }
-
-.cards-row {
-        margin-top: 30px; /* Aggiungi un margine superiore */
-    }  .card {
-            display: flex;
-            flex-direction: column;
-            width: 20rem; /* Larghezza della card */
-            margin-bottom: 20px; /* Spazio tra le card */
-            margin-top: 30px;
-            /* Altezza leggermente maggiore */
-            height: 25rem; /* Altezza fissa per tutte le card */
-            border-radius: 20px; /* Arrotonda i bordi delle cards */
-            cursor: pointer; /* Mostra il cursore come puntatore al passaggio */
-            transition: transform 0.3s ease-in-out; /* Effetto transizione */
-            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
-
-
-
-
-
-        }
-
-
-        .card:hover {
-            transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
-        }
-
-        .card-body {
-            margin-top: auto;
-            position: relative; /* Posizione relativa per consentire sovrapposizioni */
-            height: 100%; /* Altezza fissa per il corpo della card */
-            display: flex; /* Imposta il display a flex */
-            flex-direction: column; /* Imposta la direzione della flessione a colonna */
-            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
-        }
-
-
-        .card-text {
-            position: relative; /* Posizione relativa per consentire z-index */
-            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
-            color: #000000; /* Colore del testo */
-        }
-
-        .card-img-overlay {
-            position: absolute; /* Posiziona l'elemento in modo assoluto */
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-size: cover; /* Copertura completa dell'immagine */
-            opacity: 0.6; /* Opacità per l'immagine di sfondo */
-            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
-        }
-
-.cards-row {
-        margin-top: 30px; /* Aggiungi un margine superiore */
-    }
-
-    </style>
 {% endblock %}
-
+}
 {% block content %}
-    {% if session.get("tipo") != "Locatore" %}
+ {% if session.get("tipo") != "Locatore" %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
@@ -165,54 +14,89 @@
 <div style="height: 2800px">
 
 
+      <div class="container marketing" >
 
-<body>
-     <div class="container">
-         <div class="row justify-content-center mt-5">
-            <h1 class="title">Catalogo</h1>
+           <h1 class="mb-1" style="margin-top: 15px;"><b>UnirentHub | {{ citta }}</b></h1>
 
-
-            {% for alloggio in alloggi %}
-                <div class="col-md-4 mb-3">
-                    <!-- Tutto il contenuto della card viene avvolto in un link -->
-                    <div class="card" onclick="redirectTo('{{ alloggio[0] }}')">
-                        <img class="card-img-top card-img-overlay" src="path_to_your_image.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"style="margin-top: auto; text-align: center;margin-bottom: 20px">{{ alloggio[3] }}</h5>
-                            <p class="card-text">{{ alloggio[12] }}</p>
-                            <!-- Il resto del contenuto della card -->
-                        </div>
-                    </div>
-                </div>
-                {% if loop.index % 3 == 0 %} <!-- Chiudi la riga ogni 3 elementi -->
-                    </div><div class="row">
-                {% endif %}
-            {% endfor %}
+           <br>
+          {% for alloggio in alloggi %}
+          {% if alloggio %}
+          <div class="card mb-3" style="max-width: 1100px; " onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">
+        <div class="row g-0">
+        <div class="col-md-4">
+          <img src="../{{ immagini[loop.index0] }}" class="img-fluid rounded-start" alt="...">
         </div>
-     </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h3 class="card-title">{{ alloggio.get_titolo() }}</h3>
+            <h5 class="mb-0"><b>{{ alloggio.get_prezzo() }}</b>€/mese</h5>
+              <h6 class="mb-0" style="margin-top: 10px;">{{ alloggio.get_mq() }} m2 <span style="margin-left: 5px;"></span> | <span style="margin-left: 5px;"></span>{{ alloggio.get_n_stanze() }} stanze<span style="margin-left: 5px;"> </span>| </h6>
+          </div>
+            <hr class="featurette-divider" style="margin-right: 20px; margin-top: -10px">
+            <div class="d-flex justify-content-end" style="margin-right: 19px;">
+               <div style="display: flex; margin-top: 5px; margin-right: 179px;">
+  <h5 class="mb-0"><b>Rating:</b></h5>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5c8e48" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-left: 5px;">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5c8e48" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-left: 5px;">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5c8e48" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-left: 5px;">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5c8e48" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-left: 5px;">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5c8e48" class="bi bi-star-fill" viewBox="0 0 16 16" style="margin-left: 5px;">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+</div>
 
-        <button type="button" class="btn custom-btn-color-homechecker" style="position: fixed; bottom: 20px; right: 20px; max-width: 200px; padding: 15px 15px; border-radius: 20px;" onclick="scrollToTop()">
-        Torna Su
-    </button>
 
-    <script>
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
 
-    <!-- Includi il JavaScript di Bootstrap (opzionale) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+              <a href="#" class="btn btn-primary mr-2" style="background-color: #5c8e48; border-color: #5c8e48;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                  <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"></path>
+                </svg>
+                Condividi
+              </a>
+
+              <a href="/Preferiti?id={{ alloggio.get_id_alloggio() }}" class="btn btn-outline-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
+                </svg>
+                Salva preferito
+              </a>
+</div>
+
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
+      {% endfor %}
     <script>
         function redirectTo(id) {
             window.location.href = '/Alloggio.html?id=' + id;
         }
     </script>
-    {% include "footerNew.html" %}
-    {% endif %}
-    {% if session.get("tipo") == "Locatore" %}
-    {% include "error.html" %}
-    {% endif %}
-</body>
-{% endblock %}
+
+
+        <hr class="featurette-divider"> <!-- Gli altri annunci devono sempre stare SOPRA questo divider -->
+
+      </div><!-- /.container -->
+
+
 </div>
+
+
+    {% include "footerNew.html" %}
+    {% endif%}
+     {% if session.get("tipo") == "Locatore" %}
+        {% include "error.html" %}
+    {% endif %}
+{% endblock %}

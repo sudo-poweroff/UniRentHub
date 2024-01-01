@@ -16,16 +16,32 @@ from .ServiziDAO import ServiziDAO
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
-@gu2.route('/Catalogo.html')
+@gu2.route('/page', methods=['GET'])
 def catalogo():
-    dao = AlloggioDAO()
-    alloggi = dao.visualizza()
-    immagini = []
-    for alloggio in alloggi:
-        id_alloggio = alloggio[0]
-        immagine = dao.visualizzaimg(id_alloggio)
-        immagini.append(immagine)
-    return render_template("catalogo.html", immagini=immagini, alloggi=alloggi)
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_alloggio(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
 
 
 @gu2.route('/Alloggio.html')
@@ -134,12 +150,10 @@ def allservizi():
 def search():
     if request.method == 'POST':
         citta = request.form["citta"]
-        print("Sono del POST")
-        alloggi = ricerca_alloggio(citta)
-        for alloggio in alloggi:
-            print("Sono nel for POST")
-            return render_template("Catalogo.html", alloggi=alloggi) #se tutto va bene reinderizzi alla futura visualizza alloggio
-    return render_template("Homepage.html") #output per il get se non sono presenti alloggi
+        session["ricerca"] = citta
+        print("Sono dentro")
+        return redirect(url_for('gu2.catalogo')) #se tutto va bene reinderizzi alla futura visualizza alloggio
+    return redirect(url_for('gu2.main')) #output per il get se non sono presenti alloggi
 
 
 @gu2.route('/Homecheck', methods=['GET', 'POST'])
