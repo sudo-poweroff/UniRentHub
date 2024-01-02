@@ -151,11 +151,9 @@ label.light {
               <div class="form-group">
                 <label id="l-uni" for="exampleFormControlSelect1">Universita'</label>
                 <select name="universita" class="form-control" id="exampleFormControlSelect1">
-                  <option value="Federico II">Federico II</option>
-                  <option value="Politecnico di Milano">Politecnico di Milano</option>
-                  <option value="Università Roma Tre">Università Roma Tre</option>
-                  <option value="Università degli Studi di Salerno">Università degli Studi di Salerno</option>
-                  <option value="La Sapienza">La Sapienza</option>
+                {% for uni in universita %}
+                  <option value="{{ uni }}">{{ uni }}</option>
+                    {% endfor %}
                 </select>
               </div>
 

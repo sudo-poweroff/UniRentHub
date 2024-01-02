@@ -21,7 +21,8 @@ def main():
 @gu.route('/registrazione', methods=['GET', 'POST'])
 def registrazione():
     if request.method == "GET":
-        return render_template("registrazione.html")
+        universita = cercatutteuni()
+        return render_template("registrazione.html",universita=universita)
 
     if request.method == "POST":
         nome = request.form["nome"]
@@ -51,7 +52,7 @@ def registrazione():
             session["anno"] = user.getAnnoScadenza()
             session["universita"] = denominazione
 
-            return redirect(url_for("gu.main"))
+        return redirect(url_for("gu.main"))
 
 
 @gu.route('/login', methods=['GET', 'POST'])
