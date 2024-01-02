@@ -54,6 +54,7 @@ def annuncio():
     id_alloggio = request.args.get('id')
     alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
+
     immagini = dao2.recupera_path(id_alloggio=id_alloggio)
 
     path = []
