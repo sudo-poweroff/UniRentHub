@@ -233,8 +233,7 @@ def lista():
     alloggi=[]
     for num in session['case_preferite']:
         print(num)
-        dao = AlloggioDAO()
-        alloggio = dao.visualizzaannuncio(num)
+        alloggio = visualizza_annuncio(num)
         alloggi.append(alloggio)
 
     return render_template("ListaPreferiti.html",alloggi=alloggi)
