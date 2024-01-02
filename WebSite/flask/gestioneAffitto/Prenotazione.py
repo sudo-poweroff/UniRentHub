@@ -1,9 +1,10 @@
 class Prenotazione:
 
-    def __init__(self, id_alloggio, email, data_visita):
+    def __init__(self, id_alloggio, email, data_visita, disponibilita):
         self.__id_alloggio = id_alloggio
         self.__email = email
         self.__data_visita = data_visita
+        self.__disponibilita = disponibilita
 
     def get_id_alloggio(self):
         return self.__id_alloggio
@@ -22,3 +23,9 @@ class Prenotazione:
 
     def set_data_visita(self, nuova_data_visita):
         self.__data_visita = nuova_data_visita
+
+    def get_disponibilita(self):
+        return self.__disponibilita
+
+    def set_disponibilita(self, disponibilita):
+        self.__disponibilita = disponibilita

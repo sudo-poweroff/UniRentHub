@@ -200,12 +200,12 @@ INSERT INTO Affittare (id_alloggio, email, data_inizio, data_fine, numero_carta,
 (5, 'saramarti@gmail.com', '2024-04-01', '2024-04-15', '4321098765432109', 7, 2024, 600.00);
 
 -- Popolamento della tabella Prenotazione
-INSERT INTO Prenotazione (id_alloggio, email, data_visita) VALUES
-(1, 'gioromano@gmail.com', '2023-01-25 15:00:00'),
-(2, 'matteobianchi@gmail.com', '2023-02-05 16:30:00'),
-(3, 'giorgioferraro@gmail.com', '2023-02-20 10:00:00'),
-(4, 'sofiaesposito@gmail.com', '2023-03-10 11:30:00'),
-(5, 'saramarti@gmail.com', '2023-04-05 12:00:00');
+INSERT INTO Prenotazione (id_alloggio, email, data_visita, disponibilita) VALUES
+(1, 'gioromano@gmail.com', '2023-01-25 15:00:00', true),
+(2, 'matteobianchi@gmail.com', '2023-02-05 16:30:00', true),
+(3, 'giorgioferraro@gmail.com', '2023-02-20 10:00:00', true),
+(4, 'sofiaesposito@gmail.com', '2023-03-10 11:30:00', true),
+(5, 'saramarti@gmail.com', '2023-04-05 12:00:00', true);
 
 -- Popolamento della tabella Recensione
 INSERT INTO Recensione (id_alloggio, email, titolo, voto, descrizione, data_recensione) VALUES

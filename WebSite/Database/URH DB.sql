@@ -166,6 +166,7 @@ CREATE TABLE Prenotazione (
     id_alloggio INT,
     email VARCHAR(255),
     data_visita DATETIME NOT NULL,
+    disponibilita boolean,
     FOREIGN KEY (id_alloggio) REFERENCES Alloggio(id_alloggio) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (email) REFERENCES Cliente(email) ON DELETE CASCADE ON UPDATE CASCADE
 );

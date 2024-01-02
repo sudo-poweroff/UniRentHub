@@ -8,20 +8,20 @@ class PrenotazioneDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-
-
-
     #creazione prenotazione
-    def creaprenotazione(self,id_alloggio, email, data_visita):
+    def creaprenotazione(self, prenotazione):
         query = """ 
-                INSERT INTO prenotazione(id_alloggio, email, data_visita)
-                VALUES(%s, %s, %s)
+                INSERT INTO prenotazione(id_alloggio, email, data_visita, disponibilita)
+                VALUES(%s, %s, %s, %s)
                 """
-        values = (id_alloggio, email, data_visita)
+        values = (
+            prenotazione.get_id_alloggio(),
+            prenotazione.get_email(),
+            prenotazione.get_data_visita(),
+            True
+        )
         self.__cursor.execute(query, values)
         self.__connection.commit()
-
-
 
     #update prenotazione
     def updateprenotazione(self, id_alloggio, email, data_visita):
@@ -45,8 +45,6 @@ class PrenotazioneDAO:
         self.__cursor.execute(query,  values)
         self.__connection.commit()
 
-
-
     #ricerca prenotazioni
     def ricercaprenotazione(self, id_alloggio):
         query = """
@@ -68,10 +66,3 @@ class PrenotazioneDAO:
             )
             prenotazioni.append(prenotazione)
         return prenotazioni
-
-
-
-
-
-
-
