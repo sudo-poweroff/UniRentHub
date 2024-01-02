@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UniRentHub | Data Visita</title>
+    <style>
+        .div-data {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="datetime-local"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+                .table {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if session.get("tipo") == "Locatore" %}
+    {% include "header.html" %}
+
+        <div class="div-data">
+        <h2 style="margin-top: 50px; margin-bottom: 50px">Inserisci i tuoi orari:</h2>
+     <form>
+        <input type="datetime-local" id="datetime" name="datetime" required>
+        <br>
+        <button type="submit">Invia</button>
+  </form>
+        </div>
+        <section style="margin-left: 100px; margin-right: 100px; margin-top: 80px; margin-bottom: 100px">
+        <table class="table">
+  <thead>
+    <tr >
+      <th scope="col"></th>
+      <th scope="col">Giorno</th>
+      <th scope="col">Mese</th>
+      <th scope="col">Ora</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td style="width: 250px">
+        <button style="            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 35%;" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td style="width: 250px">
+        <button style="            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 35%;" type="button" class="btn btn-danger"" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td style="width: 250px">
+        <button style="           padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 35%;" type="button" class="btn btn-danger"" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<script>
+  function removeRow(button) {
+    // Find the row that contains the button
+    var row = button.parentNode.parentNode;
+
+    // Remove the row
+    row.parentNode.removeChild(row);
+  }
+</script>
+
+{% include "footerNew.html" %}
+{% endif %}
+</body>
+</html>

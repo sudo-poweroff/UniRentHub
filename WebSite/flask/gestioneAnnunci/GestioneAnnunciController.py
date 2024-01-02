@@ -354,9 +354,15 @@ def modifica_annuncio():
                                servizi=servizi)
 
 #da concludere
-    @gu2.route('/elimina_post', methods=['POST'])
-    def elimina_annuncio():
-        if request.method == 'POST':
-            id_alloggio = session.get("id_alloggio")
-            elimina_alloggio_byid(id_alloggio)
-            return render_template("Userpage.html")
+@gu2.route('/elimina_post', methods=['POST'])
+def elimina_annuncio():
+    if request.method == 'POST':
+        id_alloggio = session.get("id_alloggio")
+        elimina_alloggio_byid(id_alloggio)
+        return render_template("Userpage.html")
+
+
+@gu2.route('/data_visita')
+def data_visita_locatore():
+    print("OOOOOOO")
+    return render_template("DataVisita.html")
