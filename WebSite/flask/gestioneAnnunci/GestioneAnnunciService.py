@@ -10,6 +10,7 @@ from .PossidimentoDAO import PossedimentoDAO
 from .Post import Post
 from .PostDAO import PostDAO
 from WebSite.flask.gestioneUtente.ClienteDAO import ClienteDAO
+from WebSite.flask.gestioneAffitto.PrenotazioneDAO import PrenotazioneDAO
 from .ServiziDAO import ServiziDAO
 
 
@@ -231,3 +232,9 @@ def modifica_indirizzo_byid(id_alloggio, indirizzo):
 def elimina_alloggio_byid(id_alloggio):
     dao = AlloggioDAO()
     dao.elimina_alloggio(id_alloggio=id_alloggio)
+
+#preleva data visita by id
+def preleva_data_visita(id_alloggio):
+    dao = PrenotazioneDAO()
+    prenotazione = dao.ricercaprenotazione(id_alloggio=id_alloggio)
+    return prenotazione

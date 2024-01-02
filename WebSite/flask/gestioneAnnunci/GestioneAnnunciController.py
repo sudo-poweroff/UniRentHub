@@ -364,5 +364,17 @@ def elimina_annuncio():
 
 @gu2.route('/data_visita')
 def data_visita_locatore():
-    print("OOOOOOO")
-    return render_template("DataVisita.html")
+    id_alloggio = session.get("id_alloggio")
+    print("id_alloggio fuori: " + str(id_alloggio))
+
+    prenotazione = preleva_data_visita(id_alloggio=id_alloggio)
+    data_time = []
+
+    for row in prenotazione:
+        d = row.get_data_visita()
+        datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
+        print("AFFITTO -> dataTIME:  " + str(datetime_object))
+
+        data_time.append(datetime_object)
+
+    return render_template("DataVisita.html", data=data_time)
