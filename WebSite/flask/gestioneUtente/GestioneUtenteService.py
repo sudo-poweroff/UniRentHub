@@ -124,12 +124,13 @@ def casep(email):
     return alloggi
 
 
-def update_cliente(nome, cognome, email, password, tipo_utente, numero_carta, scadenza):
+def update_cliente(nome, cognome, email, password, tipo_utente, numero_carta, anno, mese):
     if controlla_campi(nome, cognome, email):
         if is_valid_email(email):
             if is_valid_password(password):
                 dao = ClienteDAO()
-                cliente = dao.aggiornaCliente(nome, cognome, email, password, tipo_utente, numero_carta, scadenza)
+                print(mese)
+                cliente = dao.aggiornaCliente(nome, cognome, email, password, tipo_utente, numero_carta, anno, mese)
 
 
 def idcasas(email, data):

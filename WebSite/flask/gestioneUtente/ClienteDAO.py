@@ -175,14 +175,14 @@ class ClienteDAO:
 
 
 
-    def aggiornaCliente(self, nome, cognome, email, password, tipo_utente, numero_carta, scadenza):
+    def aggiornaCliente(self, nome, cognome, email, password, tipo_utente, numero_carta, anno, mese):
         query = """
                     UPDATE cliente
-                    SET nome =%s, cognome=%s, password =%s, numero_carta =%s, data_scadenza =%s
+                    SET nome =%s, cognome=%s, password =%s, numero_carta =%s, anno_scadenza =%s, mese_scadenza =%s
                     WHERE email =%s
                 """
 
-        values = (nome, cognome, password, numero_carta, scadenza, email)
+        values = (nome, cognome, password, numero_carta, anno, mese, email)
 
         self.__cursor.execute(query, values)
         self.__connection.commit()

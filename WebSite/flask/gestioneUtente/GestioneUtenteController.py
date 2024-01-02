@@ -232,10 +232,12 @@ def modifica():
         tipo = session["tipo"]
         denominazione = request.form.get("universita")
         numero_carta = request.form.get("numeroc")
+        mese = request.form.get("mese-scadenza")
+        anno = request.form.get("anno-scadenza")
         cvv = request.form.get("cvv")
-        scadenza = request.form.get("scadenza")
+
         update_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo,
-                       numero_carta=numero_carta, scadenza=scadenza)
+                       numero_carta=numero_carta, mese=mese, anno=anno)
 
         if tipo == "Studente":
             if session["universita"] != denominazione:
@@ -246,7 +248,6 @@ def modifica():
         session["email"] = email
         session["password"] = password
         session["carta"] = numero_carta
-        session["scadenza"] = scadenza
         session["cvv"] = cvv
         session["universita"] = denominazione
     return redirect(url_for('gu.userpage'))
