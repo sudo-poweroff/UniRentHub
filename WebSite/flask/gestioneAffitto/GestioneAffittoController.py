@@ -1,7 +1,7 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
+from flask import Blueprint, request, render_template, session, redirect, url_for, Flask, jsonify
 from datetime import datetime
 
-from WebSite.flask.gestioneAffitto.GestioneAffittoService import insert_data_byId
+from WebSite.flask.gestioneAffitto.GestioneAffittoService import insert_data_byId, delete_data_byId
 from WebSite.flask.gestioneAffitto.Prenotazione import Prenotazione
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_data_visita
 
@@ -25,6 +25,7 @@ def insert_data():
         for d in data1:
             datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
             data.append(datetime_object)
+            print("DATA VISIONeds33e2: " + str(datetime_object.date().strftime("%Y-%m-%d %H:%M:%S")))
 
         print("AFFITTO -> ID ALLOGGIO:  " + str(id_alloggio))
         print("AFFITTO -> EMAIL:  " + email)
@@ -39,3 +40,16 @@ def insert_data():
         insert_data_byId(prenotazione)
 
         return render_template("DataVisita.html", data=data)
+
+
+@gu3.route('/remove_data', methods=['POST'])
+def remove_data():
+    if request.method == 'POST':
+        date = request.form["button"]
+        print("NUOVA DATA RIMOSSA: " + date)
+        id_alloggio = session.get("id_alloggio")
+        delete_data_byId(id_alloggio=id_alloggio, data_visita=date)
+
+        return redirect(url_for("gu2.data_visita_locatore"))
+
+

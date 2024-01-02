@@ -63,5 +63,5 @@ class PrenotazioneDAO:
         value = (
             id_alloggio,
             data_visita)
-        self.cursor.execute(query, values)
-        self.connection.commit()
+        self.__cursor.execute(query, value)
+        self.__connection.commit()

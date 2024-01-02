@@ -14,7 +14,7 @@
             text-align: center;
         }
 
-        form {
+        .form-uno {
             text-align: center;
             max-width: 400px;
             margin: 20px auto;
@@ -67,7 +67,7 @@
 
         <div class="div-data">
         <h2 style="margin-top: 50px; margin-bottom: 50px">Inserisci i tuoi orari</h2>
-     <form action="/insert_data" method="post">
+     <form class="form-uno" action="/insert_data" method="post">
         <input type="datetime-local" id="datetime" name="datetime" required>
         <br>
         <button type="submit">Invia</button>
@@ -91,13 +91,21 @@
       <td>{{ d.month }}</td>
       <td>{{ d.hour }} : {{ d.minute }}</td>
       <td style="width: 250px">
-        <button style="            padding: 10px;
+          <form  action="/remove_data" method="post">
+                      <button style="padding: 10px;
             background-color: #4caf50;
             color: white;
             border: 2px solid #4caf50;
             border-radius: 20px;
             cursor: pointer;
-            width: 35%;" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
+            width: 35%;"
+        type="submit"
+        class="btn btn-danger"
+                name="button"
+                value="{{d.strftime('%Y-%m-%d %H:%M:%S')}}"
+        >Rimuovi
+</button>
+          </form>
       </td>
     </tr>
   {% endfor %}
@@ -105,15 +113,8 @@
 </table>
 </section>
 
-<script>
-  function removeRow(button) {
-    // Find the row that contains the button
-    var row = button.parentNode.parentNode;
 
-    // Remove the row
-    row.parentNode.removeChild(row);
-  }
-</script>
+
 
 {% include "footerNew.html" %}
 {% endif %}

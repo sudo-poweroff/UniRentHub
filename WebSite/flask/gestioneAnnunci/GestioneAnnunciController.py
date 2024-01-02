@@ -52,6 +52,11 @@ def annuncio():
     dao3 = IndirizzoDAO()
 
     id_alloggio = request.args.get('id')
+
+    #ATTENZIONE
+    #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
+    session["id_alloggio"] = id_alloggio
+
     alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
     servizi = dao.visualizzaservizi(id_alloggio)
 
