@@ -89,7 +89,6 @@ def accessoU():
             session["carta"] = numcarta
             session["mese"] = mese
             session["anno"] = anno
-            session["universita"] = uni
 
             return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
