@@ -7,7 +7,7 @@ from .AlloggioDAO import AlloggioDAO
 from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
-    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid
+    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO

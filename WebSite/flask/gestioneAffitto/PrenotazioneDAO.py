@@ -48,7 +48,7 @@ class PrenotazioneDAO:
     #ricerca prenotazioni
     def ricercaprenotazione(self, id_alloggio):
         query = """
-                SELECT id_alloggio, email, data_visita 
+                SELECT email, data_visita 
                 FROM prenotazione
                 WHERE id_alloggio = %s
                 """
@@ -56,13 +56,11 @@ class PrenotazioneDAO:
         self.__cursor.execute(query, value)
         results = self.__cursor.fetchall()
 
-
         prenotazioni = []
         for result in results:
             prenotazione = Prenotazione(
-                id_alloggio= result[0],
-                email= result[1],
-                data_visita=result[2]
+                email= result[0],
+                data_visita=result[1]
             )
             prenotazioni.append(prenotazione)
         return prenotazioni

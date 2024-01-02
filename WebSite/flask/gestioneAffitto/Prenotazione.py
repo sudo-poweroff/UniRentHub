@@ -1,6 +1,6 @@
 class Prenotazione:
 
-    def __init__(self, id_alloggio, email, data_visita, disponibilita):
+    def __init__(self, id_alloggio = None, email = None, data_visita = None, disponibilita = None):
         self.__id_alloggio = id_alloggio
         self.__email = email
         self.__data_visita = data_visita

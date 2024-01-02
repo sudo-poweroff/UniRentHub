@@ -66,8 +66,8 @@
     {% include "header.html" %}
 
         <div class="div-data">
-        <h2 style="margin-top: 50px; margin-bottom: 50px">Inserisci i tuoi orari:</h2>
-     <form>
+        <h2 style="margin-top: 50px; margin-bottom: 50px">Inserisci i tuoi orari</h2>
+     <form action="/insert_data" method="post">
         <input type="datetime-local" id="datetime" name="datetime" required>
         <br>
         <button type="submit">Invia</button>
@@ -84,11 +84,12 @@
     </tr>
   </thead>
   <tbody>
+  {% for d in data %}
     <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{ d.day }}</td>
+      <td>{{ d.month }}</td>
+      <td>{{ d.hour }} : {{ d.minute }}</td>
       <td style="width: 250px">
         <button style="            padding: 10px;
             background-color: #4caf50;
@@ -99,36 +100,7 @@
             width: 35%;" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
       </td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td style="width: 250px">
-        <button style="            padding: 10px;
-            background-color: #4caf50;
-            color: white;
-            border: 2px solid #4caf50;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 35%;" type="button" class="btn btn-danger"" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td style="width: 250px">
-        <button style="           padding: 10px;
-            background-color: #4caf50;
-            color: white;
-            border: 2px solid #4caf50;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 35%;" type="button" class="btn btn-danger"" type="button" class="btn btn-danger" onclick="removeRow(this)">Rimuovi</button>
-      </td>
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
 </section>
