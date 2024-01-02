@@ -34,17 +34,6 @@ class PrenotazioneDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-
-    #cancella prenotazione
-    def deleteprenotazione(self, id_alloggio, email):
-        query = """
-                DELETE FROM affittare
-                WHERE id_alloggio = %s AND email = %s
-                """
-        values = (id_alloggio, email)
-        self.__cursor.execute(query,  values)
-        self.__connection.commit()
-
     #ricerca prenotazioni
     def ricercaprenotazione(self, id_alloggio):
         query = """
@@ -64,3 +53,15 @@ class PrenotazioneDAO:
             )
             prenotazioni.append(prenotazione)
         return prenotazioni
+
+    #cancella prenotazione
+    def deleteprenotazione(self, id_alloggio, data_visita):
+        query = """
+            DELETE FROM prenotazione
+            WHERE id_alloggio = %s AND data_visita = %s
+        """
+        value = (
+            id_alloggio,
+            data_visita)
+        self.cursor.execute(query, values)
+        self.connection.commit()
