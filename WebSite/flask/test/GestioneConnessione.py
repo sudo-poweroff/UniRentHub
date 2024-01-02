@@ -7,7 +7,7 @@ class GestioneConnessione:
         self.__connessione = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="ciccio",
+            password="rootBDCris77",
             database="unirenthub"
         )
         self.__cursor = self.__connessione.cursor()
