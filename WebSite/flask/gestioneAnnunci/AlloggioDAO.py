@@ -274,12 +274,3 @@ class AlloggioDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def recensione_alloggio(self, id_alloggio, email, titolo, voto, descrizione, data):
-        query = """
-        INSERT INTO recensione
-        (id_alloggio, email, titolo, voto, descrizione, data_recensione) 
-        VALUES(%s,%s,%s,%s,%s,%s)
-        """
-        values = (id_alloggio, email, titolo, voto, descrizione, data)
-        self.__cursor.execute(query, values)
-        self.__connection.commit()

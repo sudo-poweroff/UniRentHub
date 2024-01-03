@@ -11,6 +11,7 @@ from .Post import Post
 from .PostDAO import PostDAO
 from WebSite.flask.gestioneUtente.ClienteDAO import ClienteDAO
 from WebSite.flask.gestioneAffitto.PrenotazioneDAO import PrenotazioneDAO
+from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
 from .ServiziDAO import ServiziDAO
 
 
@@ -241,5 +242,11 @@ def preleva_data_visita(id_alloggio):
 
 def recensione(id, titolo, descrizione, voto, data, mail):
     print("ciao")
-    dao = AlloggioDAO()
+    dao = RecensioneDAO()
+    dao.deleterecensione(id, mail)
     dao.recensione_alloggio(id, mail, titolo, voto, descrizione, data)
+
+def cercarec(id_alloggio, email):
+    dao = RecensioneDAO()
+    rec = dao.ricercarecensionestudente(id_alloggio,email)
+    return rec

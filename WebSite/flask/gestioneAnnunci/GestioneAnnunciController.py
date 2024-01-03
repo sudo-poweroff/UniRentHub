@@ -7,7 +7,8 @@ from .AlloggioDAO import AlloggioDAO
 from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
-    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita
+    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
+    recensione, cercarec
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -406,13 +407,16 @@ def segnala():
 @gu2.route("/recensione")
 def inseriscirec():
     id_alloggio = request.args.get('id') or session.get("id_alloggio")
-    return render_template("Recensione.html", id=id_alloggio)
+    email=session["email"]
+    rec = cercarec(id_alloggio, email)
+    return render_template("Recensione.html", id=id_alloggio, rec=rec)
 
 
 @gu2.route("/recensisci", methods=['POST'])
 def recensisci():
     if request.method == 'POST':
         id_alloggio = request.form.get("id")
+        print(id_alloggio)
         titolo = request.form.get("titolo")
         descrizione = request.form.get("descrizione")
         email = session["email"]
@@ -420,4 +424,5 @@ def recensisci():
         data = datetime.now().strftime("%Y-%m-%d")
         print(id_alloggio, titolo, descrizione, email, voto, data)
         recensione(id_alloggio, titolo, descrizione, voto, data, email)
-        return render_template("Recensione.html")
+        return redirect(url_for('gu.userpage'))
+
