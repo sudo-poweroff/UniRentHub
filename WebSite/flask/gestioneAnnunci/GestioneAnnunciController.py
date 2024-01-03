@@ -13,6 +13,7 @@ from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
 from .ServiziDAO import ServiziDAO
+from WebSite.flask.gestioneAffitto.GestioneAffittoService import ricerca_data_disponibile
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -51,7 +52,7 @@ def annuncio():
     dao2 = ImmagineDAO()
     dao3 = IndirizzoDAO()
 
-    id_alloggio = request.args.get('id')
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
 
     #ATTENZIONE
     #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
@@ -71,7 +72,17 @@ def annuncio():
 
     indirizzo = dao3.visualizzaindirizzo(id_alloggio)
 
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path)
+    prenotazione = ricerca_data_disponibile(id_alloggio=id_alloggio)
+    data_time = []
+
+    for row in prenotazione:
+        d = row.get_data_visita()
+        datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
+        print("AFFITTO -> dataTIME:  " + str(datetime_object))
+
+        data_time.append(datetime_object)
+
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
@@ -129,6 +140,8 @@ def allservizi():
 
         val_id = max_id_casa()
         print("ID: " + str(val_id))
+
+        session["id_alloggio"] = val_id
 
         indirizzo2 = Indirizzo(id_alloggio=val_id, via=indirizzo, cap=cap, citta=citta, civico=civico, provincia=provincia)
         indirizzo_crea(indirizzo2)
@@ -369,7 +382,7 @@ def elimina_annuncio():
 
 @gu2.route('/data_visita')
 def data_visita_locatore():
-    id_alloggio = session.get("id_alloggio")
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
     print("id_alloggio fuori: " + str(id_alloggio))
 
     prenotazione = preleva_data_visita(id_alloggio=id_alloggio)

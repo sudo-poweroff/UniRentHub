@@ -65,3 +65,36 @@ class PrenotazioneDAO:
             data_visita)
         self.__cursor.execute(query, value)
         self.__connection.commit()
+
+    def update_disponibilita(self, id_alloggio, data_visita):
+        query = """
+            UPDATE prenotazione
+            SET disponibilita = false
+            WHERE id_alloggio = %s AND data_visita = %s
+        """
+        values = (
+            id_alloggio,
+            data_visita
+        )
+        self.__cursor.execute(query, values)
+        self.__connection.commit()
+
+    def ricerca_alloggi_disponibili(self, id_alloggio):
+        query = """
+            SELECT data_visita
+            FROM prenotazione
+            WHERE id_alloggio = %s AND disponibilita = true
+        """
+        values = (id_alloggio,)
+        self.__cursor.execute(query, values)
+        results = self.__cursor.fetchall()
+
+        prenotazioni = []
+        for result in results:
+            prenotazione = Prenotazione(
+                data_visita=result[0]
+            )
+            prenotazioni.append(prenotazione)
+        return prenotazioni
+
+

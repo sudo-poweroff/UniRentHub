@@ -23,7 +23,7 @@
 </svg>
 
         <h2>Completa il Pagamento</h2>
-        <p class="lead">Qui va spiegato che sul primo mese tratteniamo il 5%, roba da una riga e mezza.</p>
+        <p class="lead">UniRentHub addebita una commissione del 5% sul primo mese di affitto per i servizi forniti attraverso la piattaforma. Questa commissione è trattenuta per coprire i costi operativi e garantire la continuità del servizio. Gli affittuari dovrebbero tenere presente che solo sul primo mese verrà applicato questo addebito del 5%, mentre negli affitti successivi non sarà più addebitato alcun costo aggiuntivo. Questa politica ci consente di offrire una piattaforma affidabile e di continuare a fornire un servizio di qualità a tutti gli utenti.</p>
       </div>
 
       <div class="row"> <!-- PARTE DI DESTRA -->
@@ -32,9 +32,9 @@
             <span class="text-muted">Il tuo alloggio</span>
           </h4>
           <div class="card">
-    <img class="card-img-top" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="Card image cap">
+    <img class="card-img-top" src="../{{ immagini[0] }}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">Titolo alloggio</h5>
+      <h5 class="card-title">{{ titolo }}</h5>
         <li class="list-group-item d-flex justify-content-between">
               <span style="margin-top:7px">Check In</span>
               <input placeholder="Select date" type="date" id="example" class="form-control" style="width: 150px">

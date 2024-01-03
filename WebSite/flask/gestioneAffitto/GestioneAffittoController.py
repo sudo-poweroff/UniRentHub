@@ -1,9 +1,11 @@
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask, jsonify
 from datetime import datetime
 
-from WebSite.flask.gestioneAffitto.GestioneAffittoService import insert_data_byId, delete_data_byId
+from WebSite.flask.gestioneAffitto.GestioneAffittoService import insert_data_byId, delete_data_byId, \
+    update_disponibilita
 from WebSite.flask.gestioneAffitto.Prenotazione import Prenotazione
-from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_data_visita
+from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_data_visita, visualizza_annuncio, \
+    preleva_immagini
 
 gu3 = Blueprint('gu3', __name__, template_folder="gestioneAnnunci")
 
@@ -53,3 +55,31 @@ def remove_data():
         return redirect(url_for("gu2.data_visita_locatore"))
 
 
+@gu3.route('/select_data', methods=['POST'])
+def update_data():
+    if request.method == 'POST':
+        date = request.form["button"]
+        print("NUOVA DATA: " + date)
+        id_alloggio = session.get("id_alloggio")
+        print(id_alloggio+"IDIDIDIDIDID")
+        update_disponibilita(id_alloggio=id_alloggio, data_visita=date)
+
+        return redirect(url_for("gu2.annuncio"))
+
+@gu3.route('/Pagamento', methods=['POST', 'GET'])
+def pagamento():
+    if request.method == 'GET':
+        id_alloggio = request.args.get('id')
+        print("IDIDIDIDI ->" + str(id_alloggio))
+        alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+
+        immagini = []
+        count = 0
+        path = preleva_immagini(id_alloggio)
+        for p in path:
+            if count == 0:
+                print("path:     " + p)
+                immagini.append(p)
+                count = 1
+
+        return render_template("Pagamento.html", titolo = alloggio.get_titolo(), immagini=path)

@@ -3,7 +3,20 @@
 
 {% block style %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<style>
 
+                .square-btn {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 20%;
+            margin-bottom: 10px;
+        }
+
+</style>
 {% endblock %}
 
 
@@ -62,29 +75,32 @@
           <h4 class="mb-0"><b>{{ alloggio.get_prezzo() }}</b>€/mese</h4>
           <br>
             {% if session.get("tipo") != "Locatore" %}
-                <button type="button" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48; width:269px;" onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">Affitta alloggio</button> <!-- TODO redirect pagemento -->
-                <br>
-                <button type="button" class="btn btn-outline-danger" style="margin-top: 10px;" onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">
+                 <button type="button" class="btn btn-outline-danger" style="margin-top: 10px;" onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path>
                 </svg>
                 Salva preferito
               </button>
             {% endif %}
-            <form  action="/data_visita">
-              <button type="submit" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px;">
-                  Inserisci date
-              </button>
+      {% if session.get("tipo") == "Locatore" %}
+    <a href="/data_visita?id={{ alloggio.get_id_alloggio() }}" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px;">
+        Inserisci date
+    </a>
+                {% endif %}
             </form>
-          <button type="button" class="btn btn-primary" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px;" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
-                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"></path>
-                </svg>
-                Condividi
-              </button>
 
+            {% if session.get("tipo") == "Studente" %}
+              <div class="row mb-4">
+                <div class="col text-center">
+                  <a href="#" style="height: 35px;font-size: 17px; margin-top: 13px; margin-right: 705px; background-color: #5c8e48; border-color: #5c8e48; width: 200px; line-height: 20px; padding: 5px 15px;" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#largeModal">Prenota Visita</a>
 
-          <br>
+                  {% if session.get("tipo") != "Locatore" %}
+                    <button type="button" class="btn btn-primary" style="margin-top: 15px;background-color: #5c8e48; border-color: #5c8e48; width:200px;" onclick="redirectToPagamento('{{ alloggio.get_id_alloggio() }}')">Affitta alloggio</button> <!-- TODO redirect pagamento -->
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
           <hr class="featurette-divider">
 
           <h3 class="mb-1"><b>Descrizione</b></h3>
@@ -128,6 +144,12 @@
             window.location.href = '/Preferiti?id=' + id;
         }
       </script>
+            <script>
+          function redirectToPagamento(id) {
+            window.location.href = '/Pagamento?id=' + id;
+        }
+      </script>
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <div id="mappa" style="height: 400px;">
     <script>
@@ -190,6 +212,28 @@
       </div>
 </div>
 
+
+<!-- large modal -->
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Date disponibili</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form style="margin-left: 85px" class="form-uno" action="/select_data" method="post">
+            {% for d in data %}
+                <button style="margin-right: 10px" type="submit" class="square-btn"  name="button"
+                value="{{d.strftime('%Y-%m-%d %H:%M:%S')}}" >{{d.day}}/{{ d.month }}/{{ d.year}} <br> ore {{ d.hour }}:{{ d.minute }}</button>
+            {% endfor %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     {% include "footerNew.html" %}
