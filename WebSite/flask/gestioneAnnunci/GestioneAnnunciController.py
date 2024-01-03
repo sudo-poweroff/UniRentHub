@@ -396,3 +396,9 @@ def data_visita_locatore():
         data_time.append(datetime_object)
 
     return render_template("DataVisita.html", data=data_time)
+
+
+@gu2.route('/Segnala', methods=['GET'])
+def segnala():
+
+    return render_template("Segnala.html")

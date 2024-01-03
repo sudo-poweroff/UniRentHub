@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %} Segnalazione {% endblock %}
+
+{% block style %}
+    <style>
+
+
+        .checkbox-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkbox-container h2 {
+            font-weight: bold;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            width: 48%;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-control {
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+
+        .custom-control-label {
+            font-size: 18px;
+        }
+
+        .textarea-container {
+            margin-top: 20px;
+            height: 40vh;
+            margin-left: 0px; /* Rimuovi il margine sinistro */
+            position: relative;
+        }
+
+        #Descrizione {
+            width: calc(100% - 0px); /* Larghezza rimasta invariata */
+            height: 30vh; /* Altezza rimasta invariata */
+            padding: 10px;
+            resize: vertical;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+.bottone {
+    position: absolute;
+    bottom: 10px; /* Posiziona il bottone 10px dal basso */
+    right: 0; /* Posiziona il bottone all'estrema destra */
+    margin-bottom: 20px; /* Aggiungi spazio sotto il bottone per separarlo dalla textarea */
+    margin-right: 10px; /* Aggiungi margine destro per separare il bottone dal bordo */
+}
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+    <div class="text-center">
+        <h2>Seleziona le opzioni:</h2>
+    </div>
+
+    <div class="container">
+        <div class="checkbox-container">
+            <div class="checkbox-group">
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="pannelli_fotovoltaici" class="custom-control-input" id="PannelliFotovoltaici">
+                    <label class="custom-control-label" for="PannelliFotovoltaici">Annuncio non veritiero</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="arredamento" class="custom-control-input" id="Arredamento">
+                    <label class="custom-control-label" for="Arredamento">Poca affidabilità</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="pannelli_solari" class="custom-control-input" id="PannelliSolari">
+                    <label class="custom-control-label" for="PannelliSolari">Termini contratto non rispettati</label>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="nome_checkbox" class="custom-control-input" id="IdCheckbox">
+                    <label class="custom-control-label" for="IdCheckbox">Tentata frode</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="nome_checkbox" class="custom-control-input" id="IdCheckbox">
+                    <label class="custom-control-label" for="IdCheckbox">Comportamento scorretto</label>
+                </div>
+                 <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="nome_checkbox" class="custom-control-input" id="IdCheckbox">
+                    <label class="custom-control-label" for="IdCheckbox">Termini della comunity non rispettati</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group textarea-container">
+            <label for="Descrizione">Dicci di più:</label>
+            <textarea class="form-control" id="Descrizione" name="descrizione" rows="3"></textarea>
+            <div class="bottone">
+             <button type="button" class="btn btn-primary" style="margin-top: 15px;background-color: #5c8e48; border-color: #5c8e48; width:200px;">Invia segnalazione</button> <!-- TODO redi
+                </div>
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        {% include "footerNew.html" %}
+        {% if session.get("tipo") == "Locatore" %}
+            {% include "error.html" %}
+        {% endif %}
+    </footer>
+{% endblock %}
