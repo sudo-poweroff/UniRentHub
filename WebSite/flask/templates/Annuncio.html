@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Annuncio</title>
+</head>
+<body>
+Nome: {{ alloggio[3] }}
+Tipo alloggio: {{ alloggio[2] }}
+Metri Quadri : {{ alloggio[4] }}
+Camere da letto :{{ alloggio[5]}}
+Bagni : {{ alloggio[6]}}
+Classe E: {{ alloggio[7]}}
+{% if alloggio[8] == 1 %}
+        <p>Arredamento: SI</p>
+    {% else %}
+        <p>Arredamento: NO</p>
+    {% endif %}
+Data Pubblicazione: {{ alloggio[9]}}
+{% if alloggio[10] == 1 %}
+        <p>Pannelli solari: SI</p>
+    {% else %}
+        <p>Pannelli solari: NO</p>
+    {% endif %}
+{% if alloggio[11] == 1 %}
+        <p>Pannelli fotovoltaici: SI</p>
+    {% else %}
+        <p>Pannelli fotovoltaici: NO</p>
+    {% endif %}
+Descrizione: {{ alloggio[12]}}
+{% if alloggio[13] == 1 %}
+        <p>Verificata</p>
+{% endif %}
+Prezzo: {{ alloggio[14]}}
+Ospiti: {{ alloggio[15]}}
+Stanze: {{ alloggio[16]}}
+Tasse : {{ alloggio[17]}} %
+
+<h2> Servizi</h2>
+{% for s in servizi %}
+{{ s[0] }}
+{% endfor %}
+<h2> Immagini</h2>
+{% for i in immagini %}
+<img src="{{ immagini[0] }}">
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UniRentHub | Data Visita</title>
+    <style>
+        .div-data {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-uno {
+            text-align: center;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="datetime-local"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+                .table {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if session.get("tipo") == "Locatore" %}
+    {% include "header.html" %}
+
+        <div class="div-data">
+        <h2 style="margin-top: 50px; margin-bottom: 50px">Inserisci i tuoi orari</h2>
+     <form class="form-uno" action="/insert_data" method="post">
+        <input type="datetime-local" id="datetime" name="datetime" required>
+        <br>
+        <button type="submit">Invia</button>
+  </form>
+        </div>
+        <section style="margin-left: 100px; margin-right: 100px; margin-top: 80px; margin-bottom: 100px">
+        <table class="table">
+  <thead>
+    <tr >
+      <th scope="col"></th>
+      <th scope="col">Giorno</th>
+      <th scope="col">Mese</th>
+      <th scope="col">Ora</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for d in data %}
+    <tr >
+      <th scope="row">{{loop.index}}</th>
+      <td>{{ d.day }}</td>
+      <td>{{ d.month }}</td>
+      <td>{{ d.hour }} : {{ d.minute }}</td>
+      <td style="width: 250px">
+          <form  action="/remove_data" method="post">
+                      <button style="padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 35%;"
+        type="submit"
+        class="btn btn-danger"
+                name="button"
+                value="{{d.strftime('%Y-%m-%d %H:%M:%S')}}"
+        >Rimuovi
+</button>
+          </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</section>
+
+
+
+
+{% include "footerNew.html" %}
+{% endif %}
+</body>
+</html>

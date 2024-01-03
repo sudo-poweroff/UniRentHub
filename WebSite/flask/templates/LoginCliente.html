@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../static/css/dipendentiLog.css">
+</head>
+<body>
+    <form  action="/LoginCliente" method="post">
+        <header>
+            <a class="active">Accedi</a>
+            <a>Registrati</a>
+        </header>
+        <section id="section-1">
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required name="email"/>
+                <label for="user">Email</label>
+            </div>
+            <div class="form-group">
+                <input id="password" type="password" required name="password"/>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <input name="Button" id="signInButton" type="button" value="Accedi" />
+                <script>
+                     document.getElementById("signInButton").onclick = function() {
+                         document.getElementById("selectButton").value = "Accedi";
+                         document.querySelector('form').submit();
+                };
+                </script>
+            </div>
+        </section>
+        <section id="section-2">
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required name="nome2"/>
+                <label for="user">Nome</label>
+            </div>
+            <div class="form-group">
+                <input id="user" type="text" autocomplete="off" required name="cognome2"/>
+                <label for="user">Cognome</label>
+            </div>
+            <div class="form-group">
+                <input id="email" type="text" autocomplete="off" required name="email2"/>
+                <label for="email">Email</label>
+            </div>
+            <div class="form-group">
+                <input id="password" type="password" required name="password2"/>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <input id="password-2" type="password" required />
+                <label for="password-2">Retype Password</label>
+            </div>
+            <div class="form-group-check">
+                <input id="keep" type="checkbox" value="Locatore" name="locatore2"/><label for="keep">Locatore</label>
+            </div>
+            <div class="form-group">
+                <input name="Button" id="buttonRegistrazione" type="button" value="Registrazione" />
+                <script>
+                         document.getElementById("buttonRegistrazione").onclick = function() {
+                             document.getElementById("selectButton").value = "Registrazione";
+                             document.querySelector('form').submit();
+                    };
+                </script>
+                <input type="hidden" name="selectButton" id="selectButton" value="">
+            </div>
+        </section>
+        <footer>
+
+        </footer>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../static/js/pop-up.js"></script>
+</body>
+</html>

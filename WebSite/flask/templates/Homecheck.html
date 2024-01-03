@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block title %} Risultati Ricerca {% endblock %}
+    <title>UnirentHub | Homechecker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/offcanvas/">
+{% block style %}
+<style>
+ .title {
+            text-align: center;
+            margin: auto;
+            position: absolute;
+             padding-bottom: 30px;
+            top: 5px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+  .card {
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            width: 20rem; /* Larghezza della card */
+            margin-bottom: 20px; /* Spazio tra le card */
+            margin-top: 30px;
+            /* Altezza leggermente maggiore */
+            height: 25rem; /* Altezza fissa per tutte le card */
+            border-radius: 20px; /* Arrotonda i bordi delle cards */
+
+            transition: transform 0.3s ease-in-out; /* Effetto transizione */
+            overflow: hidden; /* Nasconde il contenuto che supera i limiti della card */
+
+
+
+
+
+        }
+
+
+
+
+        .card-body {
+            margin-top: auto;
+            position: relative; /* Posizione relativa per consentire sovrapposizioni */
+            height: 100%; /* Altezza fissa per il corpo della card */
+            display: flex; /* Imposta il display a flex */
+            flex-direction: column; /* Imposta la direzione della flessione a colonna */
+            padding: 20px; /* Aggiunge spazio attorno al contenuto della card */
+        }
+
+
+        .card-text {
+            position: relative; /* Posizione relativa per consentire z-index */
+            z-index: 1; /* Assicura che il testo sia sopra l'immagine */
+            color: #000000; /* Colore del testo */
+        }
+
+        .card-img-overlay {
+            position: absolute; /* Posiziona l'elemento in modo assoluto */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-size: cover; /* Copertura completa dell'immagine */
+            opacity: 0.6; /* Opacità per l'immagine di sfondo */
+            z-index: 0; /* Assicura che l'immagine sia dietro il testo */
+        }
+
+.cards-row {
+        margin-top: 30px; /* Aggiungi un margine superiore */
+    }
+ .card-body h5:hover {
+    text-decoration: underline;
+}
+.cards-wrapper {
+    padding-top: 20px;
+}
+
+
+
+/* Stile per i bottoni */
+.check-btn,
+.cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    outline: none;
+}
+
+/* Stile per il bottone verde */
+.check-btn {
+    background-color:  	#556b2f;
+}
+
+/* Stile per il bottone rosso */
+.cancel-btn {
+    background-color: #b90505;
+}
+
+/* Posizionamento dei bottoni */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+
+
+footer {
+    padding: 20px;
+    text-align: center !important;
+    position: fixed;
+    bottom: 0;
+    width: 45%;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+    {% if session.get("tipo") == "Homechecker" %}
+            {% include "header_admin.html" %}
+    <!-- bottone aggiungi homechecker-->
+    <div class="col-12">
+            <!-- Linea di separazione con stili inline -->
+             <div class="row mt-4" id="separator">
+        <div class="col-12">
+
+    </div>
+<body>
+
+     <div class="container">
+         <div class="row justify-content-center mt-5">
+            <h1 class="title" style="margin-top: 5px;">Homechecker Panel</h1>
+
+    {% for alloggio in alloggi %}
+        <div class="col-md-4 mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="../{{ immagini[loop.index0] }}" alt="Card image cap" style=" margin-left: 35px;width: 220px; height: 220px">
+                    <h5 class="card-title" style="margin-top: auto; text-align: center; margin-bottom: 20px;">
+                        <a href="{{ alloggio.get_titolo() }}" style="text-decoration: none; color: inherit;">{{ alloggio.get_titolo() }}</a>
+                    </h5>
+                    <p class="card-text">{{ alloggio.get_tipo_alloggio() }}</p>
+                    <!-- Inserimento dei due bottoni -->
+                    <div class="buttons-container">
+                      <form id="homecheckForm" method="POST" action="/Homecheck">
+    <form id="homecheckForm" method="POST" action="/Homecheck" onsubmit="handleFormSubmit()">
+    <input type="hidden" id="id_alloggio_input" name="id_alloggio" value="{{ alloggio.get_id_alloggio() }}">
+    <button class="check-btn" type="submit" style="width: 130px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+        </svg>
+    </button>
+</form>
+
+<button class="cancel-btn" style="width: 130px;" onclick="handleCancelClick()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
+    </svg>
+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if loop.index % 3 == 0 %} <!-- Chiudi la riga ogni 3 elementi -->
+            </div><div class="row" style="margin-left: 210px;">
+        {% endif %}
+    {% endfor %}
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+
+        // JavaScript per spostare il separatore più in basso ogni volta che una nuova card viene aggiunta
+        function spostaSeparatore() {
+            var separator = document.getElementById('separator');
+            var marginTop = window.getComputedStyle(separator).marginTop;
+            var newMarginTop = parseInt(marginTop) + 40; // Aggiungi un margine di 40px
+            separator.style.marginTop = newMarginTop + 'px';
+        }
+
+        // Chiamare questa funzione ogni volta che viene aggiunta una nuova card
+        spostaSeparatore();
+
+  function handleFormSubmit() {
+        var id_alloggio = document.getElementById('id_alloggio_input').value;
+
+        // Mostra l'ID alloggio nella console per verificare che sia corretto
+        console.log("ID alloggio:", id_alloggio);
+
+
+    }
+     function handleCancelClick() {
+        window.location.reload(); // Ricarica la pagina corrente
+    }
+</script>
+
+
+    <script src="../static/js/cleaner.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    {% include "footerNew.html" %}
+{% else %}
+    {% include "error.html" %}
+{% endif %}
+    </div>
+    </body>
+{% endblock %}
+
+

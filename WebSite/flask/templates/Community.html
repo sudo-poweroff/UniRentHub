@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+<style>
+
+    /* Aggiungi questo stile per rimuovere i bordi dal pulsante */
+    form button {
+        border: none;
+        padding: 0;
+        background: none;
+        cursor: pointer;
+    }
+
+    /* Aggiungi questo stile per evidenziare il pulsante al passaggio del mouse */
+    form button:hover {
+        opacity: 0.8; /* Puoi regolare l'opacità a tuo piacimento */
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+    {% if session.get("tipo") == "Studente" %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+<div style="height: 2800px; margin-top: 150px">
+
+
+      <div class="container marketing">
+
+          <!--CARDS START -->
+
+         <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card h-100">
+                <form method="post" action="/community_post">
+                <button type="submit" value="Federico II" name="button">
+                    <img src="../static/img/FedericoII.jpeg" class="card-img-top" alt=""  style="width: 348px; height: 261px;">
+                </button>
+                </form>
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Federico II</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 3 min fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+                <form method="post" action="/community_post">
+                <button name="button" type="submit" value="Milano">
+                    <img src="../static/img/Milano.jpg" class="card-img-top" alt="..." style="width: 348px; height: 261px;">
+                </button>
+                    </form>
+                <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;" data-hidden="Milano">
+                <h5 class="card-title">Politecnico di Milano</h5>
+                </a>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 1 ora fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+            <form method="post" action="/community_post">
+                <button type="submit" value="Roma Tre" name="button">
+                    <img src="../static/img/Roma-Tre_3.jpg" class="card-img-top" alt="..." style="width: 348px; height: 261px;">
+                </button>
+            </form>
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Università Roma Tre</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 30 min fa</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <br>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card h-100">
+                <form method="post" action="/community_post">
+                <button type="submit" name="button" value="Unisa">
+                     <img src="../static/img/unisa_venue.jpg" class="card-img-top" alt="..." style="width: 538px; height: 269px;">
+                </button>
+                </form>
+              <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">Università degli Studi di Salerno</h5>
+                </a>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 5 ore fa</small>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+            <form method="post" action="/community_post">
+            <button type="submit" name="button" value="Sapienza">
+                <img src="../static/img/Sapienza.jpg" class="card-img-top" alt="..." style="width: 538px; height: 269px;">
+            </button>
+            </form>
+            <div class="card-body">
+                <a href="#" class="card-link" style="color: black !important;">
+                <h5 class="card-title">La Sapienza</h5>
+                </a>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">Ultimo post 22 ore fa</small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <form>
+            <input type="hidden" value="">
+        </form>
+
+
+        </div>
+
+          <!--METTI QUI ALTRE -->
+        <!--CARDS FINISH -->
+
+          <hr class="featurette-divider">
+
+
+      </div><!-- /.container -->
+
+
+</div>
+
+
+    {% include "footerNew.html" %}
+    {% endif %}
+    {% if session.get("tipo") != "Studente" %}
+    {% include "error.html" %}
+    {% endif %}
+{% endblock %}

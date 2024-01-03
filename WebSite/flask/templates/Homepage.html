@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+
+{% block style %}
+    <style>
+
+/* Stile di base per il blocco "esplora" */
+.esplora-block {
+    width: 100%;
+    max-width: 100%; /* Limita la larghezza massima al 90% della larghezza dello schermo */
+    height: 500px;
+    background-color: #688d51;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 20px; /* Aggiungi spaziatura interna per contenuto */
+    box-sizing: border-box; /* Evita che il padding influenzi la larghezza totale */
+}
+
+.esplora-text {
+    font-size: 4vw; /* Utilizza la dimensione del testo in termini di viewport width */
+    font-weight: bolder;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sottotesto {
+    font-size: 2vw; /* Utilizza la dimensione del testo in termini di viewport width */
+    text-align: center;
+    margin-top: -20px;
+}
+
+
+/* Media query per dimensioni dello schermo più piccole */
+@media screen and (max-width: 767px) {
+    .form-control {
+        width: 100%; /* Larghezza massima del 100% su schermi più piccoli */
+        max-width: none; /* Rimuove la larghezza massima */
+    }
+
+    #nutton{
+        margin-top: 20px;
+    }
+    .esplora-text {
+        font-size: 7vw; /* Aumenta la dimensione del testo su schermi più piccoli */
+        margin-bottom: 10px; /* Modifica margine per migliorare la disposizione */
+    }
+
+    .sottotesto {
+        font-size: 4vw; /* Aumenta la dimensione del testo su schermi più piccoli */
+        margin-top: -10px; /* Modifica margine per migliorare la disposizione */
+    }
+}
+
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+ {% if session.get("tipo") != "Homechecker" and session.get("tipo") != "Admin"%}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
+
+
+<div style="height: 2800px">
+
+<main role="main">
+
+      <div class="esplora-block">
+    <div class="esplora-text">Esplora. Impara. Vivi.</div>
+    <div class="sottotesto">dove il tuo percorso di studio si fonde con la tua casa ideale</div>
+          <br>
+          <form class="form-inline" action="/search" method="post">
+              {% if session.get("tipo") == "Locatore" %}
+                    <input id="search2" class="form-control mr-sm-2" type="search" name="citta" placeholder="Crea il tuo annuncio..." aria-label="Search"
+                    style="padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 20px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    transition: box-shadow 0.3s ease-in-out;">
+              {% else %}
+    <input id="search" class="form-control mr-sm-2" type="search" name="citta" placeholder="Vorrei studiare a..." aria-label="Search" >
+    <button id="nutton" type="submit" class="btn btn-success" style="background-color: #688d51; border: 2px solid #fff;"
+        onmouseover="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#fff';"
+        onmouseout="this.style.backgroundColor='#688d51'; this.style.borderColor='#fff';"
+        onmousedown="this.style.backgroundColor='#688d51'; this.style.borderColor='#fff';"
+        onmouseup="this.style.backgroundColor='#B5DCA5'; this.style.borderColor='#fff';">
+          Search
+        </button>
+              {% endif %}
+
+<script>
+    document.getElementById('search2').addEventListener('click', function() {
+        // Sostituisci 'URL_DELLA_TUA_PAGINA_CREAZIONE_ANNUNCIO' con l'effettivo URL della tua pagina di creazione annuncio
+        window.location.href = '/CaricaAnnuncio';
+    });
+</script>
+
+
+  </form>
+
+      </div>
+
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+
+          <!-- Three columns of text below the carousel -->
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-lg-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69" height="69" fill="#5c8e48" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+              <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+            </svg>
+
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69" height="69" fill="#5c8e48" class="bi bi-tree-fill" viewBox="0 0 16 16">
+              <path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777l-3-4.5z"/>
+            </svg>
+            <h2>Heading</h2>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69" height="69" fill="#5c8e48" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
+              <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
+            </svg>
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+          </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+
+        <hr class="featurette-divider">
+
+          <div class="d-flex flex-wrap">
+            <div class="card m-4" style="width: 20rem;">
+             <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+             <div class="card-body">
+            <h5 class="card-title">Titolo Annuncio</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+    </div>
+
+            <div class="card m-4" style="width: 20rem;">
+                <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Titolo Annuncio</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+
+            <div class="card m-4" style="width: 20rem;">
+                <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Titolo Annuncio</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18cb04a0c23%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18cb04a0c23%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.109375%22%20y%3D%22261.1796875%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 500px; height: 500px;">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18cb04a0c24%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18cb04a0c24%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.109375%22%20y%3D%22261.1796875%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 500px; height: 500px;">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18cb04a0c25%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18cb04a0c25%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.109375%22%20y%3D%22261.1796875%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 500px; height: 500px;">
+          </div>
+        </div>
+
+
+        <!-- /END THE FEATURETTES -->
+
+      </div><!-- /.container -->
+
+
+
+    </main>
+</div>
+
+
+    {% include "footerNew.html" %}
+    {% endif %}
+    {% if session.get("tipo") == "Homechecker" %}
+        {% include "error.html" %}
+    {% endif %}
+{% endblock %}

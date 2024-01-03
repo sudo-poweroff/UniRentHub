@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #384047;
+}
+
+form {
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+
+h1 {
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+
+#button {
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+  background-color: #4bc970;
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #3ac162;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
+}
+
+.number {
+  background-color: #5fcf80;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+}
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 480px;
+  }
+
+}
+
+</style>
+{% endblock %}
+{% block content %}
+    {% include "header.html" %}
+<div style="margin-top: 100px; margin-bottom: 100px" class="row">
+    <div class="col-md-12">
+      <form action="/registrazione" method="post">
+        <h1> Registrazione </h1>
+
+        <fieldset>
+
+          <legend><span class="number">1</span> Profilo</legend>
+
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="nome" placeholder="Nome">
+
+            <label for="name">Cognome</label>
+          <input type="text" id="name" name="cognome" placeholder="Cognome">
+
+          <label for="email">Email</label>
+          <input type="email" id="mail" name="email" placeholder="Email">
+
+          <label for="password">Password</label>
+          <input type="password" id="password"       name="password" placeholder="Password">
+
+            <label for="password">Conferma Password</label>
+          <input type="password" id="password"       name="password2" placeholder="Conferma Password">
+
+              <div class="form-group">
+                <label id="l-uni" for="exampleFormControlSelect1">Universita'</label>
+                <select name="universita" class="form-control" id="exampleFormControlSelect1">
+                {% for uni in universita %}
+                  <option value="{{ uni }}">{{ uni }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+
+            <div class="form-group-check">
+                <input id="keep" type="checkbox" value="Locatore" name="locatore2" onchange="handleLocatoreCheckbox()"/><label for="keep">Locatore</label>
+            </div>
+            <script>
+            function handleLocatoreCheckbox() {
+                var universitaInput = document.getElementById('exampleFormControlSelect1');
+                var locatoreCheckbox = document.getElementById('keep');
+                var label = document.getElementById('l-uni')
+
+                // Se la casella di controllo "Locatore" è selezionata, pulisci il campo dell'università
+                if (locatoreCheckbox.checked) {
+                    universitaInput.value = '';
+                    universitaInput.disabled = true;
+                    universitaInput.style.display = 'none';
+                    label.style.display = 'none'// Opzionale: disabilita l'input per indicare visivamente che è stato pulito
+                } else {
+                    universitaInput.disabled = false;
+                    universitaInput.style.display = 'block';
+                    label.style.display = 'block'// Abilita l'input se la casella di controllo "Locatore" non è selezionata
+                    }
+                }
+</script>
+        </fieldset>
+        <fieldset>
+
+          <legend><span style="margin-top: 30px" class="number">2</span> Pagamento</legend>
+
+            <label for="name">Numero Carta</label>
+          <input type="text" id="name" name="numero_carta" maxlength="16" placeholder="Numero Carta">
+
+
+            <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label id="l-mese-scadenza" for="mese-scadenza">Mese</label>
+            <select name="mese-scadenza" class="form-control" id="mese-scadenza">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label id="l-anno-scadenza" for="anno-scadenza">Anno</label>
+            <select name="anno-scadenza" class="form-control" id="anno-scadenza">
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+            <label for="name">CVV</label>
+          <input type="text" id="name" name="cvv" maxlength="3" placeholder="CVV">
+
+
+         </fieldset>
+
+        <button id="button" style="padding: 20px; border-radius: 50px" type="submit" class="btn custom-btn-color">Registrati</button>
+
+       </form>
+        </div>
+      </div>
+{% include "footerNew.html" %}
+{% endblock %}
