@@ -238,3 +238,8 @@ def preleva_data_visita(id_alloggio):
     dao = PrenotazioneDAO()
     prenotazione = dao.ricercaprenotazione(id_alloggio=id_alloggio)
     return prenotazione
+
+def recensione(id, titolo, descrizione, voto, data, mail):
+    print("ciao")
+    dao = AlloggioDAO()
+    dao.recensione_alloggio(id, mail, titolo, voto, descrizione, data)

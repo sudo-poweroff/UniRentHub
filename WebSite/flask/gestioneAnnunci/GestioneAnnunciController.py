@@ -402,3 +402,22 @@ def data_visita_locatore():
 def segnala():
 
     return render_template("Segnala.html")
+
+@gu2.route("/recensione")
+def inseriscirec():
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
+    return render_template("Recensione.html", id=id_alloggio)
+
+
+@gu2.route("/recensisci", methods=['POST'])
+def recensisci():
+    if request.method == 'POST':
+        id_alloggio = request.form.get("id")
+        titolo = request.form.get("titolo")
+        descrizione = request.form.get("descrizione")
+        email = session["email"]
+        voto = request.form.get("voto")
+        data = datetime.now().strftime("%Y-%m-%d")
+        print(id_alloggio, titolo, descrizione, email, voto, data)
+        recensione(id_alloggio, titolo, descrizione, voto, data, email)
+        return render_template("Recensione.html")
