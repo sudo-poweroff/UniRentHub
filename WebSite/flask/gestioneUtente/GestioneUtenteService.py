@@ -8,6 +8,7 @@ from .Iscrizione import Iscrizione
 from .IscrizioneDAO import IscrizioneDAO
 from .UniversitaDAO import UniversitaDAO
 from WebSite.flask.gestioneAnnunci.AlloggioDAO import AlloggioDAO
+from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -140,8 +141,24 @@ def idcasas(email, data):
     return id_casa
 
 
-def cercacasastudente(id_alloggio):
+def cercacasastudente(email):
     dao = AlloggioDAO()
-    alloggio = dao.visualizzaannuncio(id_alloggio)
-    print("titolo: " + alloggio.get_titolo())
-    return alloggio
+    dao2 = AffittareDAO()
+    affitti = dao2.ricercaaffitto_per_email(email=email)
+
+    alloggi = []
+    for aff in affitti:
+        id = aff.get_id_alloggio()
+        alloggio = dao.visualizzaannuncio(id)
+        alloggi.append(alloggio)
+        print("titolo: " + alloggio.get_titolo())
+
+    return alloggi
+
+
+#sestituisce cliente byemail
+def cerca_cliente_byEmail(email):
+    dao = ClienteDAO()
+    cliente = dao.ricercaEmailC(email=email)
+    return cliente
+

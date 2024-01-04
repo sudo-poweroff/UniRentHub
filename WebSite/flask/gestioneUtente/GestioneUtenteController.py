@@ -205,17 +205,25 @@ def userpage():
         else:
             data_oggi = date.today().isoformat()
             id_casa = idcasas(session["email"], data_oggi)
-            count = 0
-            path = preleva_immagini(id_casa)
-            for p in path:
-                if count == 0:
-                    print("path:     " + p)
-                    immagini.append(p)
-                    count = 1
             if id_casa != None:
                 print("ID_CASA: " + str(id_casa))
-                alloggio = cercacasastudente(id_casa)
-                alloggi.append(alloggio)
+                email = session["email"]
+                alloggi = cercacasastudente(email=email)
+
+                id_alloggi = []
+                immagini = []
+                for row in alloggi:
+                    id_alloggio = row.get_id_alloggio()
+                    id_alloggi.append(id_alloggio)
+                for id_ in id_alloggi:
+                    print("id:     " + str(id_))
+                    count = 0
+                    path = preleva_immagini(id_)
+                    for p in path:
+                        if count == 0:
+                            print("path:     " + p)
+                            immagini.append(p)
+                            count = 1
                 return render_template("Userpage.html",alloggi=alloggi, universita= universita, immagini=immagini) #se l'utente ha case in affitto
             return render_template("Userpage.html", universita=universita) #se l'utente non ha case in affitto
         return render_template('Userpage.html', universita=universita, alloggi=alloggi, immagini = immagini) #se l'utente LOCATORE ha postato case
