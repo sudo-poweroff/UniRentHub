@@ -9,6 +9,7 @@ from .IscrizioneDAO import IscrizioneDAO
 from .UniversitaDAO import UniversitaDAO
 from WebSite.flask.gestioneAnnunci.AlloggioDAO import AlloggioDAO
 from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
+from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -161,4 +162,10 @@ def cerca_cliente_byEmail(email):
     dao = ClienteDAO()
     cliente = dao.ricercaEmailC(email=email)
     return cliente
+
+
+def visualizzasegnalazione_service(emailS):
+    dao = SegnalazioneDAO()
+    segnalazioni = dao.visualizzasegnalazione(emailS)
+    return segnalazioni
 

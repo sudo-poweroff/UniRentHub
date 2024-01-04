@@ -5,8 +5,9 @@ from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
-    cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente
+    cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
+
 
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
 
@@ -157,25 +158,29 @@ def registra_homechecker():
     if request.method == 'POST':
         if 'delete_email' in request.form:
             email_da_eliminare = request.form['delete_email']
-            print("ciao")
             # Chiamata alla funzione per eliminare il dipendente dal DAO
             elimina_dipendente_service(email_da_eliminare)
-            print("ciao2")
             # Se l'eliminazione ha avuto successo, aggiorna la lista dei dipendenti
             dipendenti_homechecker = show_homecheckerService()
             return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
 
         else:
-            email = request.form['email']
-            nome = request.form['nome']
-            cognome = request.form['cognome']
-            password = request.form['password']  # Assicurati di ottenere la password dal form HTML
+            email = request.form.get('email')
+            nome = request.form.get('nome')
+            cognome = request.form.get('cognome')
+            password = request.form.get('password')
 
-            nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
-            if nuovo_homechecker:
-                dipendenti_homechecker = show_homecheckerService()
-                return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker,
-                                       nuovo_homechecker=nuovo_homechecker)
+            if email and nome and cognome and password:  # Verifica che tutti i campi siano presenti
+                nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
+                if nuovo_homechecker:
+                    dipendenti_homechecker = show_homecheckerService()
+                    return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker,
+                                           nuovo_homechecker=nuovo_homechecker)
+
+    if 'emailS' in request.form:
+        emailS = request.form['emailS']
+        segnalazioni = visualizzasegnalazione_service(emailS)
+        return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker, segnalazioni=segnalazioni)
 
     return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
 

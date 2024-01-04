@@ -12,6 +12,7 @@ from .PostDAO import PostDAO
 from WebSite.flask.gestioneUtente.ClienteDAO import ClienteDAO
 from WebSite.flask.gestioneAffitto.PrenotazioneDAO import PrenotazioneDAO
 from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
+from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 from .ServiziDAO import ServiziDAO
 
 
@@ -250,3 +251,6 @@ def cercarec(id_alloggio, email):
     dao = RecensioneDAO()
     rec = dao.ricercarecensionestudente(id_alloggio,email)
     return rec
+def segnala_service(email, emailS, motivo):
+    dao = SegnalazioneDAO()
+    dao.createSegnalazione(email, emailS, motivo)

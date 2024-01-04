@@ -95,6 +95,49 @@ footer {
     </div>
 </div>
 
+
+
+
+<!-- ... Il tuo codice precedente ... -->
+
+<!-- Aggiunta del form e stampa delle segnalazioni -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <form action="/admin" method="POST" class="mt-4">
+                <div class="form-group">
+                    <label for="emailS">Inserisci l'emailS:</label>
+                    <input type="email" class="form-control" id="emailS" name="emailS" required placeholder="EmailS">
+                </div>
+                <button type="submit" class="btn btn-primary">Mostra Segnalazioni</button>
+            </form>
+            <!-- Stampa delle segnalazioni -->
+            {% if segnalazioni %}
+                <h3 class="mt-4">Segnalazioni relative all'emailS inserita:</h3>
+                <ul>
+                    {% for segnalazione in segnalazioni %}
+                        <li>
+                            <strong>Motivo:</strong> {{ segnalazione.getMotivo() }},
+                            <strong>Stato:</strong> {{ segnalazione.getStato() }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Modal -->
 <div class="modal fade" id="exampleModalCenterSecond" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

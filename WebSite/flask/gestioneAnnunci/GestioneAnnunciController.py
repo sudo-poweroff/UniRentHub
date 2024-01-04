@@ -8,7 +8,7 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
-    recensione, cercarec
+    recensione, cercarec, segnala_service
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -399,10 +399,34 @@ def data_visita_locatore():
     return render_template("DataVisita.html", data=data_time)
 
 
-@gu2.route('/Segnala', methods=['GET'])
+@gu2.route('/Segnala', methods=['GET', 'POST'])
 def segnala():
+    if request.method == 'POST':
+        #prendo id alloggio dalla sessione
+        id_alloggio = session.get("id_alloggio")
+        #richiamo l'alloggio con id da visualizza_alloggio
+        alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+        email = session.get("email")
+        #prendo il valore di emailS dalla funzione get email loc
+        emailS = alloggio.get_email_loc()
+        motivo = request.form.get('motivo')
+
+
+        # Chiamata al servizio di segnalazione
+        segnala_service(email, emailS, motivo)  #stato non è passato perchè è settato a aperto quando creato nel DAO
+
+        return redirect(url_for('gu2.segnala_successo', id_alloggio=id_alloggio))
 
     return render_template("Segnala.html")
+
+
+@gu2.route('/segnala_successo')
+def segnala_successo():
+    return render_template("segnala_successo.html")
+
+
+
+
 
 @gu2.route("/recensione")
 def inseriscirec():
@@ -425,4 +449,5 @@ def recensisci():
         print(id_alloggio, titolo, descrizione, email, voto, data)
         recensione(id_alloggio, titolo, descrizione, voto, data, email)
         return redirect(url_for('gu.userpage'))
+
 
