@@ -1,14 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "base.html" %}
+
+{% block title %} Segnalazione {% endblock %}
+
+{% block style %}
+
+     <style>
+
+
+
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+.bottone {
+    position: relative;
+    bottom: 0px; /* Posiziona il bottone 10px dal basso */
+    right: 0; /* Posiziona il bottone all'estrema destra */
+    margin-bottom: 20px; /* Aggiungi spazio sotto il bottone per separarlo dalla textarea */
+    margin-right: 10px; /* Aggiungi margine destro per separare il bottone dal bordo */
+}
+
+ .tutto {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        max-height: 100%;
+        overflow: hidden; /* Nasconde la scrollbar se il contenuto supera l'altezza massima */
+        text-align: center;
+    }
+
+    </style>
+{% endblock %}
+ {% block content %}
+    {% include "header.html" %}
+    <h1>{{ tipo_utente }}</h1>
     <meta charset="UTF-8">
     <title>Segnalazione avvenuta con successo</title>
-    <!-- Aggiungi qui eventuali fogli di stile CSS o altri script -->
-</head>
-<body>
+
+
+<div class="tutto">
     <h1>Segnalazione avvenuta con successo</h1>
     <p>Grazie per aver segnalato! Sarà presto valutato.</p>
-<a href="{{ url_for('gu2.annuncio', id=id_alloggio) }}" class="btn btn-primary">Torna all'annuncio</a>
+     <div class="bottone">
+<button type="button" onclick="window.location.href='{{ url_for('gu2.annuncio', id=id_alloggio) }}'" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width: 200px;">
+    Torna all'annuncio
+</button>
+</div>
+     </div>
 
-</body>
-</html>
+ <footer class="footer">
+        {% include "footerNew.html" %}
+        {% if session.get("tipo") == "Locatore" %}
+            {% include "error.html" %}
+        {% endif %}
+    </footer>
+{% endblock %}
