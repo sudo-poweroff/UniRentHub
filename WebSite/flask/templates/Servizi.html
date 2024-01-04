@@ -10,6 +10,19 @@
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
+    <style>
+        .no-bullets li {
+            display: flex;
+            align-items: flex-start;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .no-bullets strong {
+            margin-right: 0.5em;
+        }
+    </style>
 
 <div style="height: 2800px">
 
@@ -18,64 +31,86 @@
 
           <!-- PRICE START -->
             <!-- //TODO DA FINIRE -->
-          <div class="jumbotron">
+      <div class="jumbotron">
         <div class="container">
-          <h1 class="display-3">Hello, world!</h1>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <h1 class="display-3">Piani di abbonamento</h1>
+          <p>
+              Benvenuto/a su UniRentHub, il tuo partner ideale per affitti senza stress!
+              Siamo qui per semplificare il processo di affitto, che tu sia uno studente in cerca della casa perfetta o un proprietario che vuole massimizzare il rendimento dei propri immobili, abbiamo l'abbonamento giusto per te.
+              Esplora le nostre opzioni di abbonamento di seguito e scopri come UniRentHub può essere il tuo compagno affidabile nel mondo degli affitti. Non lasciarti sfuggire l'opportunità!
+          </p>
         </div>
       </div>
 
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Pricing</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
-    </div>
+      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Listino prezzi</h1>
+            <p class="lead">
+               Al momento della registrazione su UniRentHub, ogni mese verrà addebitata la tariffa corrispondente alla data di iscrizione.<br>
+               Qui di seguito troverai un elenco dei diversi abbonamenti e dei relativi servizi offerti, offrendoti la possibilità di scegliere il pacchetto che preferisci.
+               Registra il tuo account oggi e goditi l'accesso ad una serie di vantaggi esclusivi. Scegli la tua soluzione ideale con UniRentHub e semplifica la gestione degli affitti.
+            </p>
+      </div>
 
     <div class="container">
       <div class="card-deck mb-3 text-center">
         <div class="card mb-4 shadow-sm">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Free</h4>
+            <h4 class="my-0 font-weight-normal">Base*</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+            <h1 class="card-title pricing-card-title">0€<small class="text-muted">/mese</small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>10 users included</li>
-              <li>2 GB of storage</li>
-              <li>Email support</li>
-              <li>Help center access</li>
+                <li>Accesso completo alla piattaforma</li>
+                <li>Filtri di ricerca base</li>
+                <li>Community building</li>
+                <li>Assistenza Utente</li>
             </ul>
           </div>
         </div>
         <div class="card mb-4 shadow-sm">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Pro</h4>
+            <h4 class="my-0 font-weight-normal">Standard**</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
+            <h1 class="card-title pricing-card-title">5,99€<small class="text-muted">/mese</small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>20 users included</li>
-              <li>10 GB of storage</li>
-              <li>Priority email support</li>
-              <li>Help center access</li>
+                <li>Accesso completo alla piattaforma</li>
+                <li>Filtri di ricerca avanzati</li>
+                <li>Visualizzazione opzioni di contatto</li>
+                <li>Community building</li>
+                <li>Assistenza Utente</li>
             </ul>
           </div>
         </div>
         <div class="card mb-4 shadow-sm">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Enterprise</h4>
+            <h4 class="my-0 font-weight-normal">Premium***</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+            <h1 class="card-title pricing-card-title">9,99€<small class="text-muted">/mese</small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>30 users included</li>
-              <li>15 GB of storage</li>
-              <li>Phone and email support</li>
-              <li>Help center access</li>
+                <li>Accesso completo alla piattaforma</li>
+                <li>Filtri di ricerca personalizzati</li>
+                <li>Evidenza in Primo Piano</li>
+                <li>Visualizzazione opzioni di contatto</li>
+                <li>Community building</li>
+                <li>Assistenza Utente</li>
             </ul>
           </div>
         </div>
       </div>
-
+        <br>
+        <br>
+        <br>
+      <div class="service-info">
+          <ul class="no-bullets">
+              <li><strong>NOTA:</strong> <em>l'abbonamento base permette l'utilizzo di filtri di base per la ricerca, tra cui la ricerca per zona, il tipo di alloggio.*</em></li>
+              <li><strong>NOTA:</strong> <em>l'abbonamento standard permette l'utilizzo di filtri avanzati per la ricerca, tra cui la ricerca per zona, il tipo di alloggio e il range di prezzo e vicinanza a istituti accademici.**</em></li>
+              <li><strong>NOTA:</strong> <em>l'abbonamento standard permette di visualizzare le opzioni di contatto di un determinato locatore.**</em></li>
+              <li><strong>NOTA:</strong> <em>l'abbonamento premium permette l'utilizzo di filtri avanzati per la ricerca, tra cui la ricerca per zona, il tipo di alloggio e il range di prezzo e vicinanza a istituti accademici, inclusione di servizi specifici, valutazioni dei proprietari, e altro ancora.***</em></li>
+              <li><strong>NOTA:</strong> <em>l'abbonamento premium permette di visualizzare gli annunci degli alloggi migliori al top della propria homepage.***</em></li>
+          </ul>
+      </div>
 
     </div>
 
@@ -93,21 +128,13 @@
     </script>
 
 
+    <hr class="featurette-divider">
 
 
-
-
-          <hr class="featurette-divider">
-
-
-
-
-
-      </div><!-- /.container -->
+    </div><!-- /.container -->
 
 
 </div>
 
-
-    {% include "footerNew.html" %}
+{% include "footerNew.html" %}
 {% endblock %}
