@@ -66,7 +66,7 @@
         <div class="col-md-8">
           <div class="card-body">
             <h3 class="card-title">{{ alloggio.get_titolo() }}</h3>
-            <h5 class="mb-0"><b>{{ alloggio.get_prezzo() }}</b>€/mese</h5>
+            <h5 class="mb-0"><b>{{ alloggio.get_prezzo()|int }}</b> €/mese</h5>
               <h6 class="mb-0" style="margin-top: 10px;">{{ alloggio.get_mq() }} m2 <span style="margin-left: 5px;"></span> | <span style="margin-left: 5px;"></span>{{ alloggio.get_n_stanze() }} stanze<span style="margin-left: 5px;"> </span>| </h6>
           </div>
             <hr class="featurette-divider" style="margin-right: 20px; margin-top: 130px">
