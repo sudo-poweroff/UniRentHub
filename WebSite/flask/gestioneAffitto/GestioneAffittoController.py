@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for, Flask, jsonify
+from flask import Blueprint, request, render_template, session, redirect, url_for, Flask, jsonify, flash
 from datetime import datetime
 
 from WebSite.flask.gestioneAffitto.GestioneAffittoService import insert_data_byId, delete_data_byId, \
@@ -71,7 +71,7 @@ def pagamento():
     if request.method == 'GET':
         val = False
         periodo = True
-        id_alloggio = request.args.get('id')
+        id_alloggio = request.args.get('id') or session['id_alloggio']
         session['id_alloggio'] = id_alloggio
         print("IDIDIDIDI ->" + str(id_alloggio))
         alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
@@ -105,24 +105,29 @@ def pagamento():
         check_out = session['check_out_date']
         totale = session['totale']
 
-        nome = request.form.get("nome")
-        cognome = request.form.get("cognome")
-        email = request.form.get("email")
-        numero_carta = request.form.get("numeroc")
-        mese = request.form.get("mese_scadenza")
-        anno = request.form.get("anno_scadenza")
-        cvv = request.form.get("cvv")
+        val = date_disponibili_pagamento(id_alloggio=id_alloggio, data_inizio=check_in, data_fine=check_out)
+        if not val:
+            nome = request.form.get("nome")
+            cognome = request.form.get("cognome")
+            email = request.form.get("email")
+            numero_carta = request.form.get("numeroc")
+            mese = request.form.get("mese_scadenza")
+            anno = request.form.get("anno_scadenza")
+            cvv = request.form.get("cvv")
 
-        print("NOME:    " + nome)
-        print("COGNOME: " + cognome)
-        print("email:   " + email)
-        print("numero_carta:    " + str(numero_carta))
-        print("mese: " + str(mese))
-        print("anno:   " + str(anno))
+            print("NOME:    " + nome)
+            print("COGNOME: " + cognome)
+            print("email:   " + email)
+            print("numero_carta:    " + str(numero_carta))
+            print("mese: " + str(mese))
+            print("anno:   " + str(anno))
 
-        affitto_alloggio_cliente(id_alloggio = id_alloggio, email = email, data_inizio = check_in, data_fine = check_out, numero_carta = numero_carta, mese_scadenza = 11, anno_scadenza = 2025, prezzo = totale)
+            affitto_alloggio_cliente(id_alloggio = id_alloggio, email = email, data_inizio = check_in, data_fine = check_out, numero_carta = numero_carta, mese_scadenza = 11, anno_scadenza = 2025, prezzo = totale)
 
-        return redirect(url_for("gu.userpage"))
+            return redirect(url_for("gu.userpage"))
+        else:
+            flash("Inserisci una data valida.")
+            return redirect(url_for("gu3.pagamento"))
 
 @gu3.route('/calcola_prezzo', methods=['GET', 'POST'])
 def gestisci_richiesta():

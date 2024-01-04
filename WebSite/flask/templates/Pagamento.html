@@ -14,7 +14,17 @@
 
 
 <div style="height: 2800px">
-
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div style="text-align: center;
+    margin-top: 20px;
+font-size: 30px" class="flash-messages">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
       <div class="container marketing">
 
