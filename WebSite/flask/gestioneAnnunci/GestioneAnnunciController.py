@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
-from datetime import datetime
+from datetime import datetime, date
 
 from numpy import double
 
@@ -15,6 +15,7 @@ from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
 from .ServiziDAO import ServiziDAO
 from WebSite.flask.gestioneAffitto.GestioneAffittoService import ricerca_data_disponibile
+from WebSite.flask.gestioneUtente.GestioneUtenteService import idcasas
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -430,11 +431,15 @@ def segnala_successo():
 
 @gu2.route("/recensione")
 def inseriscirec():
-    id_alloggio = request.args.get('id') or session.get("id_alloggio")
+    data_oggi = date.today().isoformat()
+    id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
-    rec = cercarec(id_alloggio, email)
-    return render_template("Recensione.html", id=id_alloggio, rec=rec)
-
+    id_casa = int(idcasas(email, data_oggi))
+    if id_casa == id_alloggio:
+        rec = cercarec(id_alloggio, email)
+        return render_template("Recensione.html", id=id_alloggio, rec=rec)
+    else:
+        return redirect(url_for('gu.userpage'))
 
 @gu2.route("/recensisci", methods=['POST'])
 def recensisci():
