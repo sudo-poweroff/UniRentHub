@@ -94,7 +94,7 @@ def allservizi():
     elif request.method == 'POST':
         titolo = request.form.get("titolo")
         indirizzo = request.form.get("indirizzo")
-        cap = int(request.form.get("cap", 0))
+        cap = request.form.get("cap")
         provincia = request.form.get("provincia")
         citta = request.form.get("citta")
         tipo = request.form.get("tipo")
@@ -114,9 +114,11 @@ def allservizi():
         mail = session.get("email")
         servizi_selezionati = request.form.getlist('checkboxGroup')
 
+        cap_con_zero = cap.zfill(5)
+
         print("titolo:" + titolo)
         print("indirizzo:" + indirizzo)
-        print("cap:" + str(cap))
+        print("cap:" + str(cap_con_zero))
         print("provincia:" + provincia)
         print("citta:" + citta)
         print("tipo:" + tipo)
