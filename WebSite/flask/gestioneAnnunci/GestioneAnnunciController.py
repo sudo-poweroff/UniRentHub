@@ -252,12 +252,20 @@ def crea_post():
 @gu2.route('/ListaPreferiti.html',methods=['GET', 'POST'])
 def lista():
     alloggi=[]
+    immagini = []
     for num in session['case_preferite']:
         print(num)
         alloggio = visualizza_annuncio(num)
         alloggi.append(alloggio)
-
-    return render_template("ListaPreferiti.html",alloggi=alloggi)
+        count = 0
+        path = preleva_immagini(num)
+        for p in path:
+            if count == 0:
+                print("pathricerca:     " + p)
+                immagini.append(p)
+                count = 1
+    print(immagini)
+    return render_template("ListaPreferiti.html",alloggi=alloggi,immagini=immagini)
 
 
 @gu2.route('/Preferiti',methods=['GET', 'POST'])
