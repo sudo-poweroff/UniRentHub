@@ -1,11 +1,13 @@
 from datetime import date
-
+from flask import current_app as app
+from flask_mail import Message, Mail
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from .Dipendente import Dipendente
 from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
-    cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service
+    cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service, \
+    update_verificatoservice
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
 
 
@@ -273,3 +275,42 @@ def servizi():
 @gu.route("/community")
 def community():
     return render_template("Community.html")
+
+
+
+from flask_mail import Mail, Message
+
+@gu.route("/verifica")
+def verifica():
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USERNAME'] = 'm.greco65@studenti.unisa.it'
+    app.config['MAIL_PASSWORD'] = 'Marcogreco123$!'
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USE_SSL'] = False
+
+    mail = Mail(app)
+
+    if 'email' in session:
+        email = session['email']
+        update_verificato(email)
+
+        # Invia l'email di conferma
+        send_verification_email(app, email)
+
+        return render_template("verifica.html")
+
+    # Se l'email non è presente nella sessione, reindirizza l'utente alla pagina di login o a un'altra pagina
+    return redirect(url_for('login'))
+
+# Funzione per inviare l'email di conferma
+def send_verification_email(app, email):
+    mail = Mail(app)
+    msg = Message("Verifica dell'account", sender=app.config.get("MAIL_USERNAME"), recipients=[email])
+    msg.body = f"Ciao, sei stato verificato! Link alla tua pagina utente: {url_for('gu.userpage', _external=True)}"
+    mail.send(msg)
+
+# Funzione per aggiornare il valore "verificato" nel database
+def update_verificato(email):
+    update_verificatoservice(email)
+

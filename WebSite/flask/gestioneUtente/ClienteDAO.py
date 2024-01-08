@@ -186,3 +186,16 @@ class ClienteDAO:
 
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+
+
+    def update_verificato(self, email):
+        query = """
+                UPDATE cliente
+                SET verificato = 1
+                WHERE email = %s
+            """
+        values = (email,)
+        print("aggiornato con successo")
+        self.__cursor.execute(query, values)
+        self.__connection.commit()

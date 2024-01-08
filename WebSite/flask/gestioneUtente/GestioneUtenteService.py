@@ -169,3 +169,6 @@ def visualizzasegnalazione_service(emailS):
     segnalazioni = dao.visualizzasegnalazione(emailS)
     return segnalazioni
 
+def update_verificatoservice(email):
+    dao = ClienteDAO()
+    update = dao.update_verificato(email=email)
