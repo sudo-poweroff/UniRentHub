@@ -214,19 +214,26 @@
             <p>Non ci sono alloggi disponibili.</p>
         {% endif %}
         </div>
-    </div>
+
 
           <hr class="featurette-divider">
 
 
       </div><!-- /.container -->
      <form action="/verifica" method="get">
-            <button type="submit" class="btn btn-primary">Verifica</button>
+          <button type="submit" class="btn btn-primary btn-lg btn-block styled-btn" style="background-color: #688d51; border-color: #688d51;  height: 40px;
+        width: 180px;
+        padding: 5px 10px"
+            onmouseover="this.style.backgroundColor='#6eb150'; this.style.borderColor='#6eb150';"
+            onmouseout="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
+            onmousedown="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
+            onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';">Verifica account</button>
+
         </form>
 
 
 </div>
-
+</div>
 
     {% include "footerNew.html" %}
     {% endif %}
