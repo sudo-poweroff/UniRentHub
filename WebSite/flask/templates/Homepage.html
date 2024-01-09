@@ -54,6 +54,15 @@
     }
 }
 
+    a, .card a {
+        color: black;
+        text-decoration: none;
+    }
+
+    a:hover, .card a:hover {
+        color: black;
+    }
+
     </style>
 
 {% endblock %}
@@ -148,39 +157,47 @@
         </div><!-- /.row -->
 
 
+        {% if session.get("tipo") != "Locatore" %}
         <hr class="featurette-divider">
 
           <div class="d-flex flex-wrap">
             <div class="card m-4" style="width: 20rem;">
-             <img class="card-img-top" src="../static/img/camera_singola_napoli.jpg" alt="Foto annuncio top">
+             <a href="Alloggio.html?id=3">
+             <img class="card-img-top" src="../static/alloggi/3/NidoPartenopeo_3.jpg" alt="Foto annunci top">
              <div class="card-body">
-                 <h5 class="card-title">Camera singola in centro</h5>
+                 <h5 class="card-title">Nido Partenopeo</h5>
                     <p class="card-text">
-                        Camera in pieno centro di Napoli vicino all'università Federico II arredata con il necessario per uno studente.
+                        Adorabile dimora nel cuore di Napoli, ideale per chi cerca comfort e praticità. Ben curato, fornendo tutto il necessario per un soggiorno piacevole.
                     </p>
             </div>
+            </a>
           </div>
 
           <div class="card m-4" style="width: 20rem;">
-              <img class="card-img-top" src="../static/img/monolocale_roma.jpg" alt="Foto annuncio top">
+              <a href="Alloggio.html?id=15">
+              <img class="card-img-top" src="../static/alloggi/15/DolcevitaSalernitana_3.jpg" alt="Foto annunci top">
               <div class="card-body">
-                  <h5 class="card-title">Monolocale moderno</h5>
+                  <h5 class="card-title">Dolcevita Salernitana</h5>
                     <p class="card-text">
-                        Monolocale moderno arredato con tutti i comfort essenziali nei pressi di Roma.
+                        Esperienza di vita rilassante e confortevole nel cuore di Salerno. Questo bilocale accogliente è pensato per garantire comfort e tranquillità.
                     </p>
               </div>
+              </a>
           </div>
 
-            <div class="card m-4" style="width: 20rem;">
-                <img class="card-img-top" src="../static/img/bilocale_vicino_campus.jpg" alt="Foto annuncio top">
+          <div class="card m-4" style="width: 20rem;">
+                <a href="Alloggio.html?id=23">
+                <img class="card-img-top" src="../static/alloggi/23/SpazioColosseo_1.jpg" alt="Foto annunci top">
                 <div class="card-body">
-                    <h5 class="card-title">Bilocale vicino al campus</h5>
+                    <h5 class="card-title">Spazio del Colosseo</h5>
                         <p class="card-text">
-                            Il bilocale ideale, completamente arredato per soddisfare le esigenze di convivenza di uno studentato e situato in prossimità del campus, raggiungibile a piedi.
+                            Offre un'atmosfera speciale che si fonde con la grandiosità di Roma, regalando agli ospiti un'esperienza davvero memorabile e senza pari nel cuore della città eterna.
                         </p>
                 </div>
+                </a>
             </div>
         </div>
+        {% endif %}
 
 
         <!-- START THE FEATURETTES -->

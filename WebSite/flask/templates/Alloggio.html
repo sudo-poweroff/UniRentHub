@@ -196,20 +196,25 @@
             console.log('Errore nel caricamento dei dati del primo indirizzo:', error);
         });
 </script>
-
+</div>
 
           <!-- FINE MAPPA -->
 
-
+        <!-- INIZIO SEZIONE CONTATTI -->
           <hr class="featurette-divider">
-
+<div>
     <h3 class="mb-1"><b>Contatti</b></h3>
           <br>
-    <p style="font-size: 19px;"><b>Nome Cognome del Locatore</b><br>Email locatore</p>
+    <p style="font-size: 19px;">
+        <b>Dati del Locatore: </b>
+        <br>e-mail: {{ alloggio.get_email_loc() }}
+    </p>
     <hr class="featurette-divider">
 <button type="button" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width:200px;" onclick="window.location.href='/Segnala'">
     Segnala locatore
-</button>      </div><!-- /.container -->
+</button>
+</div><!-- /.container -->
+              <!-- FINE SEZIONE CONTATTI -->
 
       </div>
 </div>
