@@ -22,7 +22,7 @@
           <br>
           {% for alloggio in alloggi %}
           {% if alloggio %}
-          <div class="card mb-3" style="max-width: 1100px;">
+          <div class="card mb-3" style="max-width: 1100px;" onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">
         <div class="row g-0">
         <div class="col-md-4">
           <img src="../{{ immagini[loop.index0] }}" class="img-fluid rounded-start" alt="...">        </div>
@@ -79,6 +79,12 @@
     </div>
     {% endif %}
       {% endfor %}
+
+      <script>
+        function redirectTo(id) {
+            window.location.href = '/Alloggio.html?id=' + id;
+        }
+      </script>
 
 
 
