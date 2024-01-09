@@ -128,3 +128,15 @@ class AffittareDAO:
             affitti.append(affitto)
 
         return affitti
+
+    def cercadataaffitto(self,email,id_alloggio):
+        query = """
+        SELECT data_inizio
+        FROM Affittare
+        WHERE email=%s
+        AND id_alloggio = %s
+        """
+        values = (email,id_alloggio)
+        self.__cursor.execute(query,values)
+        result = self.__cursor.fetchone()
+        return result[0]

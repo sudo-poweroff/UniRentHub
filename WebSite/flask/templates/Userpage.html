@@ -202,6 +202,9 @@
                             <a href="{{ url_for('gu2.modifica_annuncio', id=alloggio.get_id_alloggio()) }}" class="card-link">Modifica</a>
                             {% else %}
                             <a href="{{ url_for('gu2.inseriscirec', id=alloggio.get_id_alloggio()) }}" class="card-link">Recensione</a>
+                                {% if session["alert"]==alloggio.get_id_alloggio() %}
+                                    <p>Non puoi ancora recensire</p>
+                                    {% endif %}
                             {% endif %}
                         </div>
                     </div>

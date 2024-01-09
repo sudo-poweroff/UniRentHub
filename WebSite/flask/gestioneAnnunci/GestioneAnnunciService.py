@@ -14,6 +14,7 @@ from WebSite.flask.gestioneAffitto.PrenotazioneDAO import PrenotazioneDAO
 from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
 from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 from .ServiziDAO import ServiziDAO
+from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -254,3 +255,8 @@ def cercarec(id_alloggio, email):
 def segnala_service(email, emailS, motivo):
     dao = SegnalazioneDAO()
     dao.createSegnalazione(email, emailS, motivo)
+
+def cercadataacquisto(email,id_alloggio):
+    dao = AffittareDAO()
+    data = dao.cercadataaffitto(email,id_alloggio)
+    return data
