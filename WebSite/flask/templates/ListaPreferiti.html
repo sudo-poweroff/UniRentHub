@@ -25,7 +25,7 @@
           <div class="card mb-3" style="max-width: 1100px;" onclick="redirectTo('{{ alloggio.get_id_alloggio() }}')">
         <div class="row g-0">
         <div class="col-md-4">
-          <img src="../{{ immagini[loop.index0] }}" class="img-fluid rounded-start" alt="...">        </div>
+          <img src="../{{ immagini[(loop.index0) - 1]}}" class="img-fluid rounded-start" alt="...">        </div>
         <div class="col-md-8">
           <div class="card-body">
             <h3 class="card-title">{{ alloggio.get_titolo() }}</h3>
