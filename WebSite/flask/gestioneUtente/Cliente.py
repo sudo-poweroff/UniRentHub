@@ -1,16 +1,20 @@
+from flask import Flask
+
+
 class Cliente:
-    def __init__(self, email=None, nome=None, cognome=None, tipo_utente=None, data_nascita=None, numero_carta=None, verificato=None, data_scadenza=None, password=None, mese_scadenza = None, anno_scadenza = None):
+    def __init__(self, email=None, nome=None, cognome=None, tipo_utente=None, data_nascita=None, numero_carta=None,
+                 mese_scadenza=None, anno_scadenza=None, verificato=None, password=None, data_blocco=None):
         self.__email = email
         self.__nome = nome
         self.__cognome = cognome
         self.__tipo_utente = tipo_utente
         self.__data_nascita = data_nascita
         self.__numero_carta = numero_carta
-        self.__verificato = verificato
         self.__mese_scadenza = mese_scadenza
         self.__anno_scadenza = anno_scadenza
+        self.__verificato = verificato
         self.__password = password
-
+        self.__data_blocco = data_blocco
     def getEmail(self):
         return self.__email
 
@@ -41,6 +45,9 @@ class Cliente:
     def getPassword(self):
         return self.__password
 
+    def getDataBlocco(self):
+        return self.__data_blocco
+
     def setEmail(self, email):
         self.__email = email
 
@@ -70,3 +77,8 @@ class Cliente:
 
     def setPassword(self, password):
         self.__password = password
+
+    def setDataBlocco(self, data_blocco):
+        self.__data_blocco = data_blocco
+
+

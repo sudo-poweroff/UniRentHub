@@ -7,11 +7,47 @@ from .DipendenteDAO import DipendenteDAO
 from .GestioneUtenteService import get_cliente_by_email_password, registra_cliente, registra_homechecker_service, \
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
     cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service, \
-    update_verificatoservice
+    update_verificatoservice, check_account_verification, cerca_cliente_byEmail, blocca_utenteservice, \
+    rimuovi_blocco_utenteservice, utenti_contre_segnalazioniservice
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
+from itsdangerous import  URLSafeTimedSerializer
+from functools import wraps
+from datetime import datetime
+from flask import flash
 
-
+serializer = URLSafeTimedSerializer('my_secret_token')
 gu = Blueprint('gu', __name__, template_folder="gestioneUtente")
+
+
+
+
+
+
+#decoratore (serve per prendere una funzione come argomento e resituire una nuova funzione, in pratica eseguo questa funzione in qualsiasi altra funzione semplicemente facnedo @verifica_account_required
+
+def verifica_account_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'verificato' in session and session['verificato']:
+            return f(*args, **kwargs)
+        else:
+            return redirect(
+                url_for('gu.verifica'))  # Reindirizza alla pagina di verifica se l'account non è stato verificato
+    return decorated_function
+
+
+
+#decoratore per il controllo del bloccato
+def controllo_blocco_utente(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        data_blocco = session.get('data_blocco')
+
+        if data_blocco is not None and (datetime.now() - data_blocco).days < 30:
+            return render_template('blockpage.html', messaggio="Utente già bloccato nelle ultime 30 giorni.")
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 
 @gu.route('/')
@@ -55,7 +91,9 @@ def registrazione():
             session["anno"] = user.getAnnoScadenza()
             session["universita"] = denominazione
 
-        return redirect(url_for("gu.main"))
+        if tipo in ["Studente", "Locatore"]:
+            return redirect(url_for("gu.verifica"))
+    return render_template("verifica.html")
 
 
 @gu.route('/login', methods=['GET', 'POST'])
@@ -156,7 +194,7 @@ def reg():
 @gu.route('/admin', methods=['GET', 'POST'])
 def registra_homechecker():
     dipendenti_homechecker = show_homecheckerService()
-
+    utenti_con_segnalazioni = utenti_contre_segnalazioniservice()
     if request.method == 'POST':
         if 'delete_email' in request.form:
             email_da_eliminare = request.form['delete_email']
@@ -179,12 +217,7 @@ def registra_homechecker():
                     return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker,
                                            nuovo_homechecker=nuovo_homechecker)
 
-    if 'emailS' in request.form:
-        emailS = request.form['emailS']
-        segnalazioni = visualizzasegnalazione_service(emailS)
-        return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker, segnalazioni=segnalazioni)
-
-    return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker)
+    return render_template('admin.html', dipendenti_homechecker=dipendenti_homechecker, utenti_con_segnalazioni=utenti_con_segnalazioni)
 
 
 @gu.route('/Userpage', methods=['GET', 'POST'])
@@ -238,6 +271,7 @@ def userpage():
 
 
 @gu.route('/modifica', methods=['GET', 'POST'])
+@verifica_account_required
 def modifica():
     if request.method == "POST":
         nome = request.form.get("nome")
@@ -269,48 +303,117 @@ def modifica():
 
 
 @gu.route("/servizi")
+@verifica_account_required
 def servizi():
     return render_template("Servizi.html")
 
 @gu.route("/community")
+@verifica_account_required
 def community():
     return render_template("Community.html")
 
 
+#codice per la gestione della virifica account con creazione/gestione di token univoco
+#questa funzione genera il token
+def generate_confirmation_token(email):
+    return serializer.dumps(email)
 
-from flask_mail import Mail, Message
 
-@gu.route("/verifica")
-def verifica():
+
+
+#gestione del token con decodificazione
+def confirm_token(token, expiration=600):
+    try:
+        email = serializer.loads(token, max_age=expiration)
+    except:
+        return False
+    return email
+
+
+# Configurazione della posta
+def configure_mail(app):
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USERNAME'] = 'm.greco65@studenti.unisa.it'
     app.config['MAIL_PASSWORD'] = 'Marcogreco123$!'
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USE_SSL'] = False
+    app.config['MAIL_DEFAULT_SENDER'] = 'm.greco65@studenti.unisa.it'
 
     mail = Mail(app)
+    return mail
 
-    if 'email' in session:
-        email = session['email']
-        update_verificato(email)
 
-        # Invia l'email di conferma
-        send_verification_email(app, email)
-
-        return render_template("verifica.html")
-
-    # Se l'email non è presente nella sessione, reindirizza l'utente alla pagina di login o a un'altra pagina
-    return redirect(url_for('login'))
 
 # Funzione per inviare l'email di conferma
-def send_verification_email(app, email):
-    mail = Mail(app)
-    msg = Message("Verifica dell'account", sender=app.config.get("MAIL_USERNAME"), recipients=[email])
-    msg.body = f"Ciao, sei stato verificato! Link alla tua pagina utente: {url_for('gu.userpage', _external=True)}"
+def send_verification_email(mail, email, confirmation_url):
+    msg = Message("Verifica dell'account", sender=mail.default_sender, recipients=[email])
+    msg.body = f"Ciao, sei stato verificato! Link alla tua pagina utente: {confirmation_url}"
     mail.send(msg)
 
-# Funzione per aggiornare il valore "verificato" nel database
-def update_verificato(email):
-    update_verificatoservice(email)
+
+#funzione invio email
+@gu.route("/verifica")
+def verifica():
+    if request.method == "POST":
+        pass
+    else:
+        if 'email' in session:
+            email = session['email']
+            token = generate_confirmation_token(email)
+
+            confirmation_url = url_for('gu.conferma_account', token=token, _external=True)
+
+            # Invia l'email di conferma
+            mail = configure_mail(app)
+            send_verification_email(mail, email, confirmation_url)  # Passa l'istanza mail configurata
+            return render_template("verifica.html")
+
+        # Se l'email non è presente nella sessione, reindirizza l'utente alla pagina di login
+        return redirect(url_for('LoginCliente'))
+
+
+#conferma account basata sul token
+@gu.route('/conferma/<token>', methods=['GET'])
+def conferma_account(token):
+    email = confirm_token(token)
+    if email:
+        update_verificatoservice(email)
+        session['verificato'] = True
+        return redirect(url_for('gu.userpage'))
+    else:
+        return render_template('link_scaduto.html')
+
+@gu.route('/segnalazioni/<emailS>')
+def visualizzasegnalazione(emailS):
+    segnalazioni = visualizzasegnalazione_service(emailS)
+    return render_template('segnalazioni.html', segnalazioni = segnalazioni)
+
+
+from flask import flash  # Assicurati di importare flash da Flask
+
+
+@gu.route('/block_user', methods=["POST"])
+def blocca_utente():
+    if 'emailS' in request.form:
+        emailS = request.form['emailS']
+        print(emailS)
+        update_success = blocca_utenteservice(emailS)
+
+        if update_success:
+            session[emailS] = datetime.now()  # Imposta la data di blocco dell'utente nella sessione
+            return redirect(url_for('gu.blockpage'))
+        else:
+            flash('Errore durante il blocco dell\'utente. Si prega di riprovare.', 'error')
+            return redirect(url_for('gu.main'))  # Ritorna alla pagina precedente con il messaggio di errore
+
+    return render_template('link_scaduto.html')
+
+
+@gu.route('/blockpage')
+def blockpage():
+    return render_template('blockpage.html')
+
+
+
 

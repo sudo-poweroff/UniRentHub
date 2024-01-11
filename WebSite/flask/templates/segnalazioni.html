@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Segnalazioni per l'email</title>
+</head>
+<body>
+
+<h1>Segnalazioni per l'email selezionata</h1>
+
+<div>
+    <ul>
+        {% for segnalazione in segnalazioni %}
+        <li>
+            <strong>Motivo:</strong> {{ segnalazione.getMotivo() }} |
+            <strong>Stato:</strong> {{ segnalazione.getStato() }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

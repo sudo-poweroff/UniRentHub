@@ -1,7 +1,7 @@
 from .Cliente import Cliente
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
-
+from datetime import datetime
 class ClienteDAO:
 
     def __init__(self):
@@ -9,10 +9,11 @@ class ClienteDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
+
     def createCliente(self, cliente):
-        query= """
-            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        query = """
+            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NULL)
         """
         values = (
             cliente.getEmail(), cliente.getNome(), cliente.getCognome(),
@@ -25,8 +26,8 @@ class ClienteDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def deleteCliente (self, email):
-        query="""
+    def deleteCliente(self, email):
+        query = """
             DELETE FROM cliente WHERE email = %s
         """
 
@@ -34,26 +35,26 @@ class ClienteDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
-    def updateCliente(self, email, password, numero_carta, data_scadenza):
-        query="""
+    def updateCliente(self, email, password, numero_carta, data_scadenza, data_blocco):
+        query = """
             UPDATE cliente
-            SET password =%s, numero_carta =%s, data_scadenza =%s
-            WHERE email =%s
+            SET password = %s, numero_carta = %s, data_scadenza = %s, data_blocco = %s
+            WHERE email = %s
         """
 
-        values = (password, numero_carta, data_scadenza, email)
+        values = (password, numero_carta, data_scadenza, data_blocco, email)
 
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
     def ricercaEmailC(self, email):
-        query="""
-            SELECT *
+        query = """
+            SELECT email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco
             FROM cliente
-            WHERE email =%s
+            WHERE email = %s
         """
 
-        values =(email,)
+        values = (email,)
 
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
@@ -66,23 +67,25 @@ class ClienteDAO:
                 tipo_utente=result[3],
                 data_nascita=result[4],
                 numero_carta=result[5],
-                data_scadenza=result[6],
-                verificato=result[7],
-                password=result[8]
+                mese_scadenza=result[6],
+                anno_scadenza=result[7],
+                verificato=result[8],
+                password=result[9],
+                data_blocco=result[10]
             )
             return cliente
         else:
             return None
 
-    def accesso(self, email,pwd):
-        query="""
+    def accesso(self, email, pwd):
+        query = """
             SELECT *
             FROM cliente
-            WHERE email =%s
+            WHERE email = %s
             AND password = %s
         """
 
-        values =(email,pwd)
+        values = (email, pwd)
 
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
@@ -95,9 +98,11 @@ class ClienteDAO:
                 tipo_utente=result[3],
                 data_nascita=result[4],
                 numero_carta=result[5],
-                data_scadenza=result[6],
-                verificato=result[7],
-                password=result[8]
+                mese_scadenza=result[6],
+                anno_scadenza=result[7],
+                verificato=result[8],
+                password=result[9],
+                data_blocco=result[10]
             )
             return cliente
         else:
@@ -152,7 +157,7 @@ class ClienteDAO:
                 tasse=r[17],
                 email_dip=r[18],
                 email_loc=r[19],
-                data_verifica=r[20]
+                data_verifica=r[20],
             )
             alloggi.append(alloggio)
         return alloggi
@@ -196,6 +201,32 @@ class ClienteDAO:
                 WHERE email = %s
             """
         values = (email,)
-        print("aggiornato con successo")
+        self.__cursor.execute(query, values)
+        self.__connection.commit()
+
+    def blocca_utente(self, email):
+        try:
+            data_corrente = datetime.now().strftime("%Y-%m-%d")
+            query = """
+                    UPDATE cliente
+                    SET data_blocco = %s
+                    WHERE email = %s
+                    """
+            values = (data_corrente, email)
+            self.__cursor.execute(query, values)
+            self.__connection.commit()
+            print(data_corrente)
+            return True  # Restituisce True se l'aggiornamento ha avuto successo
+        except Exception as e:
+            print(f"Errore durante l'aggiornamento del cliente: {str(e)}")
+            return False  # Restituisce False in caso di errore
+
+    def rimuovi_blocco_utente(self, email):
+        query = """
+                UPDATE cliente 
+                SET data_blocco = NULL 
+                WHERE email = %s
+                """
+        values = (email, )
         self.__cursor.execute(query, values)
         self.__connection.commit()

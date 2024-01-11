@@ -8,7 +8,7 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
-    recensione, cercarec, segnala_service, cercadataacquisto
+    recensione, cercarec, segnala_service
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -16,6 +16,7 @@ from .Possedimento import Possedimento
 from .ServiziDAO import ServiziDAO
 from WebSite.flask.gestioneAffitto.GestioneAffittoService import ricerca_data_disponibile
 from WebSite.flask.gestioneUtente.GestioneUtenteService import idcasas
+from WebSite.flask.gestioneUtente.GestioneUtenteController import verifica_account_required
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -87,6 +88,7 @@ def annuncio():
     return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
+@verifica_account_required
 def allservizi():
     if request.method == 'GET':
         servizi = visualizza_servizi()
@@ -411,6 +413,7 @@ def data_visita_locatore():
 
 
 @gu2.route('/Segnala', methods=['GET', 'POST'])
+@verifica_account_required
 def segnala():
     if request.method == 'POST':
         #prendo id alloggio dalla sessione
@@ -440,30 +443,20 @@ def segnala_successo():
 
 
 @gu2.route("/recensione")
+@verifica_account_required
 def inseriscirec():
-    data_oggi = date.today()
+    data_oggi = date.today().isoformat()
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
     id_casa = int(idcasas(email, data_oggi))
-    print(id_casa,id_alloggio)
-    data_acquisto = cercadataacquisto(email,id_alloggio)
-    print("DATAOGGI")
-    print(data_oggi)
-    print("DATAACQUISTO")
-    print(data_acquisto)
-    diff = data_oggi - data_acquisto
-    diff = diff.days
-    print(diff)
-    if id_casa == id_alloggio and diff>30:
+    if id_casa == id_alloggio:
         rec = cercarec(id_alloggio, email)
-        print("SONO QUI")
         return render_template("Recensione.html", id=id_alloggio, rec=rec)
     else:
-        if diff<30:
-            session["alert"]=id_alloggio
         return redirect(url_for('gu.userpage'))
 
 @gu2.route("/recensisci", methods=['POST'])
+@verifica_account_required
 def recensisci():
     if request.method == 'POST':
         id_alloggio = request.form.get("id")

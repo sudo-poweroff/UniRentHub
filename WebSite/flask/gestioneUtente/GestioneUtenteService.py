@@ -172,3 +172,38 @@ def visualizzasegnalazione_service(emailS):
 def update_verificatoservice(email):
     dao = ClienteDAO()
     update = dao.update_verificato(email=email)
+
+def check_account_verification(email):
+    cliente_dao = ClienteDAO()  # Crea un'istanza del tuo ClienteDAO
+    cliente = cliente_dao.ricercaEmailC(email)  # Ottieni i dettagli del cliente tramite l'email
+
+    if cliente and cliente.getVerificato() == 1:  # Controlla se il cliente esiste e se è stato verificato
+        return True  # Restituisce True se l'account è verificato
+    else:
+        return False
+
+def utenti_contre_segnalazioniservice():
+    dao = SegnalazioneDAO()
+    num_segnalazione = dao.utenti_contre_segnalazioni()
+    return num_segnalazione
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def blocca_utenteservice(emailS):
+    dao = ClienteDAO()
+    update = dao.blocca_utente(email=emailS)
+
+def rimuovi_blocco_utenteservice(emailS):
+    dao = ClienteDAO()
+    update = dao.rimuovi_blocco_utente(email=emailS)

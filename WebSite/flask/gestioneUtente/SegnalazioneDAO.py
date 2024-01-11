@@ -55,16 +55,36 @@ class SegnalazioneDAO:
         values = (emailS,)
         self.__cursor.execute(query, values)
         results = self.__cursor.fetchall()
-        print(results)
         segnalazioni = []
         for result in results:
             segnalazione = Segnalazione(
-                motivo = result[0],
-                stato  = result[1]
+                motivo=result[0],
+                stato =result[1]
             )
-
+            print(segnalazioni)
             segnalazioni.append(segnalazione)
         return segnalazioni
 
 
 
+    def utenti_contre_segnalazioni(self):
+        query = """
+                SELECT  emailS
+                FROM segnalazione
+                """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchall()
+        segnalazioni_per_utente = {}
+
+        for result in results:
+            emailS = result[0]
+            #verifica se l'emaiS ha altre segnalazioni
+            if emailS not in segnalazioni_per_utente:
+                #se non ci sta mette il contatore a 1
+                segnalazioni_per_utente[emailS] = 1
+            else:
+                #altrimenti lo aggiora di 1
+                segnalazioni_per_utente[emailS] +=1
+        #crea una lista di utenti con 3 più segnalazioni
+        utenti_con_segnalazioni = [emailS for emailS, count in segnalazioni_per_utente.items() if count >= 3]
+        return utenti_con_segnalazioni
