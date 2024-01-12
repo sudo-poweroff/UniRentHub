@@ -210,9 +210,11 @@
         <br>e-mail: {{ alloggio.get_email_loc() }}
     </p>
     <hr class="featurette-divider">
+    {% if session.get("tipo") != "Locatore" %}
 <button type="button" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width:200px;" onclick="window.location.href='/Segnala'">
     Segnala locatore
 </button>
+    {% endif %}
 </div><!-- /.container -->
               <!-- FINE SEZIONE CONTATTI -->
 

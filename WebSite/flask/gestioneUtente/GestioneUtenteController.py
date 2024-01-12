@@ -90,6 +90,7 @@ def registrazione():
             session["mese"] = user.getMeseScadenza()
             session["anno"] = user.getAnnoScadenza()
             session["universita"] = denominazione
+            session["verificato"] = user.getVerificato()
 
         if tipo in ["Studente", "Locatore"]:
             return redirect(url_for("gu.verifica"))
@@ -121,6 +122,7 @@ def accessoU():
             numcarta = user.getNumeroCarta()
             mese = user.getMeseScadenza()
             anno = user.getAnnoScadenza()
+            verificato = user.getVerificato()
 
             session["nome"] = nomecliente
             session["cognome"] = cognomecliente
@@ -130,6 +132,7 @@ def accessoU():
             session["carta"] = numcarta
             session["mese"] = mese
             session["anno"] = anno
+            session["verificato"] = verificato
 
             return redirect(url_for("gu.main"))
         else:  # Se l'autenticazione fallisce
@@ -146,6 +149,7 @@ def logout():
         session.pop("email", None)
         session.pop("password", None)
         session.pop("tipo", None)
+        session.pop("verificato", None)
         print("ciao sono CLIENTE")
         return redirect(url_for('gu.main'))
     elif session.get("tipo") == "Homechecker" or session.get("tipo") == "Admin":
@@ -271,7 +275,6 @@ def userpage():
 
 
 @gu.route('/modifica', methods=['GET', 'POST'])
-@verifica_account_required
 def modifica():
     if request.method == "POST":
         nome = request.form.get("nome")
@@ -303,12 +306,10 @@ def modifica():
 
 
 @gu.route("/servizi")
-@verifica_account_required
 def servizi():
     return render_template("Servizi.html")
 
 @gu.route("/community")
-@verifica_account_required
 def community():
     return render_template("Community.html")
 
@@ -370,7 +371,7 @@ def verifica():
             return render_template("verifica.html")
 
         # Se l'email non è presente nella sessione, reindirizza l'utente alla pagina di login
-        return redirect(url_for('LoginCliente'))
+        return redirect(url_for('gu.main'))
 
 
 #conferma account basata sul token
