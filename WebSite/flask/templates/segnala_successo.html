@@ -6,32 +6,42 @@
 
      <style>
 
-
-
-
         .footer {
             position: absolute;
             bottom: 0;
             width: 100%;
         }
-.bottone {
-    position: relative;
-    bottom: 0px; /* Posiziona il bottone 10px dal basso */
-    right: 0; /* Posiziona il bottone all'estrema destra */
-    margin-bottom: 20px; /* Aggiungi spazio sotto il bottone per separarlo dalla textarea */
-    margin-right: 10px; /* Aggiungi margine destro per separare il bottone dal bordo */
-}
 
- .tutto {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 80vh;
-        max-height: 100%;
-        overflow: hidden; /* Nasconde la scrollbar se il contenuto supera l'altezza massima */
-        text-align: center;
-    }
+        .bottone {
+            position: relative;
+            bottom: 0px; /* Posiziona il bottone 10px dal basso */
+            right: 0; /* Posiziona il bottone all'estrema destra */
+            margin-bottom: 20px; /* Aggiungi spazio sotto il bottone per separarlo dalla textarea */
+            margin-right: 10px; /* Aggiungi margine destro per separare il bottone dal bordo */
+        }
+
+         .tutto {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             height: 80vh;
+             max-height: 100%;
+             overflow: hidden; /* Nasconde la scrollbar se il contenuto supera l'altezza massima */
+             text-align: center;
+         }
+
+        .tutto, h1 {
+            color: #5c8e48;
+            font-size: 1.5em;
+            line-height: 1.5;
+        }
+
+        .tutto, h6 {
+            color: #5c8e48;
+            font-size: 1em;
+            line-height: 1.5;
+        }
 
     </style>
 {% endblock %}
@@ -43,14 +53,17 @@
 
 
 <div class="tutto">
+    <img src="../static/img/Group%207.png" style="width: 614px; height: 165px;"><br><br>
+
     <h1>Segnalazione avvenuta con successo</h1>
-    <p>Grazie per aver segnalato! Sarà presto valutato.</p>
-     <div class="bottone">
-<button type="button" onclick="window.location.href='{{ url_for('gu2.annuncio', id=id_alloggio) }}'" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width: 200px;">
-    Torna all'annuncio
-</button>
+    <h6>Grazie per aver segnalato! Sarà presto valutato.</h6><br><br>
+
+    <div class="bottone">
+    <button type="button" onclick="window.location.href='{{ url_for('gu2.annuncio', id=id_alloggio) }}'" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width: 200px;">
+        Torna all'annuncio
+    </button>
+    </div>
 </div>
-     </div>
 
  <footer class="footer">
         {% include "footerNew.html" %}
