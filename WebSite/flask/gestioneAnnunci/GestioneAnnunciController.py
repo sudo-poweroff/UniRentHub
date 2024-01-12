@@ -120,7 +120,7 @@ def allservizi():
 
         print("titolo:" + titolo)
         print("indirizzo:" + indirizzo)
-        print("cap:" + str(cap_con_zero))
+        print("cap:" + cap_con_zero)
         print("provincia:" + provincia)
         print("citta:" + citta)
         print("tipo:" + tipo)
@@ -319,7 +319,7 @@ def modifica_annuncio():
         id_ = session.get("id_alloggio")
         titolo = request.form.get("titolo")
         indirizzo = request.form.get("indirizzo")
-        cap = int(request.form.get("cap", 0))
+        cap = request.form.get("cap")
         provincia = request.form.get("provincia")
         citta = request.form.get("citta")
         tipo = request.form.get("tipo")
@@ -344,10 +344,12 @@ def modifica_annuncio():
         mail = session.get("email")
         servizi_selezionati = request.form.getlist('checkboxGroup')
 
+        cap_con_zero = cap.zfill(5)
+
         print("id: " + str(id_))
         print("titolo:" + titolo)
         print("indirizzo:" + indirizzo)
-        print("cap:" + str(cap))
+        print("cap:" + cap_con_zero)
         print("provincia:" + provincia)
         print("citta:" + citta)
         print("tipo:" + tipo)
