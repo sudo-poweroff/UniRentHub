@@ -14,7 +14,8 @@ CREATE TABLE Cliente (
     mese_scadenza INT NOT NULL,
     anno_scadenza INT NOT NULL,
     verificato BOOLEAN,
-    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL
+    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL,
+    data_blocco DATE
 );
 
 CREATE TABLE Dipendente (
