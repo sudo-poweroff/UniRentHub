@@ -90,7 +90,7 @@ def registrazione():
             session["mese"] = user.getMeseScadenza()
             session["anno"] = user.getAnnoScadenza()
             session["universita"] = denominazione
-            session["verificato"] = user.getVerificato()
+            session["verificato"] = 0
 
         if tipo in ["Studente", "Locatore"]:
             return redirect(url_for("gu.verifica"))
