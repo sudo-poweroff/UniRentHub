@@ -71,6 +71,7 @@ class SegnalazioneDAO:
         query = """
                 SELECT  emailS
                 FROM segnalazione
+                WHERE stato = 'Aperta'
                 """
         self.__cursor.execute(query)
         results = self.__cursor.fetchall()
@@ -88,3 +89,13 @@ class SegnalazioneDAO:
         #crea una lista di utenti con 3 più segnalazioni
         utenti_con_segnalazioni = [emailS for emailS, count in segnalazioni_per_utente.items() if count >= 3]
         return utenti_con_segnalazioni
+
+    def chiudi_segnalazioni_per_utente(self, emailS):
+        query = """
+                UPDATE Segnalazione
+                SET stato = 'Chiusa'
+                WHERE emailS = %s
+                """
+        values = (emailS,)
+        self.__cursor.execute(query, values)
+        self.__connection.commit()

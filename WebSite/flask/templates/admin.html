@@ -34,8 +34,6 @@
 {% endblock %}
 
 {% block content %}
-
-
     {% if session.get("tipo") == "Admin" %}
         {% include "header_admin.html" %}
         <div class="container mt-5">
@@ -66,7 +64,7 @@
                                         <p style="word-wrap: break-word;" class="card-text">{{ dipendente.getEmail() }}</p>
                                         <form action="/admin" method="post" id="deleteForm">
                                             <input type="hidden" name="delete_email" id="deleteEmailField" value="{{ dipendente.getEmail() }}">
-                                            <button style="border-radius:20px ;margin-top:20px; background-color: #556b2f; border-color: #556b2f !important;" type="submit">Rimuovi</button>
+                                            <button style="color: white;border-radius:20px ;margin-top:20px; background-color: #556b2f; border-color: #556b2f !important;" type="submit">Rimuovi</button>
                                         </form>
                                     </div>
                                 </div>
@@ -78,30 +76,6 @@
                     </div>
                 </div>
 
-<h2>Utenti con 3 o più segnalazioni</h2>
-<div class="container mt-5">
-    <div class="row mt-4">
-        {% for utente in utenti_con_segnalazioni %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card d-flex flex-column justify-content-between" style="width: 18rem; height: 100%;">
-                    <img style="padding: 20px" src="../static/img/profile.png" width="30" height="200" class="card-img-top" alt="userpictures">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ utente }}</h5>
-                        <!-- Bottone "Segnalazioni" -->
-                        <a href="/segnalazioni/{{ utente }}" class="btn btn-primary">Segnalazioni</a>
-                             <form action="/block_user" method="POST">
-                                  <input type="hidden" name="emailS" value=" {{ utente }} ">
-                                  <button type="submit" class="btn btn-danger">Blocca Utente</button>
-                             </form>
-                    </div>
-                </div>
-            </div>
-            {% if (loop.index % 3 == 0) and (not loop.last) %}
-                </div><div class="row mt-4">
-            {% endif %}
-        {% endfor %}
-    </div>
-</div>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModalCenterSecond" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -141,12 +115,11 @@
                 <!-- Fine Modal -->
             </div>
         </div>
-       <!-- <footer class="footer"> -->
-            <!--  {% include "footerNew.html" %} -->
-         <!--     {% if session.get("tipo") == "Locatore" %}    -->
+            {% include "footerNew.html" %}
+             {% if session.get("tipo") != "Admin" %}
                 {% include "error.html" %}
             {% endif %}
-       <!-- </footer> -->
+
     {% endif %}
 {% endblock %}
 

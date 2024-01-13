@@ -230,3 +230,15 @@ class ClienteDAO:
         values = (email, )
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def resetDataBloccoCliente(self, email):
+        query = """
+            UPDATE cliente
+            SET data_blocco = NULL
+            WHERE email = %s
+        """
+
+        values = (email,)
+
+        self.__cursor.execute(query, values)
+        self.__connection.commit()

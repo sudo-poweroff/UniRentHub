@@ -187,19 +187,6 @@ def utenti_contre_segnalazioniservice():
     num_segnalazione = dao.utenti_contre_segnalazioni()
     return num_segnalazione
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 def blocca_utenteservice(emailS):
     dao = ClienteDAO()
     update = dao.blocca_utente(email=emailS)
@@ -207,3 +194,11 @@ def blocca_utenteservice(emailS):
 def rimuovi_blocco_utenteservice(emailS):
     dao = ClienteDAO()
     update = dao.rimuovi_blocco_utente(email=emailS)
+
+def chiudi_tutte_le_segnalazioni(emailS):
+    dao = SegnalazioneDAO()
+    dao.chiudi_segnalazioni_per_utente(emailS=emailS)
+
+def update_blocco(email):
+    dao = ClienteDAO()
+    dao.resetDataBloccoCliente(email=email)

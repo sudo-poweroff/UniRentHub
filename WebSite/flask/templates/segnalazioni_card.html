@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+ {% if session.get("tipo") == "Admin" %}
+    {% include "header_admin.html" %}
+    <div class="container mt-5">
+        <div class="row">
+            {% for e in emailS %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card d-flex flex-column justify-content-between" style="width: 18rem; height: 100%;">
+                    <img style="padding: 20px" src="../static/img/profile.png" width="30" height="200" class="card-img-top" alt="homecheckerpictures">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p style="word-wrap: break-word;" class="card-text"> {{ e }}</p>
+                        <form action="/segnalazioni" method="get">
+                            <input type="hidden" name="email" value="{{ e }}">
+                            <button style="color: white;border-radius: 20px; background-color: #5c8e48; border-color: #5c8e48 !important;  box-shadow: none;" type="submit">Segnalazioni</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% include "footerNew.html" %}
+{% endif %}
+ {% if session.get("tipo") != "Admin" %}
+     {% include "error.html" %}
+ {% endif %}
+
+</body>
+
+</html>

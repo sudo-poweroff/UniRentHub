@@ -8,11 +8,13 @@ from .GestioneUtenteService import get_cliente_by_email_password, registra_clien
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
     cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service, \
     update_verificatoservice, check_account_verification, cerca_cliente_byEmail, blocca_utenteservice, \
-    rimuovi_blocco_utenteservice, utenti_contre_segnalazioniservice
+    rimuovi_blocco_utenteservice, utenti_contre_segnalazioniservice, chiudi_tutte_le_segnalazioni, update_blocco
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
 from itsdangerous import  URLSafeTimedSerializer
 from functools import wraps
 from datetime import datetime
+import datetime
+
 from flask import flash
 
 serializer = URLSafeTimedSerializer('my_secret_token')
@@ -106,6 +108,21 @@ def accessoU():
         password = request.form["password"]
 
         user = get_cliente_by_email_password(email, password)
+        data_blocco = user.getDataBlocco()
+        verifica = user.getVerificato()
+
+        if data_blocco is not None:
+            data_blocco = datetime.datetime.combine(data_blocco, datetime.datetime.min.time())
+            data_attuale = datetime.datetime.now()
+            differenza_tempo = data_attuale - data_blocco
+            print("Differenza TEMPO: ", differenza_tempo)
+            if differenza_tempo.days >= 30:
+                update_blocco(email)
+            else:
+                return render_template("blockpage.html")
+
+        if not verifica:
+            return render_template("verifica.html")
 
         if user:  # Se l'autenticazione ha successo
             session.permanent = True
@@ -144,6 +161,14 @@ def accessoU():
 @gu.route("/logout")
 def logout():
     if session.get("tipo") == "Studente" or session.get("tipo") == "Locatore":
+        if session.get("verifica") == 0:
+            session.pop("nome", None)
+            session.pop("cognome", None)
+            session.pop("email", None)
+            session.pop("password", None)
+            session.pop("tipo", None)
+            session.pop("verificato", None)
+            return render_template("verifica.html")
         session.pop("nome", None)
         session.pop("cognome", None)
         session.pop("email", None)
@@ -368,6 +393,7 @@ def verifica():
             # Invia l'email di conferma
             mail = configure_mail(app)
             send_verification_email(mail, email, confirmation_url)  # Passa l'istanza mail configurata
+            logout()
             return render_template("verifica.html")
 
         # Se l'email non è presente nella sessione, reindirizza l'utente alla pagina di login
@@ -391,30 +417,29 @@ def visualizzasegnalazione(emailS):
     return render_template('segnalazioni.html', segnalazioni = segnalazioni)
 
 
-from flask import flash  # Assicurati di importare flash da Flask
-
-
-@gu.route('/block_user', methods=["POST"])
+@gu.route('/block_user', methods=["POST", "GET"])
 def blocca_utente():
-    if 'emailS' in request.form:
-        emailS = request.form['emailS']
-        print(emailS)
-        update_success = blocca_utenteservice(emailS)
-
-        if update_success:
-            session[emailS] = datetime.now()  # Imposta la data di blocco dell'utente nella sessione
-            return redirect(url_for('gu.blockpage'))
-        else:
-            flash('Errore durante il blocco dell\'utente. Si prega di riprovare.', 'error')
-            return redirect(url_for('gu.main'))  # Ritorna alla pagina precedente con il messaggio di errore
-
-    return render_template('link_scaduto.html')
+    if request.method == "GET":
+        email = session.get("emailS")
+        print("BLOCCO:  " + email)
+        chiudi_tutte_le_segnalazioni(email)
+        blocca_utenteservice(email)
+        return redirect(url_for("gu.segnalazioni_card"))
 
 
-@gu.route('/blockpage')
-def blockpage():
-    return render_template('blockpage.html')
+@gu.route('/segnalazioni', methods=["GET"])
+def segnalazioni():
+    if request.method == "GET":
+        email = request.args.get('email')
+        session["emailS"] = email
+        print("EMAIL:    "  + email)
+        segnalazioni = visualizzasegnalazione_service(email)
+        return render_template("segnalazioni_admin.html", segnalazioni=segnalazioni)
 
 
-
-
+@gu.route('/segnalazioni_card', methods=["GET"])
+def segnalazioni_card():
+    if request.method == "GET":
+        segnalazioni = []
+        emailS = utenti_contre_segnalazioniservice()
+        return render_template("segnalazioni_card.html", emailS = emailS)

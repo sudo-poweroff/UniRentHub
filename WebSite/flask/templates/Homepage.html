@@ -69,9 +69,7 @@
 
 
 {% block content %}
-{% if session.get("verificato") == false %}
-    {% include "verifica.html" %}
- {% elif session.get("tipo") != "Homechecker" and session.get("tipo") != "Admin"%}
+ {% if session.get("tipo") != "Homechecker" and session.get("tipo") != "Admin"%}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
 
