@@ -39,9 +39,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
+    {% if session.get("tipo") == "Admin" %}
       <li class="nav-item active" id="servizi">
         <a id="news" style="font-size: 20px; margin-right: 30px" class="nav-link" href="/segnalazioni_card">Segnalazioni</a>
       </li>
+    {% endif %}
         <li>
         {% if 'tipo' in session %}
                 <a href="/logout" class="btn btn-primary" style="border-radius: 20px; background-color: #5c8e48; border-color: #5c8e48 !important;  box-shadow: none;">

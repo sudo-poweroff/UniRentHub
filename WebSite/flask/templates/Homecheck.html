@@ -167,9 +167,7 @@ footer {
                 </div>
             </div>
         </div>
-        {% if loop.index % 3 == 0 %} <!-- Chiudi la riga ogni 3 elementi -->
-            </div><div class="row" style="margin-left: 210px;">
-        {% endif %}
+
     {% endfor %}
 
 
@@ -215,6 +213,7 @@ footer {
 {% else %}
     {% include "error.html" %}
 {% endif %}
+</div>
     </div>
     </body>
 {% endblock %}
