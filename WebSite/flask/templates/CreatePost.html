@@ -27,7 +27,7 @@
          <div class="card" style="width: 800px; margin-left: 180px">
 
           <div class="card-body" style="font-size: 24px;">
-              <form method="post" action="/community_crea_post">
+              <form method="post" action="/community_crea_post" onsubmit="return verificaForm()">
              <label for="exampleFormControlInput1" class="form-label">Titolo</label>
              <input name ="titolo" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Inserici il titolo">
 
@@ -64,6 +64,24 @@
 
 </div>
 
+<script>
+    // Funzione per la verifica del form prima dell'invio
+    function verificaForm() {
+        // Ottieni i valori dei campi del form
+        var titolo = document.getElementById('exampleFormControlInput1').value;
+        var descrizione = document.getElementById('exampleFormControlTextarea1').value;
+
+        // Effettua la verifica
+        if (titolo === '' || descrizione === '') {
+            // Se i campi non sono compilati, mostra un messaggio di avviso
+            alert('Compila tutti i campi del form prima di pubblicare.');
+            return false; // Impedisce l'invio del form
+        } else {
+            // Se tutti i campi sono compilati, il form verrà inviato normalmente
+            return true;
+        }
+    }
+</script>
 
     {% include "footerNew.html" %}
     {% endif %}
