@@ -136,7 +136,6 @@ CREATE TABLE Indirizzo (
     civico VARCHAR(5) NOT NULL,
     citta VARCHAR(255) NOT NULL,
     provincia VARCHAR(2) CHECK(LENGTH(provincia) = 2) NOT NULL,
-    PRIMARY KEY (via, cap, civico, citta, provincia),
     FOREIGN KEY (id_alloggio) REFERENCES Alloggio(id_alloggio) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
