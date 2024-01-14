@@ -128,6 +128,63 @@ def ricerca_alloggio(citta):
 
     return alloggi
 
+
+def ricerca_recensione_byId(id_alloggi):
+    dao3 = RecensioneDAO()
+    recensioni = dao3.ricercarecensionealloggio(id_alloggio=id_alloggi)
+
+    voti = []
+    for rec in recensioni:
+        voto = rec.get_voto()
+        print("VOTO BYID:     " + str(voto))
+        voti.append(voto)
+
+    media = 0
+    somma_voti = 0
+    for v in voti:
+        if v:
+            somma_voti = v + somma_voti
+            media = somma_voti / len(voti)
+
+    return media
+
+
+def ricerca_recensione(citta):
+    dao1 = IndirizzoDAO()
+    dao3 = RecensioneDAO()
+
+    recensioni = []
+
+    id_alloggi = dao1.ricerca_citta(citta=citta)
+    for id in id_alloggi:
+        for i in id:
+            rece = dao3.ricercarecensionealloggio(id_alloggio=i)
+            recensioni.append(rece)
+
+    print("OOOOOOOO")
+    votiFinish = []
+    for rec in recensioni:
+        voti = []
+        for row in rec:
+            voto = row.get_voto()
+            print("VOTO:   " + str(voto))
+            voti.append(voto)
+        votiFinish.append(voti)
+
+    media = []
+    for voti in votiFinish:
+        if voti:
+            somma_voti = sum(voti)
+            media.append(somma_voti / len(voti))
+        else:
+            media.append(0)
+
+    for m in media:
+        print("MEDIA :" + str(m))
+
+    return media
+
+
 #ricerca di un post studente UniRentHubCommunity
 def ricerca_post_studente(value):
     dao = PostDAO()

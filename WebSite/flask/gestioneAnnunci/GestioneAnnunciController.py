@@ -8,7 +8,8 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
-    recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica
+    recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica, \
+    ricerca_recensione, ricerca_recensione_byId
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -26,6 +27,8 @@ def catalogo():
         citta = session.get("ricerca")
         print("citta" + citta)
         alloggi = ricerca_alloggio(citta)
+        media = ricerca_recensione(citta=citta)
+
         print("hey")
         id_alloggi = []
         immagini = []
@@ -45,7 +48,7 @@ def catalogo():
                         count = 1
         else:
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
-        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
 
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
@@ -438,6 +441,7 @@ def catalogo_asc():
         print("hey")
         id_alloggi = []
         immagini = []
+        media = []
         if alloggi:
             for row in alloggi:
                 print("hey 2")
@@ -452,9 +456,12 @@ def catalogo_asc():
                         print("path:     " + p)
                         immagini.append(p)
                         count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
         else:
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
-        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
 
 
 @gu2.route("/page_desc", methods=['POST', 'GET'])
@@ -466,6 +473,7 @@ def catalogo_desc():
         print("hey")
         id_alloggi = []
         immagini = []
+        media=[]
         if alloggi:
             for row in alloggi:
                 print("hey 2")
@@ -480,9 +488,12 @@ def catalogo_desc():
                         print("path:     " + p)
                         immagini.append(p)
                         count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
         else:
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
-        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
 
 @gu2.route("/page_classe_energetica", methods=['POST', 'GET'])
 def classe_energetica():
@@ -493,6 +504,7 @@ def classe_energetica():
         print("hey")
         id_alloggi = []
         immagini = []
+        media=[]
         if alloggi:
             for row in alloggi:
                 print("hey 2")
@@ -507,9 +519,12 @@ def classe_energetica():
                         print("path:     " + p)
                         immagini.append(p)
                         count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
         else:
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
-        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
 
 
 @gu2.route('/Alloggio.html')
