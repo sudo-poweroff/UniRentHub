@@ -143,7 +143,7 @@ footer {
                 <div class="card-body">
                     <img class="card-img-top" src="../{{ immagini[loop.index0] }}" alt="Card image cap" style=" margin-left: 35px;width: 220px; height: 220px">
                     <h5 class="card-title" style="margin-top: auto; text-align: center; margin-bottom: 20px;">
-                        <a href="{{ alloggio.get_titolo() }}" style="text-decoration: none; color: inherit;">{{ alloggio.get_titolo() }}</a>
+                        <a href="/Alloggio.html?id={{ alloggio.get_id_alloggio() }}" style="text-decoration: none; color: inherit;">{{ alloggio.get_titolo() }}</a>
                     </h5>
                     <p class="card-text">{{ alloggio.get_tipo_alloggio() }}</p>
                     <!-- Inserimento dei due bottoni -->

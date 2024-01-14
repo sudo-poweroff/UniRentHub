@@ -48,45 +48,6 @@ def catalogo():
         return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
 
 
-@gu2.route('/Alloggio.html')
-def annuncio():
-
-    dao = AlloggioDAO()
-    dao2 = ImmagineDAO()
-    dao3 = IndirizzoDAO()
-
-    id_alloggio = request.args.get('id') or session.get("id_alloggio")
-
-    #ATTENZIONE
-    #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
-    session["id_alloggio"] = id_alloggio
-
-    alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
-    servizi = dao.visualizzaservizi(id_alloggio)
-
-    immagini = dao2.recupera_path(id_alloggio=id_alloggio)
-
-    path = []
-    for im in immagini:
-        path.append(im.get_path())
-
-    for p in path:
-        print("PATH:    " + p)
-
-    indirizzo = dao3.visualizzaindirizzo(id_alloggio)
-
-    prenotazione = ricerca_data_disponibile(id_alloggio=id_alloggio)
-    data_time = []
-
-    for row in prenotazione:
-        d = row.get_data_visita()
-        datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
-        print("AFFITTO -> dataTIME:  " + str(datetime_object))
-
-        data_time.append(datetime_object)
-
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)
-
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
     if request.method == 'GET':
@@ -550,3 +511,44 @@ def classe_energetica():
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
         return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
 
+
+@gu2.route('/Alloggio.html')
+def annuncio():
+
+    dao = AlloggioDAO()
+    dao2 = ImmagineDAO()
+    dao3 = IndirizzoDAO()
+
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
+
+    #ATTENZIONE
+    #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
+    session["id_alloggio"] = id_alloggio
+
+    print("ID ALLOGGIO AALLOGGIOGIGOG:       " + str(id_alloggio))
+
+    alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+    servizi = dao.visualizzaservizi(id_alloggio)
+
+    immagini = dao2.recupera_path(id_alloggio=id_alloggio)
+
+    path = []
+    for im in immagini:
+        path.append(im.get_path())
+
+    for p in path:
+        print("PATH:    " + p)
+
+    indirizzo = dao3.visualizzaindirizzo(id_alloggio)
+
+    prenotazione = ricerca_data_disponibile(id_alloggio=id_alloggio)
+    data_time = []
+
+    for row in prenotazione:
+        d = row.get_data_visita()
+        datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
+        print("AFFITTO -> dataTIME:  " + str(datetime_object))
+
+        data_time.append(datetime_object)
+
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)
