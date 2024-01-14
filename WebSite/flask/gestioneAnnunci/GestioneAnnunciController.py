@@ -8,7 +8,7 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
-    recensione, cercarec, segnala_service
+    recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -88,7 +88,6 @@ def annuncio():
     return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
-@verifica_account_required
 def allservizi():
     if request.method == 'GET':
         servizi = visualizza_servizi()
@@ -356,7 +355,6 @@ def modifica_annuncio():
         print("descrizione:" + descrizione)
         print("num_bagni:" + str(num_bagni))
         print("num_camere:" + str(num_camere))
-        print("classe_energetica:" + classe_energetica)
         print("num_ospiti:" + str(num_ospiti))
         print("metri_quadri:" + str(metri_quadri))
         print("prezzo:" + str(prezzo))
@@ -415,7 +413,6 @@ def data_visita_locatore():
 
 
 @gu2.route('/Segnala', methods=['GET', 'POST'])
-@verifica_account_required
 def segnala():
     if request.method == 'POST':
         #prendo id alloggio dalla sessione
@@ -445,7 +442,6 @@ def segnala_successo():
 
 
 @gu2.route("/recensione")
-@verifica_account_required
 def inseriscirec():
     data_oggi = date.today().isoformat()
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
@@ -458,7 +454,6 @@ def inseriscirec():
         return redirect(url_for('gu.userpage'))
 
 @gu2.route("/recensisci", methods=['POST'])
-@verifica_account_required
 def recensisci():
     if request.method == 'POST':
         id_alloggio = request.form.get("id")
@@ -472,4 +467,86 @@ def recensisci():
         recensione(id_alloggio, titolo, descrizione, voto, data, email)
         return redirect(url_for('gu.userpage'))
 
+
+@gu2.route("/page_asc", methods=['POST', 'GET'])
+def catalogo_asc():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_prezzo_minore(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+
+
+@gu2.route("/page_desc", methods=['POST', 'GET'])
+def catalogo_desc():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_prezzo_maggiore(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+
+@gu2.route("/page_classe_energetica", methods=['POST', 'GET'])
+def classe_energetica():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_classe_energetica(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
 

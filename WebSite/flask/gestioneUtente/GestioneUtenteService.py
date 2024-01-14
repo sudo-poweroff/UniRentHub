@@ -132,7 +132,8 @@ def update_cliente(nome, cognome, email, password, tipo_utente, numero_carta, an
             if is_valid_password(password):
                 dao = ClienteDAO()
                 print(mese)
-                cliente = dao.aggiornaCliente(nome, cognome, email, password, tipo_utente, numero_carta, anno, mese)
+                print(anno)
+                cliente = dao.aggiornaCliente(email, nome, cognome, password, numero_carta, anno, mese)
 
 
 def idcasas(email, data):

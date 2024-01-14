@@ -301,6 +301,8 @@ def userpage():
 
 @gu.route('/modifica', methods=['GET', 'POST'])
 def modifica():
+    if request.method == "GET":
+        return "FRATMMMMMMMMMMMMMMMM"
     if request.method == "POST":
         nome = request.form.get("nome")
         cognome = request.form.get("cognome")

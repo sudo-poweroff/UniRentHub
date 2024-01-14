@@ -274,3 +274,444 @@ class AlloggioDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
+    def ricerca_prezzo_minore_per_citta(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_prezzo_maggiore_per_citta(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            ORDER BY a.prezzo DESC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_per_classe_energetica(self, citta):
+        classe_energetica_minima = 'A++'
+        classe_energetica_massima = 'D'
+
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica BETWEEN %s AND %s
+            ORDER BY a.classe_energetica ASC, a.prezzo ASC
+        """
+        values = (citta, classe_energetica_minima, classe_energetica_massima)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        current_classe_energetica = None
+        current_classe_energetica_alloggi = []
+
+        for row in alloggi:
+            classe_energetica = row[7]
+
+            if classe_energetica != current_classe_energetica:
+                # Nuova classe energetica, aggiungi gli alloggi della classe precedente al risultato
+                result.extend(current_classe_energetica_alloggi)
+
+                # Inizializza per la nuova classe energetica
+                current_classe_energetica = classe_energetica
+                current_classe_energetica_alloggi = []
+
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            current_classe_energetica_alloggi.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        # Aggiungi gli alloggi dell'ultima classe energetica al risultato
+        result.extend(current_classe_energetica_alloggi)
+
+        return result
+
+
+    def ricerca_classe_energetica_Aplusplus(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'A++'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_classe_energetica_Aplus(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'A+'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_classe_energetica_A(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'A'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_classe_energetica_B(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'B'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_classe_energetica_C(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'C'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+    def ricerca_classe_energetica_D(self, citta):
+        query = """
+            SELECT a.*
+            FROM alloggio a
+            INNER JOIN indirizzo i ON a.id_alloggio = i.id_alloggio
+            WHERE a.disponibilità = 1
+            AND i.citta = %s
+            AND a.classe_energetica = 'D'
+            ORDER BY a.prezzo ASC
+        """
+        values = (citta,)
+        self.__cursor.execute(query, values)
+        alloggi = self.__cursor.fetchall()
+
+        result = []
+        for row in alloggi:
+            print("ID DAO ENERGIA:      " + str(row[0]))
+            result.append(Alloggio(
+                id_alloggio=row[0],
+                tipo_alloggio=row[1],
+                disponibilita=row[2],
+                titolo=row[3],
+                mq=row[4],
+                n_camere_letto=row[5],
+                n_bagni=row[6],
+                classe_energetica=row[7],
+                arredamenti=row[8],
+                data_publicazione=row[9],
+                pannelli_solari=row[10],
+                pannelli_fotovoltaici=row[11],
+                descrizione=row[12],
+                verifica=row[13],
+                prezzo=row[14],
+                n_ospiti=row[15],
+                n_stanze=row[16],
+                tasse=row[17],
+                email_dip=row[18],
+                email_loc=row[19],
+                data_verifica=row[20]
+            ))
+
+        return result
+
+
+    def ricerca_per_id(self, id_alloggio):
+        query = """
+            SELECT * FROM alloggio
+            WHERE id_alloggio = %s
+        """
+        values = (id_alloggio,)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            alloggio = Alloggio(
+                id_alloggio=result[0],
+                tipo_alloggio=result[1],
+                disponibilita=result[2],
+                titolo=result[3],
+                mq=result[4],
+                n_camere_letto=result[5],
+                n_bagni=result[6],
+                classe_energetica=result[7],
+                arredamenti=result[8],
+                data_publicazione=result[9],
+                pannelli_solari=result[10],
+                pannelli_fotovoltaici=result[11],
+                descrizione=result[12],
+                verifica=result[13],
+                prezzo=result[14],
+                n_ospiti=result[15],
+                n_stanze=result[16],
+                tasse=result[17],
+                email_dip=result[18],
+                email_loc=result[19],
+                data_verifica=result[20]
+            )
+            return alloggio
+        else:
+            return None

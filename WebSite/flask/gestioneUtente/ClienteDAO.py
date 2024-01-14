@@ -178,21 +178,23 @@ class ClienteDAO:
         else:
             return None
 
+    def aggiornaCliente(self, email, nome, cognome, password, numero_carta, anno, mese):
+        try:
+            query = """
+                UPDATE cliente
+                SET nome = %s, cognome = %s, password = %s, numero_carta = %s, anno_scadenza = %s, mese_scadenza = %s
+                WHERE email = %s
+            """
 
+            values = (nome, cognome, password, numero_carta, anno, mese, email)
 
-    def aggiornaCliente(self, nome, cognome, email, password, tipo_utente, numero_carta, anno, mese):
-        query = """
-                    UPDATE cliente
-                    SET nome =%s, cognome=%s, password =%s, numero_carta =%s, anno_scadenza =%s, mese_scadenza =%s
-                    WHERE email =%s
-                """
+            self.__cursor.execute(query, values)
+            self.__connection.commit()
 
-        values = (nome, cognome, password, numero_carta, anno, mese, email)
-
-        self.__cursor.execute(query, values)
-        self.__connection.commit()
-
-
+            return True  # Restituisce True se l'aggiornamento ha avuto successo
+        except Exception as e:
+            print(f"Errore durante l'aggiornamento del cliente: {str(e)}")
+            return False  # Restituisce False in caso di errore
 
     def update_verificato(self, email):
         query = """

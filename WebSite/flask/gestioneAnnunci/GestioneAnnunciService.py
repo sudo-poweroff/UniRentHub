@@ -223,6 +223,10 @@ def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto
     )
     print("sono nel service")
     dao = AlloggioDAO()
+    if classe_energetica is None:
+        a = dao.ricerca_per_id(id_alloggio=id_allogio)
+        alloggio.set_classe_energetica(nuova_classe_energetica=a.get_classe_energetica())
+
     dao.modifica_alloggio(id_alloggio=id_allogio, alloggio=alloggio)
     return alloggio
 
@@ -260,3 +264,42 @@ def cercadataacquisto(email,id_alloggio):
     dao = AffittareDAO()
     data = dao.cercadataaffitto(email,id_alloggio)
     return data
+
+def ricerca_prezzo_minore(citta):
+    dao2 = AlloggioDAO()
+    alloggi = dao2.ricerca_prezzo_minore_per_citta(citta=citta)
+    for i in alloggi:
+        print("CASA TITOLO SERVICE MINORE: " + i.get_titolo())
+    return alloggi
+
+def ricerca_prezzo_maggiore(citta):
+    dao2 = AlloggioDAO()
+    alloggi = dao2.ricerca_prezzo_maggiore_per_citta(citta=citta)
+    for i in alloggi:
+        print("CASA TITOLO SERVICE MAGGIORE: " + i.get_titolo())
+    return alloggi
+
+
+def ricerca_classe_energetica(citta):
+    dao2 = AlloggioDAO()
+    alloggiAplusPlus = dao2.ricerca_classe_energetica_Aplusplus(citta=citta)
+    alloggiAplus = dao2.ricerca_classe_energetica_Aplus(citta=citta)
+    alloggiA = dao2.ricerca_classe_energetica_A(citta=citta)
+    alloggiB = dao2.ricerca_classe_energetica_B(citta=citta)
+    alloggiC = dao2.ricerca_classe_energetica_C(citta=citta)
+    alloggiD = dao2.ricerca_classe_energetica_D(citta=citta)
+
+    tutti_alloggi = []
+    tutti_alloggi.extend(alloggiAplusPlus)
+    tutti_alloggi.extend(alloggiAplus)
+    tutti_alloggi.extend(alloggiA)
+    tutti_alloggi.extend(alloggiB)
+    tutti_alloggi.extend(alloggiC)
+    tutti_alloggi.extend(alloggiD)
+
+    return tutti_alloggi
+
+def ricerca_alloggio_Byid(id_alloggio):
+    dao = AlloggioDAO()
+    alloggio = dao.ricerca_per_id(id_alloggio=id_alloggio)
+    return alloggio
