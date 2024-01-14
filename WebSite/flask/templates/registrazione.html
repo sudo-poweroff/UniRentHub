@@ -126,7 +126,7 @@ label.light {
     {% include "header.html" %}
 <div style="margin-top: 100px; margin-bottom: 100px" class="row">
     <div class="col-md-12">
-      <form action="/registrazione" method="post">
+      <form action="/registrazione" method="post" onsubmit="return verificaForm()">
         <h1> Registrazione </h1>
 
         <fieldset>
@@ -137,7 +137,7 @@ label.light {
           <input type="text" id="name" name="nome" placeholder="Nome">
 
             <label for="name">Cognome</label>
-          <input type="text" id="name" name="cognome" placeholder="Cognome">
+          <input type="text" id="cognome" name="cognome" placeholder="Cognome">
 
           <label for="email">Email</label>
           <input type="email" id="mail" name="email" placeholder="Email">
@@ -146,7 +146,7 @@ label.light {
           <input type="password" id="password"       name="password" placeholder="Password">
 
             <label for="password">Conferma Password</label>
-          <input type="password" id="password"       name="password2" placeholder="Conferma Password">
+          <input type="password" id="confermaPassword"       name="password2" placeholder="Conferma Password">
 
               <div class="form-group">
                 <label id="l-uni" for="exampleFormControlSelect1">Universita'</label>
@@ -185,7 +185,7 @@ label.light {
           <legend><span style="margin-top: 30px" class="number">2</span> Pagamento</legend>
 
             <label for="name">Numero Carta</label>
-          <input type="text" id="name" name="numero_carta" maxlength="16" placeholder="Numero Carta">
+          <input type="text" id="numeroCarta" name="numero_carta" maxlength="16" placeholder="Numero Carta">
 
 
             <div class="row">
@@ -225,7 +225,7 @@ label.light {
 </div>
 
             <label for="name">CVV</label>
-          <input type="text" id="name" name="cvv" maxlength="3" placeholder="CVV">
+          <input type="text" id="cvv" name="cvv" maxlength="3" placeholder="CVV">
 
 
          </fieldset>
@@ -238,5 +238,30 @@ label.light {
        </form>
         </div>
       </div>
+    <script>
+    // Funzione per la verifica del form prima dell'invio
+    function verificaForm() {
+        // Ottieni i valori dei campi del form
+        var nome = document.getElementById('name').value;
+        var cognome = document.getElementById('cognome').value;
+        var email = document.getElementById('mail').value;
+        var password = document.getElementById('password').value;
+        var confermaPassword = document.getElementById('confermaPassword').value;
+        var numeroCarta = document.getElementById('numeroCarta').value;
+        var meseScadenza = document.getElementById('mese-scadenza').value;
+        var annoScadenza = document.getElementById('anno-scadenza').value;
+        var cvv = document.getElementById('cvv').value;
+
+        // Effettua la verifica
+        if (nome === '' || cognome === '' || email === '' || password === '' || confermaPassword === '' || numeroCarta === '' || meseScadenza === '' || annoScadenza === '' || cvv === '') {
+            // Se uno qualsiasi dei campi non è compilato, mostra un messaggio di avviso
+            alert('Compila tutti i campi del form prima di registrarti.');
+            return false; // Impedisce l'invio del form
+        } else {
+            // Se tutti i campi sono compilati, il form verrà inviato normalmente
+            return true;
+        }
+    }
+</script>
 {% include "footerNew.html" %}
 {% endblock %}
