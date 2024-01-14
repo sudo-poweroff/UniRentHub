@@ -108,23 +108,25 @@ def accessoU():
         password = request.form["password"]
 
         user = get_cliente_by_email_password(email, password)
-        data_blocco = user.getDataBlocco()
-        verifica = user.getVerificato()
-
-        if data_blocco is not None:
-            data_blocco = datetime.datetime.combine(data_blocco, datetime.datetime.min.time())
-            data_attuale = datetime.datetime.now()
-            differenza_tempo = data_attuale - data_blocco
-            print("Differenza TEMPO: ", differenza_tempo)
-            if differenza_tempo.days >= 30:
-                update_blocco(email)
-            else:
-                return render_template("blockpage.html")
-
-        if not verifica:
-            return render_template("verifica.html")
 
         if user:  # Se l'autenticazione ha successo
+
+            data_blocco = user.getDataBlocco()
+            verifica = user.getVerificato()
+
+            if data_blocco is not None:
+                data_blocco = datetime.datetime.combine(data_blocco, datetime.datetime.min.time())
+                data_attuale = datetime.datetime.now()
+                differenza_tempo = data_attuale - data_blocco
+                print("Differenza TEMPO: ", differenza_tempo)
+                if differenza_tempo.days >= 30:
+                    update_blocco(email)
+                else:
+                    return render_template("blockpage.html")
+
+            if not verifica:
+                return render_template("verifica.html")
+
             session.permanent = True
 
             if user.getTipo() == "Studente":

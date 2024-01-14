@@ -11,7 +11,6 @@ from WebSite.flask.gestioneUtente.GestioneUtenteController import verifica_accou
 gu3 = Blueprint('gu3', __name__, template_folder="gestioneAnnunci")
 
 @gu3.route('/insert_data', methods=['GET', 'POST'])
-@verifica_account_required
 def insert_data():
     if request.method == 'POST':
         id_alloggio = session.get("id_alloggio")
@@ -47,7 +46,6 @@ def insert_data():
 
 
 @gu3.route('/remove_data', methods=['POST'])
-@verifica_account_required
 def remove_data():
     if request.method == 'POST':
         date = request.form["button"]
@@ -59,7 +57,6 @@ def remove_data():
 
 
 @gu3.route('/select_data', methods=['POST'])
-@verifica_account_required
 def update_data():
     if request.method == 'POST':
         date = request.form["button"]
@@ -71,7 +68,6 @@ def update_data():
         return redirect(url_for("gu2.annuncio"))
 
 @gu3.route('/Pagamento', methods=['POST', 'GET'])
-@verifica_account_required
 def pagamento():
     if request.method == 'GET':
         val = False
@@ -135,7 +131,6 @@ def pagamento():
             return redirect(url_for("gu3.pagamento"))
 
 @gu3.route('/calcola_prezzo', methods=['GET', 'POST'])
-@verifica_account_required
 def gestisci_richiesta():
     if request.method == 'POST':
         check_in = request.form.get('checkIn')

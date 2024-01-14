@@ -14,7 +14,7 @@ class SegnalazioneDAO:
 
 
     def createSegnalazione(self, email, emailS,motivo):
-        stato = "aperto" #imposto lo stato ad aperto quando si crea la segnalazione
+        stato = "Aperta" #imposto lo stato ad aperto quando si crea la segnalazione
         query = """
                 INSERT INTO Segnalazione ( email, emailS, stato, motivo)
                 VAlUES (%s,%s,%s,%s)
