@@ -20,7 +20,7 @@
 
       <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Dati utente</h4>
-          <form class="needs-validation" novalidate="" action="/modifica" METHOD="post">
+          <form class="needs-validation" novalidate="" action="/modifica" method="post">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
@@ -143,41 +143,12 @@
             onmouseout="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
             onmousedown="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
             onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
-            disabled>
+            >
         Modifica dati
     </button>
           </form>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var originalValues = {}; // Memorizza i valori originali dei campi del form
 
-        // Salva i valori originali dei campi del form all'avvio
-        $('form :input').each(function () {
-            var fieldName = $(this).attr('id');
-            originalValues[fieldName] = $(this).val();
-        });
-
-        // Funzione per controllare se i valori sono stati modificati
-        $('form :input').on('input', function () {
-            var formModified = false;
-
-            // Confronta i valori dei campi con i valori originali
-            $('form :input').each(function () {
-                var fieldName = $(this).attr('id');
-                var fieldValue = $(this).val();
-
-                if (fieldValue !== originalValues[fieldName]) {
-                    formModified = true;
-                    return false; // Esci dal ciclo se un campo è stato modificato
-                }
-            });
-
-            // Abilita/disabilita il pulsante in base alle modifiche
-            $('#modificaDatiBtn').prop('disabled', !formModified);
-        });
-    });
-</script>
         </div>
 
 
@@ -222,7 +193,27 @@
       </div><!-- /.container -->
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('modificaDatiBtn').addEventListener('click', function (event) {
+            var form = document.querySelector('form.needs-validation');
 
+            var nome = document.getElementById('firstName').value;
+            var cognome = document.getElementById('lastName').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var numeroCarta = document.getElementById('cc-number').value;
+            var meseScadenza = document.getElementById('mese_scadenza').value;
+            var annoScadenza = document.getElementById('scadenza').value;
+
+            if (!form.checkValidity() || !nome || !cognome || !email || !password || !numeroCarta || !meseScadenza || !annoScadenza) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    });
+</script>
     {% include "footerNew.html" %}
     {% endif %}
     {% if session.get("tipo") != "Studente"  and session.get("tipo") != "Locatore" %}
