@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
-from datetime import datetime
+from datetime import datetime, date
 
 from numpy import double
 
@@ -7,12 +7,17 @@ from .AlloggioDAO import AlloggioDAO
 from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ricerca_post_studente, \
     creazione_post, max_id_casa, indirizzo_crea, crea_possedimento, visualizza_servizi, \
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
-    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita
+    modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
+    recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica, \
+    ricerca_recensione, ricerca_recensione_byId
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
 from .ServiziDAO import ServiziDAO
+from WebSite.flask.gestioneAffitto.GestioneAffittoService import ricerca_data_disponibile
+from WebSite.flask.gestioneUtente.GestioneUtenteService import idcasas
+from WebSite.flask.gestioneUtente.GestioneUtenteController import verifica_account_required
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
 
@@ -22,6 +27,8 @@ def catalogo():
         citta = session.get("ricerca")
         print("citta" + citta)
         alloggi = ricerca_alloggio(citta)
+        media = ricerca_recensione(citta=citta)
+
         print("hey")
         id_alloggi = []
         immagini = []
@@ -41,37 +48,8 @@ def catalogo():
                         count = 1
         else:
             return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
-        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta)
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
 
-
-@gu2.route('/Alloggio.html')
-def annuncio():
-
-    dao = AlloggioDAO()
-    dao2 = ImmagineDAO()
-    dao3 = IndirizzoDAO()
-
-    id_alloggio = request.args.get('id')
-
-    #ATTENZIONE
-    #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
-    session["id_alloggio"] = id_alloggio
-
-    alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
-    servizi = dao.visualizzaservizi(id_alloggio)
-
-    immagini = dao2.recupera_path(id_alloggio=id_alloggio)
-
-    path = []
-    for im in immagini:
-        path.append(im.get_path())
-
-    for p in path:
-        print("PATH:    " + p)
-
-    indirizzo = dao3.visualizzaindirizzo(id_alloggio)
-
-    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path)
 
 @gu2.route('/CaricaAnnuncio', methods=['GET', 'POST'])
 def allservizi():
@@ -81,7 +59,7 @@ def allservizi():
     elif request.method == 'POST':
         titolo = request.form.get("titolo")
         indirizzo = request.form.get("indirizzo")
-        cap = int(request.form.get("cap", 0))
+        cap = request.form.get("cap")
         provincia = request.form.get("provincia")
         citta = request.form.get("citta")
         tipo = request.form.get("tipo")
@@ -101,9 +79,11 @@ def allservizi():
         mail = session.get("email")
         servizi_selezionati = request.form.getlist('checkboxGroup')
 
+        cap_con_zero = cap.zfill(5)
+
         print("titolo:" + titolo)
         print("indirizzo:" + indirizzo)
-        print("cap:" + str(cap))
+        print("cap:" + cap_con_zero)
         print("provincia:" + provincia)
         print("citta:" + citta)
         print("tipo:" + tipo)
@@ -129,6 +109,8 @@ def allservizi():
 
         val_id = max_id_casa()
         print("ID: " + str(val_id))
+
+        session["id_alloggio"] = val_id
 
         indirizzo2 = Indirizzo(id_alloggio=val_id, via=indirizzo, cap=cap, citta=citta, civico=civico, provincia=provincia)
         indirizzo_crea(indirizzo2)
@@ -237,12 +219,20 @@ def crea_post():
 @gu2.route('/ListaPreferiti.html',methods=['GET', 'POST'])
 def lista():
     alloggi=[]
+    immagini = []
     for num in session['case_preferite']:
         print(num)
         alloggio = visualizza_annuncio(num)
         alloggi.append(alloggio)
-
-    return render_template("ListaPreferiti.html",alloggi=alloggi)
+        count = 0
+        path = preleva_immagini(num)
+        for p in path:
+            if count == 0:
+                print("pathricerca:     " + p)
+                immagini.append(p)
+                count = 1
+    print(immagini)
+    return render_template("ListaPreferiti.html",alloggi=alloggi,immagini=immagini)
 
 
 @gu2.route('/Preferiti',methods=['GET', 'POST'])
@@ -292,7 +282,7 @@ def modifica_annuncio():
         id_ = session.get("id_alloggio")
         titolo = request.form.get("titolo")
         indirizzo = request.form.get("indirizzo")
-        cap = int(request.form.get("cap", 0))
+        cap = request.form.get("cap")
         provincia = request.form.get("provincia")
         citta = request.form.get("citta")
         tipo = request.form.get("tipo")
@@ -317,17 +307,18 @@ def modifica_annuncio():
         mail = session.get("email")
         servizi_selezionati = request.form.getlist('checkboxGroup')
 
+        cap_con_zero = cap.zfill(5)
+
         print("id: " + str(id_))
         print("titolo:" + titolo)
         print("indirizzo:" + indirizzo)
-        print("cap:" + str(cap))
+        print("cap:" + cap_con_zero)
         print("provincia:" + provincia)
         print("citta:" + citta)
         print("tipo:" + tipo)
         print("descrizione:" + descrizione)
         print("num_bagni:" + str(num_bagni))
         print("num_camere:" + str(num_camere))
-        print("classe_energetica:" + classe_energetica)
         print("num_ospiti:" + str(num_ospiti))
         print("metri_quadri:" + str(metri_quadri))
         print("prezzo:" + str(prezzo))
@@ -369,7 +360,7 @@ def elimina_annuncio():
 
 @gu2.route('/data_visita')
 def data_visita_locatore():
-    id_alloggio = session.get("id_alloggio")
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
     print("id_alloggio fuori: " + str(id_alloggio))
 
     prenotazione = preleva_data_visita(id_alloggio=id_alloggio)
@@ -383,3 +374,196 @@ def data_visita_locatore():
         data_time.append(datetime_object)
 
     return render_template("DataVisita.html", data=data_time)
+
+
+@gu2.route('/Segnala', methods=['GET', 'POST'])
+def segnala():
+    if request.method == 'POST':
+        #prendo id alloggio dalla sessione
+        id_alloggio = session.get("id_alloggio")
+        #richiamo l'alloggio con id da visualizza_alloggio
+        alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+        email = session.get("email")
+        #prendo il valore di emailS dalla funzione get email loc
+        emailS = alloggio.get_email_loc()
+        motivo = request.form.get('motivo')
+
+
+        # Chiamata al servizio di segnalazione
+        segnala_service(email, emailS, motivo)  #stato non è passato perchè è settato a aperto quando creato nel DAO
+
+        return redirect(url_for('gu2.segnala_successo', id_alloggio=id_alloggio))
+
+    return render_template("Segnala.html")
+
+
+@gu2.route('/segnala_successo')
+def segnala_successo():
+    return render_template("segnala_successo.html")
+
+
+
+
+
+@gu2.route("/recensione")
+def inseriscirec():
+    data_oggi = date.today().isoformat()
+    id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
+    email=session["email"]
+    id_casa = int(idcasas(email, data_oggi))
+    if id_casa == id_alloggio:
+        rec = cercarec(id_alloggio, email)
+        return render_template("Recensione.html", id=id_alloggio, rec=rec)
+    else:
+        return redirect(url_for('gu.userpage'))
+
+@gu2.route("/recensisci", methods=['POST'])
+def recensisci():
+    if request.method == 'POST':
+        id_alloggio = request.form.get("id")
+        print(id_alloggio)
+        titolo = request.form.get("titolo")
+        descrizione = request.form.get("descrizione")
+        email = session["email"]
+        voto = request.form.get("voto")
+        data = datetime.now().strftime("%Y-%m-%d")
+        print(id_alloggio, titolo, descrizione, email, voto, data)
+        recensione(id_alloggio, titolo, descrizione, voto, data, email)
+        return redirect(url_for('gu.userpage'))
+
+
+@gu2.route("/page_asc", methods=['POST', 'GET'])
+def catalogo_asc():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_prezzo_minore(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        media = []
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
+
+
+@gu2.route("/page_desc", methods=['POST', 'GET'])
+def catalogo_desc():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_prezzo_maggiore(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        media=[]
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
+
+@gu2.route("/page_classe_energetica", methods=['POST', 'GET'])
+def classe_energetica():
+    if request.method == "GET":
+        citta = session.get("ricerca")
+        print("citta" + citta)
+        alloggi = ricerca_classe_energetica(citta)
+        print("hey")
+        id_alloggi = []
+        immagini = []
+        media=[]
+        if alloggi:
+            for row in alloggi:
+                print("hey 2")
+                id_alloggio = row.get_id_alloggio()
+                id_alloggi.append(id_alloggio)
+            for id_ in id_alloggi:
+                print("id:     " + str(id_))
+                count = 0
+                path = preleva_immagini(id_)
+                for p in path:
+                    if count == 0:
+                        print("path:     " + p)
+                        immagini.append(p)
+                        count = 1
+            for id_ in id_alloggi:
+                m = ricerca_recensione_byId(id_alloggi=id_)
+                media.append(m)
+        else:
+            return redirect(url_for('gu.main')) #output per il get se non sono presenti alloggi
+        return render_template("Catalogo.html", immagini=immagini, alloggi=alloggi, citta=citta, media=media)
+
+
+@gu2.route('/Alloggio.html')
+def annuncio():
+
+    dao = AlloggioDAO()
+    dao2 = ImmagineDAO()
+    dao3 = IndirizzoDAO()
+
+    id_alloggio = request.args.get('id') or session.get("id_alloggio")
+
+    #ATTENZIONE
+    #importante non eliminare la sessione, serve per un corretto funzionamento di data visita Locatore
+    session["id_alloggio"] = id_alloggio
+
+    print("ID ALLOGGIO AALLOGGIOGIGOG:       " + str(id_alloggio))
+
+    alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+    servizi = dao.visualizzaservizi(id_alloggio)
+
+    immagini = dao2.recupera_path(id_alloggio=id_alloggio)
+
+    path = []
+    for im in immagini:
+        path.append(im.get_path())
+
+    for p in path:
+        print("PATH:    " + p)
+
+    indirizzo = dao3.visualizzaindirizzo(id_alloggio)
+
+    prenotazione = ricerca_data_disponibile(id_alloggio=id_alloggio)
+    data_time = []
+
+    for row in prenotazione:
+        d = row.get_data_visita()
+        datetime_object = datetime.strptime(str(d), '%Y-%m-%d %H:%M:%S')
+        print("AFFITTO -> dataTIME:  " + str(datetime_object))
+
+        data_time.append(datetime_object)
+
+    return render_template("Alloggio.html", alloggio=alloggio, servizi=servizi, indirizzo=indirizzo, immagini = path, data=data_time)

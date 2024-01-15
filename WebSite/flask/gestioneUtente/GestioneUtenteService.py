@@ -8,6 +8,8 @@ from .Iscrizione import Iscrizione
 from .IscrizioneDAO import IscrizioneDAO
 from .UniversitaDAO import UniversitaDAO
 from WebSite.flask.gestioneAnnunci.AlloggioDAO import AlloggioDAO
+from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
+from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -130,7 +132,8 @@ def update_cliente(nome, cognome, email, password, tipo_utente, numero_carta, an
             if is_valid_password(password):
                 dao = ClienteDAO()
                 print(mese)
-                cliente = dao.aggiornaCliente(nome, cognome, email, password, tipo_utente, numero_carta, anno, mese)
+                print(anno)
+                cliente = dao.aggiornaCliente(email, nome, cognome, password, numero_carta, anno, mese)
 
 
 def idcasas(email, data):
@@ -140,8 +143,63 @@ def idcasas(email, data):
     return id_casa
 
 
-def cercacasastudente(id_alloggio):
+def cercacasastudente(email):
     dao = AlloggioDAO()
-    alloggio = dao.visualizzaannuncio(id_alloggio)
-    print("titolo: " + alloggio.get_titolo())
-    return alloggio
+    dao2 = AffittareDAO()
+    affitti = dao2.ricercaaffitto_per_email(email=email)
+
+    alloggi = []
+    for aff in affitti:
+        id = aff.get_id_alloggio()
+        alloggio = dao.visualizzaannuncio(id)
+        alloggi.append(alloggio)
+        print("titolo: " + alloggio.get_titolo())
+
+    return alloggi
+
+
+#sestituisce cliente byemail
+def cerca_cliente_byEmail(email):
+    dao = ClienteDAO()
+    cliente = dao.ricercaEmailC(email=email)
+    return cliente
+
+
+def visualizzasegnalazione_service(emailS):
+    dao = SegnalazioneDAO()
+    segnalazioni = dao.visualizzasegnalazione(emailS)
+    return segnalazioni
+
+def update_verificatoservice(email):
+    dao = ClienteDAO()
+    update = dao.update_verificato(email=email)
+
+def check_account_verification(email):
+    cliente_dao = ClienteDAO()  # Crea un'istanza del tuo ClienteDAO
+    cliente = cliente_dao.ricercaEmailC(email)  # Ottieni i dettagli del cliente tramite l'email
+
+    if cliente and cliente.getVerificato() == 1:  # Controlla se il cliente esiste e se è stato verificato
+        return True  # Restituisce True se l'account è verificato
+    else:
+        return False
+
+def utenti_contre_segnalazioniservice():
+    dao = SegnalazioneDAO()
+    num_segnalazione = dao.utenti_contre_segnalazioni()
+    return num_segnalazione
+
+def blocca_utenteservice(emailS):
+    dao = ClienteDAO()
+    update = dao.blocca_utente(email=emailS)
+
+def rimuovi_blocco_utenteservice(emailS):
+    dao = ClienteDAO()
+    update = dao.rimuovi_blocco_utente(email=emailS)
+
+def chiudi_tutte_le_segnalazioni(emailS):
+    dao = SegnalazioneDAO()
+    dao.chiudi_segnalazioni_per_utente(emailS=emailS)
+
+def update_blocco(email):
+    dao = ClienteDAO()
+    dao.resetDataBloccoCliente(email=email)

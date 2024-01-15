@@ -11,7 +11,10 @@ from .Post import Post
 from .PostDAO import PostDAO
 from WebSite.flask.gestioneUtente.ClienteDAO import ClienteDAO
 from WebSite.flask.gestioneAffitto.PrenotazioneDAO import PrenotazioneDAO
+from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
+from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 from .ServiziDAO import ServiziDAO
+from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
 
 
 # Funzione di controllo per l'email caratteri
@@ -125,6 +128,63 @@ def ricerca_alloggio(citta):
 
     return alloggi
 
+
+def ricerca_recensione_byId(id_alloggi):
+    dao3 = RecensioneDAO()
+    recensioni = dao3.ricercarecensionealloggio(id_alloggio=id_alloggi)
+
+    voti = []
+    for rec in recensioni:
+        voto = rec.get_voto()
+        print("VOTO BYID:     " + str(voto))
+        voti.append(voto)
+
+    media = 0
+    somma_voti = 0
+    for v in voti:
+        if v:
+            somma_voti = v + somma_voti
+            media = somma_voti / len(voti)
+
+    return media
+
+
+def ricerca_recensione(citta):
+    dao1 = IndirizzoDAO()
+    dao3 = RecensioneDAO()
+
+    recensioni = []
+
+    id_alloggi = dao1.ricerca_citta(citta=citta)
+    for id in id_alloggi:
+        for i in id:
+            rece = dao3.ricercarecensionealloggio(id_alloggio=i)
+            recensioni.append(rece)
+
+    print("OOOOOOOO")
+    votiFinish = []
+    for rec in recensioni:
+        voti = []
+        for row in rec:
+            voto = row.get_voto()
+            print("VOTO:   " + str(voto))
+            voti.append(voto)
+        votiFinish.append(voti)
+
+    media = []
+    for voti in votiFinish:
+        if voti:
+            somma_voti = sum(voti)
+            media.append(somma_voti / len(voti))
+        else:
+            media.append(0)
+
+    for m in media:
+        print("MEDIA :" + str(m))
+
+    return media
+
+
 #ricerca di un post studente UniRentHubCommunity
 def ricerca_post_studente(value):
     dao = PostDAO()
@@ -220,6 +280,10 @@ def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto
     )
     print("sono nel service")
     dao = AlloggioDAO()
+    if classe_energetica is None:
+        a = dao.ricerca_per_id(id_alloggio=id_allogio)
+        alloggio.set_classe_energetica(nuova_classe_energetica=a.get_classe_energetica())
+
     dao.modifica_alloggio(id_alloggio=id_allogio, alloggio=alloggio)
     return alloggio
 
@@ -238,3 +302,61 @@ def preleva_data_visita(id_alloggio):
     dao = PrenotazioneDAO()
     prenotazione = dao.ricercaprenotazione(id_alloggio=id_alloggio)
     return prenotazione
+
+def recensione(id, titolo, descrizione, voto, data, mail):
+    print("ciao")
+    dao = RecensioneDAO()
+    dao.deleterecensione(id, mail)
+    dao.recensione_alloggio(id, mail, titolo, voto, descrizione, data)
+
+def cercarec(id_alloggio, email):
+    dao = RecensioneDAO()
+    rec = dao.ricercarecensionestudente(id_alloggio,email)
+    return rec
+def segnala_service(email, emailS, motivo):
+    dao = SegnalazioneDAO()
+    dao.createSegnalazione(email, emailS, motivo)
+
+def cercadataacquisto(email,id_alloggio):
+    dao = AffittareDAO()
+    data = dao.cercadataaffitto(email,id_alloggio)
+    return data
+
+def ricerca_prezzo_minore(citta):
+    dao2 = AlloggioDAO()
+    alloggi = dao2.ricerca_prezzo_minore_per_citta(citta=citta)
+    for i in alloggi:
+        print("CASA TITOLO SERVICE MINORE: " + i.get_titolo())
+    return alloggi
+
+def ricerca_prezzo_maggiore(citta):
+    dao2 = AlloggioDAO()
+    alloggi = dao2.ricerca_prezzo_maggiore_per_citta(citta=citta)
+    for i in alloggi:
+        print("CASA TITOLO SERVICE MAGGIORE: " + i.get_titolo())
+    return alloggi
+
+
+def ricerca_classe_energetica(citta):
+    dao2 = AlloggioDAO()
+    alloggiAplusPlus = dao2.ricerca_classe_energetica_Aplusplus(citta=citta)
+    alloggiAplus = dao2.ricerca_classe_energetica_Aplus(citta=citta)
+    alloggiA = dao2.ricerca_classe_energetica_A(citta=citta)
+    alloggiB = dao2.ricerca_classe_energetica_B(citta=citta)
+    alloggiC = dao2.ricerca_classe_energetica_C(citta=citta)
+    alloggiD = dao2.ricerca_classe_energetica_D(citta=citta)
+
+    tutti_alloggi = []
+    tutti_alloggi.extend(alloggiAplusPlus)
+    tutti_alloggi.extend(alloggiAplus)
+    tutti_alloggi.extend(alloggiA)
+    tutti_alloggi.extend(alloggiB)
+    tutti_alloggi.extend(alloggiC)
+    tutti_alloggi.extend(alloggiD)
+
+    return tutti_alloggi
+
+def ricerca_alloggio_Byid(id_alloggio):
+    dao = AlloggioDAO()
+    alloggio = dao.ricerca_per_id(id_alloggio=id_alloggio)
+    return alloggio

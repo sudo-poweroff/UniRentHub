@@ -11,12 +11,13 @@ class RecensioneDAO:
 
 
     #creazione recensione
-    def pubblicazionerecensione(self, id_alloggio, email, titolo, voto, descrizione,data_recensione):
+    def recensione_alloggio(self, id_alloggio, email, titolo, voto, descrizione, data):
         query = """
-                INSERT INTO recensione(id_alloggio, email, titolo, voto, descrizione,data_recensione)
-                VALUES (%s, %s, %s, %s, %s, %s,)
-                """
-        values = (id_alloggio, email, titolo, voto, descrizione, data_recensione)
+        INSERT INTO recensione
+        (id_alloggio, email, titolo, voto, descrizione, data_recensione) 
+        VALUES(%s,%s,%s,%s,%s,%s)
+        """
+        values = (id_alloggio, email, titolo, voto, descrizione, data)
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
@@ -51,21 +52,18 @@ class RecensioneDAO:
         self.__connection.commit()
 
 
-    #ricercarecensioni di un alloggio
-    def ricercarecensione(self, id_alloggio):
+    def ricercarecensionestudente(self, id_alloggio,email):
         query = """
                 SELECT  id_alloggio, email, titolo, voto, descrizione, data_recensione 
                 FROM recensione
-                WHERE id_alloggio = %s 
+                WHERE id_alloggio = %s
+                AND email = %s 
                 """
-        value = (id_alloggio,)
+        value = (id_alloggio,email)
         self.__cursor.execute(query, value)
-        results = self.__cursor.fetchall()
-
-
-        recensioni= []
-        for result in results:
-            recensione = Recensione(
+        result = self.__cursor.fetchone()
+        if result:
+            rec = Recensione(
                 id_alloggio=result[0],
                 email=result[1],
                 titolo=result[2],
@@ -73,7 +71,26 @@ class RecensioneDAO:
                 descrizione=result[4],
                 data_recensione=result[5]
             )
-            recensioni.append(recensione)
+            return rec
+
+    def ricercarecensionealloggio(self, id_alloggio):
+        query = """
+                SELECT  id_alloggio, email, titolo, voto, descrizione, data_recensione 
+                FROM recensione
+                WHERE id_alloggio = %s
+                """
+        value = (id_alloggio,)
+        self.__cursor.execute(query, value)
+        results = self.__cursor.fetchall()
+        recensioni = []
+        for result in results:
+            rec = Recensione(
+                id_alloggio=result[0],
+                email=result[1],
+                titolo=result[2],
+                voto=result[3],
+                descrizione=result[4],
+                data_recensione=result[5]
+            )
+            recensioni.append(rec)
         return recensioni
-
-

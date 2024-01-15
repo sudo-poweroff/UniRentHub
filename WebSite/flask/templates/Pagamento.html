@@ -2,7 +2,17 @@
 {% block title %} Homepage {% endblock %}
 
 {% block style %}
+<style>
 
+    p.lead em {
+        font-size: 0.9em;
+    }
+
+    .emadv {
+        color: #5c8e48;
+    }
+
+</style>
 {% endblock %}
 }
 {% block content %}
@@ -12,7 +22,17 @@
 
 
 <div style="height: 2800px">
-
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div style="text-align: center;
+    margin-top: 20px;
+font-size: 30px" class="flash-messages">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
       <div class="container marketing">
 
@@ -23,7 +43,9 @@
 </svg>
 
         <h2>Completa il Pagamento</h2>
-        <p class="lead">Qui va spiegato che sul primo mese tratteniamo il 5%, roba da una riga e mezza.</p>
+        <p class="lead">
+            <em class="emadv">UniRentHub applica una commissione del 5% solo sul primo mese di affitto</em><em> per coprire i costi operativi.<br> Questa politica ci consente di mantenere un servizio di qualità senza interruzioni.</em>
+        </p>
       </div>
 
       <div class="row"> <!-- PARTE DI DESTRA -->
@@ -32,34 +54,80 @@
             <span class="text-muted">Il tuo alloggio</span>
           </h4>
           <div class="card">
-    <img class="card-img-top" src="../static/img/WhatsApp%20Image%202023-12-26%20at%2009.11.22.jpeg" alt="Card image cap">
+    <img class="card-img-top" src="../{{ immagini[0] }}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">Titolo alloggio</h5>
+      <h5 class="card-title">{{ titolo }}</h5>
+<form action="/calcola_prezzo" method="post">
+    <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between">
-              <span style="margin-top:7px">Check In</span>
-              <input placeholder="Select date" type="date" id="example" class="form-control" style="width: 150px">
-            </li>
+            <span style="margin-top:7px">Check In</span>
+            <input id="lastCheckInDate" placeholder="Select date" type="date" name="checkIn" class="form-control" value="2024-01-01" style="width: 150px">
+        </li>
         <li class="list-group-item d-flex justify-content-between">
-              <span style="margin-top:7px">Check Out</span>
-              <input placeholder="Select date" type="date" id="example" class="form-control" style="width: 150px">
-            </li>
+            <span style="margin-top:7px">Check Out</span>
+            <input id="lastCheckOutDate" placeholder="Select date" type="date" name="checkOut" class="form-control" value="2024-01-01" style="width: 150px">
+        </li>
+    </ul>
+
+    <button id="button1" style="border-radius: 5px;color: white; margin-top: 15px; background-color: #7fad75; border: none; width: 150px;" type="submit">Calcola Prezzo</button>
+</form>
+
+{% if val == True %}
+  <script>
+    $(document).ready(function () {
+      // Mostra il messaggio se la variabile val è true
+      alert("Date non disponibili");
+      // Puoi eseguire ulteriori azioni qui se necessario
+    });
+  </script>
+{% endif %}
+
+{% if periodo == False %}
+  <script>
+    $(document).ready(function () {
+      // Mostra il messaggio se la variabile val è true
+      alert("Periodo minimo di {{periodo_minimo}} mesi");
+      // Puoi eseguire ulteriori azioni qui se necessario
+    });
+  </script>
+{% endif %}
+<!-- ... Altre parti del tuo codice ... -->
+
+<script>
+    // Recupera le date salvate dalla memoria locale
+    var lastCheckInDate = localStorage.getItem('lastCheckInDate') || '2024-01-01';
+    var lastCheckOutDate = localStorage.getItem('lastCheckOutDate') || '2024-01-01';
+
+    // Imposta i valori iniziali degli input
+    document.getElementById('lastCheckInDate').value = lastCheckInDate;
+    document.getElementById('lastCheckOutDate').value = lastCheckOutDate;
+
+    // Aggiungi event listener per salvare le date quando cambiano
+    document.getElementById('lastCheckInDate').addEventListener('change', function() {
+        localStorage.setItem('lastCheckInDate', this.value);
+    });
+
+    document.getElementById('lastCheckOutDate').addEventListener('change', function() {
+        localStorage.setItem('lastCheckOutDate', this.value);
+    });
+</script>
+
+<!-- ... Altre parti del tuo codice ... -->
 
     </div>
     <div class="card-footer">
       <li class="list-group-item d-flex justify-content-between">
               <span>Totale</span>
-              <strong>€500</strong>
+              <strong>€{{prezzo}}</strong>
             </li>
     </div>
   </div>
-
-
         </div>
           <!-- FINE PARTE DESTRA -->
           <!-- INIZIO FORM -->
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Dati utente</h4>
-          <form class="needs-validation" novalidate="" action="/modifica" METHOD="post">
+          <form class="needs-validation" novalidate="" action="/Pagamento" METHOD="post">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
@@ -103,20 +171,20 @@
             <div class="row">
               <div class="col-md-3 mb-3">
                 <label for="scadenza">Mese</label>
-                <select class="custom-select d-block w-100" id="mese_scadenza" required="">
+                <select class="custom-select d-block w-100" id="anno_scadenza" name="anno_scadenza" required="">
                   <option value="">Mese</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
 
                 </select>
 
@@ -127,15 +195,15 @@
 
                 <div class="col-md-3 mb-3">
                 <label for="scadenza">Anno</label>
-                <select class="custom-select d-block w-100" id="anno_scadenza" required="">
+                <select name="anno_scadenza" class="custom-select d-block w-100" id="anno_scadenza" required="">
                   <option value="">Anno</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
-                    <option>2028</option>
-                    <option>2029</option>
-                    <option>2030</option>
+                 <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
                 </select>
 
                 <div class="invalid-feedback">
@@ -153,15 +221,14 @@
             </div>
 
             <hr class="mb-4">
-            <a href="Homepage.html" class="btn btn-primary btn-lg btn-block"
+            <button id="confermaPagamentoBtn" type="submit" class="btn btn-primary btn-lg btn-block"
    style="background-color: #688d51; border-color: #688d51; text-decoration: none; color: white;"
    onmouseover="this.style.backgroundColor='#6eb150'; this.style.borderColor='#6eb150';"
    onmouseout="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
    onmousedown="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
-   onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
-   disabled>
+   onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';">
     Conferma Pagamento
-</a>
+</button>
 
           </form>
         </div>
@@ -191,12 +258,47 @@
           <hr class="featurette-divider">
 
 
-
-      </div><!-- /.container -->
-
-
+<h3 style="text-align: center;
+        margin-top: 100px; margin-bottom: 50px ">Date non disponibili</h3>
 </div>
-
-
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Check In</th>
+        <th scope="col">Check Out</th>
+      </tr>
+    </thead>
+ {% for i in range(0, date|length, 2) %}
+    <tbody>
+      <tr>
+        <th scope="row">{{ i // 2 + 1 }}</th>
+        <td>{{ date[i] }}</td>
+        <td>{{ date[i + 1]}}</td>
+      </tr>
+    </tbody>
+  {% endfor %}
+  </table>
+</div>
+      </div><!-- /.container -->
+{% if periodo == False and val == True %}
+    <script>
+        var confermaPagamentoBtn = document.getElementById("confermaPagamentoBtn");
+        confermaPagamentoBtn.disabled = true;
+    </script>
+{% endif %}
+    {% if periodo == False %}
+    <script>
+        var confermaPagamentoBtn = document.getElementById("confermaPagamentoBtn");
+        confermaPagamentoBtn.disabled = true;
+    </script>
+{% endif %}
+    {% if val == True %}
+    <script>
+        var confermaPagamentoBtn = document.getElementById("confermaPagamentoBtn");
+        confermaPagamentoBtn.disabled = true;
+    </script>
+{% endif %}
     {% include "footerNew.html" %}
 {% endblock %}

@@ -95,7 +95,7 @@
         <!-- Contenuto del tuo div qui -->
         <h3>UniRentHub</h3>
         <br>
-    <form  method="post" action="/CaricaAnnuncio" enctype="multipart/form-data">
+    <form  method="post" action="/CaricaAnnuncio" enctype="multipart/form-data" onsubmit="return verificaForm()">
 
     <div class="row form">
     <div class="col-md-4 mb-3">
@@ -372,6 +372,33 @@
             reader.readAsDataURL(file);
         }
     });
+</script>
+
+    <script>
+
+    function verificaForm() {
+
+        var titolo = document.getElementById('titolo').value;
+        var provincia = document.getElementById('provincia').value;
+        var cap = document.getElementById('cap').value;
+        var indirizzo = document.getElementById('indirizzo').value;
+        var civico = document.getElementById('civico').value;
+        var descrizione = document.getElementById('Descrizione').value;
+        var num_bagni = document.getElementById('num_bagni').value;
+        var num_camere = document.getElementById('num_camere').value;
+        var num_ospiti = document.getElementById('num_ospiti').value;
+        var metri_quadri = document.getElementById('metri_quadri').value;
+        var periodo_minimo = document.getElementById('periodo_minimo').value;
+        var prezzo = document.getElementById('prezzo').value;
+
+
+        if (titolo === '' || provincia === '' || cap === '' || indirizzo === '' || civico === '' || descrizione === '' || num_bagni === '' || num_camere === '' || num_ospiti === '' || metri_quadri === '' || periodo_minimo === '' || prezzo === '') {
+            alert('Compila tutti i campi del form prima di registrarti.');
+            return false;
+        } else {
+            return true;
+        }
+    }
 </script>
 
 

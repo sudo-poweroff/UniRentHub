@@ -14,7 +14,8 @@ CREATE TABLE Cliente (
     mese_scadenza INT NOT NULL,
     anno_scadenza INT NOT NULL,
     verificato BOOLEAN,
-    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL
+    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL,
+    data_blocco DATE
 );
 
 CREATE TABLE Dipendente (
@@ -131,13 +132,21 @@ CREATE TABLE Alloggio (
 CREATE TABLE Indirizzo (
     id_alloggio INT,
     via VARCHAR(255) NOT NULL,
-    cap INT CHECK(cap >= 10000 AND cap <= 99999) NOT NULL,
-    civico VARCHAR(255) NOT NULL,
+    cap VARCHAR(5) NOT NULL,
+    civico VARCHAR(5) NOT NULL,
     citta VARCHAR(255) NOT NULL,
     provincia VARCHAR(2) CHECK(LENGTH(provincia) = 2) NOT NULL,
-    PRIMARY KEY (via, cap, civico, citta, provincia),
     FOREIGN KEY (id_alloggio) REFERENCES Alloggio(id_alloggio) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- Trigger per aggiungere gli zeri iniziali al cap quando presenti
+DELIMITER //
+CREATE TRIGGER add_zero_cap BEFORE INSERT ON Indirizzo
+FOR EACH ROW
+BEGIN
+    SET NEW.cap = LPAD(NEW.cap, 5, '0');
+END;
+// DELIMITER ;
 
 -- Creazione della tabella Immagine
 CREATE TABLE Immagine (

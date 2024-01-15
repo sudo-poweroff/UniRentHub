@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block style %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Aggiungi stili per la tua intestazione admin */
+        /* ... */
+
+        .centered-container {
+            margin-top: 50px;
+        }
+
+        .centered-container h3 {
+            text-align: center;
+            margin-top: 75px;
+        }
+
+        .centered-table {
+            margin: 20px auto; /* Aggiunto un margine per separare la tabella dal resto della pagina */
+            width: 70%;
+            border-collapse: collapse; /* Per unire i bordi delle celle */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+            background-color: #fff; /* Colore di sfondo bianco */
+        }
+
+        .centered-table caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .centered-table th,
+        .centered-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd; /* Bordo inferiore grigio */
+            word-wrap: break-word; /* Aggiunto per far andare a capo il testo lungo */
+        }
+
+        .centered-table th {
+            color: #000000; /* Colore del testo bianco per l'intestazione */
+        }
+
+        .centered-table tbody tr:hover {
+            background-color: #f5f5f5; /* Cambia il colore di sfondo al passaggio del mouse */
+        }
+
+
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    {% if session.get("tipo") == "Admin" %}
+    {% include "header_admin.html" %}
+
+    <div class="centered-container">
+            <table class="centered-table">
+                <thead>
+                    <tr>
+                         <th scope="col"><a href="/block_user" class="block-link">Blocca</a></th>
+                        <th scope="col">Motivo</th>
+                        <th scope="col">Stato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in segnalazioni %}
+                        <tr>
+                            <th scope="row">{{ loop.index0 + 1 }}</th>
+                            <td>{{ s.getMotivo() }}</td>
+                            <td>{{ s.getStato() }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+    {% endif %}
+
+{% include "footerNew.html" %}
+ {% if session.get("tipo") != "Admin" %}
+     {% include "error.html" %}
+ {% endif %}
+</body>
+
+</html>

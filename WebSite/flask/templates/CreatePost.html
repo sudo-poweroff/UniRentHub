@@ -18,7 +18,7 @@
       <div class="container marketing">
 
           <h2 class="mb-1" style="margin-top: 15px;"><b>Crea il tuo Post</b></h2>
-          <h6 class="mb-0" style="margin-top: 20px;"><span style="margin-left: 3px;"></span>Ti preghiamo prima di pubblicare (per evitare alcun tipo di segnalazione o ban) di rispettare le linee guida di UniRentHub.</h6>
+          <h6 class="mb-0" style="margin-top: 20px;"><span style="margin-left: 3px;"></span>Prima di condividere, ti preghiamo di assicurarti che quanto pubblicato rispetti le linee guida di UniRentHub, così da evitare segnalazioni o sanzioni.</h6>
 
           <hr class="featurette-divider">
 
@@ -27,7 +27,7 @@
          <div class="card" style="width: 800px; margin-left: 180px">
 
           <div class="card-body" style="font-size: 24px;">
-              <form method="post" action="/community_crea_post">
+              <form method="post" action="/community_crea_post" onsubmit="return verificaForm()">
              <label for="exampleFormControlInput1" class="form-label">Titolo</label>
              <input name ="titolo" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Inserici il titolo">
 
@@ -64,6 +64,24 @@
 
 </div>
 
+<script>
+    // Funzione per la verifica del form prima dell'invio
+    function verificaForm() {
+        // Ottieni i valori dei campi del form
+        var titolo = document.getElementById('exampleFormControlInput1').value;
+        var descrizione = document.getElementById('exampleFormControlTextarea1').value;
+
+        // Effettua la verifica
+        if (titolo === '' || descrizione === '') {
+            // Se i campi non sono compilati, mostra un messaggio di avviso
+            alert('Compila tutti i campi del form prima di pubblicare.');
+            return false; // Impedisce l'invio del form
+        } else {
+            // Se tutti i campi sono compilati, il form verrà inviato normalmente
+            return true;
+        }
+    }
+</script>
 
     {% include "footerNew.html" %}
     {% endif %}
