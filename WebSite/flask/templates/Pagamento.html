@@ -57,7 +57,7 @@ font-size: 30px" class="flash-messages">
     <img class="card-img-top" src="../{{ immagini[0] }}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ titolo }}</h5>
-<form action="/calcola_prezzo" method="post">
+<form action="/calcola_prezzo" method="post" onsubmit="return validatecheckinout()">
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between">
             <span style="margin-top:7px">Check In</span>
@@ -91,7 +91,7 @@ font-size: 30px" class="flash-messages">
     });
   </script>
 {% endif %}
-<!-- ... Altre parti del tuo codice ... -->
+
 
 <script>
     // Recupera le date salvate dalla memoria locale
@@ -110,9 +110,73 @@ font-size: 30px" class="flash-messages">
     document.getElementById('lastCheckOutDate').addEventListener('change', function() {
         localStorage.setItem('lastCheckOutDate', this.value);
     });
+
+
+
+    <!-- Assert per i testing-->
+</script>
+    <script>
+    function validateCreditCardNumber() {
+    var creditCardNumber = document.getElementById("cc-number").value;
+    var cvv = document.getElementById("cc-cvv").value;
+
+    if (creditCardNumber.length < 16) {
+        alert("Il numero della carta deve essere di almeno 16 cifre.");
+        return false;
+    }
+
+    if (cvv.length < 3) {
+        alert("Il CVV deve essere di almeno 3 cifre.");
+        return false;
+    }
+
+    var currentYear = new Date().getFullYear();
+    var currentMonth = new Date().getMonth() + 1; // Aggiungi 1 perché i mesi in JavaScript partono da zero
+
+    var selectedYear = parseInt(document.getElementById("anno_scadenza").value, 10);
+    var selectedMonth = parseInt(document.getElementById("mese_scadenza").value, 10);
+
+    // Controllo generale sulla scadenza della carta
+    if (selectedYear < currentYear || (selectedYear === currentYear && selectedMonth < currentMonth)) {
+        alert("La tua carta è scaduta. Seleziona una data di scadenza valida.");
+        // Resetta il valore del campo del mese di scadenza al valore predefinito
+        document.getElementById("mese_scadenza").value = "";
+        return false;
+    }
+
+    // Controllo specifico per il mese corrente
+    if (selectedYear === currentYear && selectedMonth === currentMonth) {
+        alert("Attenzione: hai selezionato il mese corrente. La tua carta è scaduta.");
+        // Puoi scegliere di consentire all'utente di procedere o intraprendere ulteriori azioni
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+<script>
+    function validatecheckinout() {
+        var checkInDate = new Date(document.getElementById('lastCheckInDate').value);
+        var checkOutDate = new Date(document.getElementById('lastCheckOutDate').value);
+
+        if (checkInDate > checkOutDate) {
+            alert("La data di check-in non può essere successiva alla data di check-out.");
+            return false;
+        }
+
+        return true;
+    }
 </script>
 
-<!-- ... Altre parti del tuo codice ... -->
+
+
+
+
+
+
+
+
 
     </div>
     <div class="card-footer">
@@ -127,7 +191,7 @@ font-size: 30px" class="flash-messages">
           <!-- INIZIO FORM -->
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Dati utente</h4>
-          <form class="needs-validation" novalidate="" action="/Pagamento" METHOD="post">
+          <form class="needs-validation" novalidate="" action="/Pagamento" METHOD="post" onsubmit="return validateCreditCardNumber()">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
@@ -171,7 +235,7 @@ font-size: 30px" class="flash-messages">
             <div class="row">
               <div class="col-md-3 mb-3">
                 <label for="scadenza">Mese</label>
-                <select class="custom-select d-block w-100" id="anno_scadenza" name="anno_scadenza" required="">
+             <select class="custom-select d-block w-100" id="anno_scadenza" name="anno_scadenza" required="">
                   <option value="">Mese</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -186,7 +250,7 @@ font-size: 30px" class="flash-messages">
                 <option value="11">11</option>
                 <option value="12">12</option>
 
-                </select>
+             </select>
 
                 <div class="invalid-feedback">
                   Il mese di scadenza è richiesto.
