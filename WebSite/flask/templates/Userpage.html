@@ -148,7 +148,42 @@
     </button>
           </form>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.getElementById("modificaDatiBtn").addEventListener("click", function() {
+        var password = document.getElementById("password").value;
+        var cvv = document.getElementById("cc-cvv").value;
+        // Verifica che la password contenga almeno 8 caratteri
+        var lunghezzaValida = password.length >= 8;
 
+        // Verifica che ci sia almeno una maiuscola
+        var contieneMaiuscola = /[A-Z]/.test(password);
+
+        // Verifica che ci sia almeno una minuscola
+        var contieneMinuscola = /[a-z]/.test(password);
+
+        // Verifica che ci sia almeno un numero
+        var contieneNumero = /\d/.test(password);
+
+        // Verifica che ci sia almeno un carattere speciale
+        var contieneSpeciale = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        var numcarta = document.getElementById("cc-number").value
+        if(numcarta.trim().length !== 16){
+            alert("il Numero di carta deve avere 16 cifre");
+            event.preventDefault()
+        }
+        if(cvv.trim().length !== 3){
+            alert("il cvv non ha tre cifre");
+            event.preventDefault();
+        }
+        // Controlla tutte le condizioni
+        if (lunghezzaValida && contieneMaiuscola && contieneMinuscola && contieneNumero && contieneSpeciale) {
+
+        } else {
+            alert("La password non è valida. Assicurati di rispettare tutti i requisiti.");
+            event.preventDefault();
+        }
+    });
+</script>
         </div>
 
 
