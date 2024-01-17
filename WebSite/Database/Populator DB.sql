@@ -1,43 +1,44 @@
 -- Popolamento della tabella Cliente
 INSERT INTO Cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco) VALUES
-('sofiaesposito@gmail.com', 'Sofia', 'Esposito', 'Studente', '2001-03-10', '3546746378291034', 1, 2025, true, 'Passsofy1@', null),
-('matteobianchi@gmail.com', 'Matteo', 'Bianchi', 'Studente', '2003-07-25', '9857362548907847', 12, 2024, true, 'matt7Passurh@.', null),
-('kekkamancini@gmail.com', 'Francesca', 'Mancini', 'Locatore', '1982-08-30', '1265783490875645', 6, 2024, true, 'kekkaLoc007@.', null),
-('gioromano@gmail.com', 'Giorgia', 'Romano', 'Studente', '2000-09-05', '6574837392817454', 1, 2024, true, 'GiogioRom@pass1.', null),
-('lucaferrari@gmail.com', 'Luca', 'Ferrari', 'Studente', '1999-11-05', '1234768590432345', 2, 2025, true, 'LucaPassURH!.', null),
-('marcorossi@gmail.com', 'Marco', 'Rossi', 'Locatore', '1970-01-10', '5678901234567890', 3, 2024, false, 'UniPass7@.', null),
-('sofybianchi@gmail.com', 'Sofy', 'Bianchi', 'Locatore', '1985-07-22', '1945637890987453', 10, 2024, true, 'PassSof7@!.', null),
-('lucaambruoso@gmail.com', 'Luca', 'Ambruoso', 'Locatore', '1978-04-18', '3456789012345678', 9, 2024, false, 'LucPass@!!.1', null),
-('giogioespo@gmail.com', 'Giovanni', 'Esposito', 'Locatore', '1975-11-30', '2345678901234567', 8, 2024, true, 'PassValid@Uh7.', null),
-('saramarti@gmail.com', 'Sara', 'Martini', 'Studente', '1999-02-14', '4321098765432109', 7, 2024, true, 'Pass7word@.', null),
-('giorgioferraro@gmail.com', 'Giorgio', 'Ferraro', 'Studente', '2005-09-08', '9085362718192346', 6, 2024, true, 'giorGioPass7@.', null),
-('antoalbanese@gmail.com', 'Antonio', 'Albanese', 'Studente', '2001-09-18', '3546374789092364', 7, 2024, true, 'AntoUrh7!!.', null),
-('paolomoretti@gmail.com', 'Paolo', 'Moretti', 'Locatore', '1970-08-17', '7646893475091237', 11, 2024, true, 'LucMor70@.', null),
-('francescopixcont@gmail.com', 'Francesco Pio', 'Contaldo', 'Studente', '2000-09-22', '4657283767900123', 2, 2024, true, 'pixPass9@.', null),
-('cristyanesp@gmail.com', 'Cristyan', 'Esposito', 'Studente', '2001-04-21', '9085362718192346', 7, 2024, true, 'UniRentHpass@!.', null),
-('andreaconti@gmail.com', 'Andrea', 'Conti', 'Locatore', '1969-05-12', '8647362787980967', 2, 2024, true, 'And@99pass.', null),
-('ilianofaso@gmail.com', 'Iliano', 'Fasolino', 'Studente', '2000-09-08', '8573653989023647', 1, 2024, true, 'gPassfaso@..', null),
-('marcogreco@gmail.com', 'Marco', 'Greco', 'Studente', '2000-09-08', '9046276473892912', 2, 2024, true, 'urhPass54!.', null),
-('giupiosorr@gmail.com', 'Giuseppe Pio', 'Sorrentino', 'Studente', '2000-09-08', '4536174783921224', 6, 2024, true, 'giupiPass65!.', null),
-('chiararusso@gmail.com', 'Chiara', 'Russo', 'Locatore', '1980-09-15', '9075645362718175', 3, 2024, true, 'locPassSic7..', null),
-('marticosta@gmail.com', 'Martina', 'Costa', 'Locatore', '1987-04-08', '9075643678932346', 7, 2024, true, 'Passurh89@.', null),
-('giugatti@gmail.com', 'Giulia', 'Gatti', 'Locatore', '1967-11-03', '7684093400543456', 10, 2024, true, 'giuCat@1.', null),
-('mariorossi@gmail.com', 'Mario', 'Rossi', 'Studente', '1996-08-10', '1234567890123456', 10, 2025, true, 'marioRedpass@.', null),
-('laurawhite@gmail.com', 'Laura', 'Bianchi', 'Studente', '1998-05-22', '9876543210987654', 5, 2024, true, 'LauWhitelock124.', null),
-('greenluigi@gmail.com', 'Luigi', 'Verdi', 'Studente', '2000-12-18', '1111222233334444', 7, 2026, true, 'greenPassHome!!1', null),
-('giomastro@gmail.com', 'Giovanna', 'Mastro', 'Studente', '1996-03-05', '5555666677778888', 9, 2024, true, 'p@ssw0rd!', null),
-('paolorusso@gmail.com', 'Paolo', 'Russo', 'Studente', '1998-09-30', '9999000011112222', 12, 2027, true, 'strongPWD123@', null),
-('annayellow@gmail.com', 'Anna', 'Gialli', 'Studente', '2002-11-15', '7777888899990000', 8, 2025, true, 'yellowAnnPass!456', null);
+    ('sofiaesposito@gmail.com', 'Sofia', 'Esposito', 'Studente', '2001-03-10', '3546746378291034', 1, 2025, true, AES_ENCRYPT('Passsofy1@', 'ciao'), null),
+    ('matteobianchi@gmail.com', 'Matteo', 'Bianchi', 'Studente', '2003-07-25', '9857362548907847', 12, 2024, true, AES_ENCRYPT('matt7Passurh@.', 'ciao'), null),
+    ('kekkamancini@gmail.com', 'Francesca', 'Mancini', 'Locatore', '1982-08-30', '1265783490875645', 6, 2024, true, AES_ENCRYPT('kekkaLoc007@.', 'ciao'), null),
+    ('gioromano@gmail.com', 'Giorgia', 'Romano', 'Studente', '2000-09-05', '6574837392817454', 1, 2024, true, AES_ENCRYPT('GiogioRom@pass1.', 'ciao'), null),
+    ('lucaferrari@gmail.com', 'Luca', 'Ferrari', 'Studente', '1999-11-05', '1234768590432345', 2, 2025, true, AES_ENCRYPT('LucaPassURH!.', 'ciao'), null),
+    ('marcorossi@gmail.com', 'Marco', 'Rossi', 'Locatore', '1970-01-10', '5678901234567890', 3, 2024, false, AES_ENCRYPT('UniPass7@.', 'ciao'), null),
+    ('sofybianchi@gmail.com', 'Sofy', 'Bianchi', 'Locatore', '1985-07-22', '1945637890987453', 10, 2024, true, AES_ENCRYPT('PassSof7@!.', 'ciao'), null),
+    ('lucaambruoso@gmail.com', 'Luca', 'Ambruoso', 'Locatore', '1978-04-18', '3456789012345678', 9, 2024, false, AES_ENCRYPT('LucPass@!!.1', 'ciao'), null),
+    ('giogioespo@gmail.com', 'Giovanni', 'Esposito', 'Locatore', '1975-11-30', '2345678901234567', 8, 2024, true, AES_ENCRYPT('PassValid@Uh7.', 'ciao'), null),
+    ('saramarti@gmail.com', 'Sara', 'Martini', 'Studente', '1999-02-14', '4321098765432109', 7, 2024, true, AES_ENCRYPT('Pass7word@.', 'ciao'), null),
+    ('giorgioferraro@gmail.com', 'Giorgio', 'Ferraro', 'Studente', '2005-09-08', '9085362718192346', 6, 2024, true, AES_ENCRYPT('giorGioPass7@.', 'ciao'), null),
+    ('antoalbanese@gmail.com', 'Antonio', 'Albanese', 'Studente', '2001-09-18', '3546374789092364', 7, 2024, true, AES_ENCRYPT('AntoUrh7!!.', 'ciao'), null),
+    ('paolomoretti@gmail.com', 'Paolo', 'Moretti', 'Locatore', '1970-08-17', '7646893475091237', 11, 2024, true, AES_ENCRYPT('LucMor70@.', 'ciao'), null),
+    ('francescopixcont@gmail.com', 'Francesco Pio', 'Contaldo', 'Studente', '2000-09-22', '4657283767900123', 2, 2024, true, AES_ENCRYPT('pixPass9@.', 'ciao'), null),
+    ('cristyanesp@gmail.com', 'Cristyan', 'Esposito', 'Studente', '2001-04-21', '9085362718192346', 7, 2024, true, AES_ENCRYPT('UniRentHpass@!.', 'ciao'), null),
+    ('andreaconti@gmail.com', 'Andrea', 'Conti', 'Locatore', '1969-05-12', '8647362787980967', 2, 2024, true, AES_ENCRYPT('And@99pass.', 'ciao'), null),
+    ('ilianofaso@gmail.com', 'Iliano', 'Fasolino', 'Studente', '2000-09-08', '8573653989023647', 1, 2024, true, AES_ENCRYPT('gPassfaso@..', 'ciao'), null),
+    ('marcogreco@gmail.com', 'Marco', 'Greco', 'Studente', '2000-09-08', '9046276473892912', 2, 2024, true, AES_ENCRYPT('urhPass54!.', 'ciao'), null),
+    ('giupiosorr@gmail.com', 'Giuseppe Pio', 'Sorrentino', 'Studente', '2000-09-08', '4536174783921224', 6, 2024, true, AES_ENCRYPT('giupiPass65!.', 'ciao'), null),
+    ('chiararusso@gmail.com', 'Chiara', 'Russo', 'Locatore', '1980-09-15', '9075645362718175', 3, 2024, true, AES_ENCRYPT('locPassSic7..', 'ciao'), null),
+    ('marticosta@gmail.com', 'Martina', 'Costa', 'Locatore', '1987-04-08', '9075643678932346', 7, 2024, true, AES_ENCRYPT('Passurh89@.', 'ciao'), null),
+    ('giugatti@gmail.com', 'Giulia', 'Gatti', 'Locatore', '1967-11-03', '7684093400543456', 10, 2024, true, AES_ENCRYPT('giuCat@1.', 'ciao'), null),
+    ('mariorossi@gmail.com', 'Mario', 'Rossi', 'Studente', '1996-08-10', '1234567890123456', 10, 2025, true, AES_ENCRYPT('marioRedpass@.', 'ciao'), null),
+    ('laurawhite@gmail.com', 'Laura', 'Bianchi', 'Studente', '1998-05-22', '9876543210987654', 5, 2024, true, AES_ENCRYPT('LauWhitelock124.', 'ciao'), null),
+    ('greenluigi@gmail.com', 'Luigi', 'Verdi', 'Studente', '2000-12-18', '1111222233334444', 7, 2026, true, AES_ENCRYPT('greenPassHome!!1', 'ciao'), null),
+    ('giomastro@gmail.com', 'Giovanna', 'Mastro', 'Studente', '1996-03-05', '5555666677778888', 9, 2024, true, AES_ENCRYPT('p@ssw0rd!', 'ciao'), null),
+    ('paolorusso@gmail.com', 'Paolo', 'Russo', 'Studente', '1998-09-30', '9999000011112222', 12, 2027, true, AES_ENCRYPT('strongPWD123@', 'ciao'), null),
+    ('annayellow@gmail.com', 'Anna', 'Gialli', 'Studente', '2002-11-15', '7777888899990000', 8, 2025, true, AES_ENCRYPT('yellowAnnPass!456', 'ciao'), null);
+
 
 
 -- Popolamento della tabella Dipendente
 INSERT INTO Dipendente (email, nome, cognome, tipo_dipendente, password) VALUES
-('simodellaporta@gmail.com', 'Simone', 'Della Porta', 'Admin', 'SimoDP@23.'),
-('roccoiuliano@gmail.com', 'Rocco', 'Iuliano', 'Admin', 'RoccIul89.'),
-('alexdeluca@gmail.com', 'Alessando', 'De Luca', 'Homechecker', 'AlexDL@65.'),
-('alessandramaione@gmail.com', 'Alessanda', 'Maione', 'Homechecker', 'AlessMatt45.!'),
-('mariomuratore@gmail.com', 'Mario', 'Muratore', 'Homechecker', 'MarMur89@.'),
-('stefdecaro@gmail.com', 'Stefano', 'De Caro', 'Homechecker', 'steDeC@pass.7');
+('simodellaporta@gmail.com', 'Simone', 'Della Porta', 'Admin', AES_ENCRYPT('SimoDP@23.', 'ciao')),
+    ('roccoiuliano@gmail.com', 'Rocco', 'Iuliano', 'Admin', AES_ENCRYPT('RoccIul89.', 'ciao')),
+    ('alexdeluca@gmail.com', 'Alessando', 'De Luca', 'Homechecker', AES_ENCRYPT('AlexDL@65.', 'ciao')),
+    ('alessandramaione@gmail.com', 'Alessanda', 'Maione', 'Homechecker', AES_ENCRYPT('AlessMatt45.!', 'ciao')),
+    ('mariomuratore@gmail.com', 'Mario', 'Muratore', 'Homechecker', AES_ENCRYPT('MarMur89@.', 'ciao')),
+    ('stefdecaro@gmail.com', 'Stefano', 'De Caro', 'Homechecker', AES_ENCRYPT('steDeC@pass.7', 'ciao'));
 
 
 -- Popolamento della tabella Post

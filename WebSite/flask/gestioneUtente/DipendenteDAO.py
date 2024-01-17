@@ -12,7 +12,7 @@ class DipendenteDAO:
     def registra_homechecker(self, dipendente):
         query = """
             INSERT INTO dipendente (email, nome, cognome, tipo_dipendente, password)
-            VALUES (%s, %s, %s, 'Homechecker', %s)
+            VALUES (%s, %s, %s, 'Homechecker', AES_ENCRYPT(%s, 'ciao'))
         """
         values = (
             dipendente.getEmail(), dipendente.getNome(), dipendente.getCognome(),
@@ -32,7 +32,7 @@ class DipendenteDAO:
     def updateDipendente(self, email, password):
         query = """
             UPDATE dipendente
-            SET password = %s
+            SET password = AES_ENCRYPT(%s, 'ciao')
             WHERE email = %s
         """
         values = (password, email)
@@ -44,7 +44,7 @@ class DipendenteDAO:
             SELECT *
             FROM dipendente
             WHERE email = %s
-            AND password = %s
+            AND password = AES_ENCRYPT(%s, 'ciao')
         """
         values = (email,password)
 
@@ -57,7 +57,7 @@ class DipendenteDAO:
                 nome=result[1],
                 cognome=result[2],
                 tipo_dipendente=result[3],
-                password=result[4]
+                password= password
             )
             return dipendente
         else:

@@ -14,7 +14,7 @@ CREATE TABLE Cliente (
     mese_scadenza INT NOT NULL,
     anno_scadenza INT NOT NULL,
     verificato BOOLEAN,
-    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL,
+    password VARBINARY(200)  NOT NULL,
     data_blocco DATE
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE Dipendente (
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     tipo_dipendente ENUM('Homechecker', 'Admin') NOT NULL,
-    password VARCHAR(255) CHECK(LENGTH(password) >= 8) NOT NULL
+    password VARBINARY(200) NOT NULL
 );
 
 

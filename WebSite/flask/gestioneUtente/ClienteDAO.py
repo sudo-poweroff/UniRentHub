@@ -9,12 +9,11 @@ class ClienteDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-
     def createCliente(self, cliente):
         query = """
-            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NULL)
-        """
+               INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, AES_ENCRYPT(%s, 'ciao'), NULL)
+           """
         values = (
             cliente.getEmail(), cliente.getNome(), cliente.getCognome(),
             cliente.getTipo(), cliente.getDataNascita(),
@@ -38,7 +37,7 @@ class ClienteDAO:
     def updateCliente(self, email, password, numero_carta, data_scadenza, data_blocco):
         query = """
             UPDATE cliente
-            SET password = %s, numero_carta = %s, data_scadenza = %s, data_blocco = %s
+            SET password = AES_ENCRYPT(%s, 'ciao'), numero_carta = %s, data_scadenza = %s, data_blocco = %s
             WHERE email = %s
         """
 
@@ -82,8 +81,9 @@ class ClienteDAO:
             SELECT *
             FROM cliente
             WHERE email = %s
-            AND password = %s
+            AND password = AES_ENCRYPT(%s, 'ciao')
         """
+
 
         values = (email, pwd)
 
@@ -101,7 +101,7 @@ class ClienteDAO:
                 mese_scadenza=result[6],
                 anno_scadenza=result[7],
                 verificato=result[8],
-                password=result[9],
+                password=pwd,
                 data_blocco=result[10]
             )
             return cliente
@@ -182,7 +182,7 @@ class ClienteDAO:
         try:
             query = """
                 UPDATE cliente
-                SET nome = %s, cognome = %s, password = %s, numero_carta = %s, anno_scadenza = %s, mese_scadenza = %s
+                SET nome = %s, cognome = %s, password =AES_ENCRYPT(%s, 'ciao'), numero_carta = %s, anno_scadenza = %s, mese_scadenza = %s
                 WHERE email = %s
             """
 
