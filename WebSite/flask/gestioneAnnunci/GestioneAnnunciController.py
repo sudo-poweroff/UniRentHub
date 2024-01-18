@@ -9,7 +9,7 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
     recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica, \
-    ricerca_recensione, ricerca_recensione_byId
+    ricerca_recensione, ricerca_recensione_byId, cercadataacquisto
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -407,15 +407,25 @@ def segnala_successo():
 
 @gu2.route("/recensione")
 def inseriscirec():
-    data_oggi = date.today().isoformat()
+    data_oggi = date.today()
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
     id_casa = int(idcasas(email, data_oggi))
-    if id_casa == id_alloggio:
+    print(id_casa,id_alloggio)
+    data_acquisto = cercadataacquisto(email,id_alloggio)
+    print("DATAOGGI")
+    print(data_oggi)
+    print("DATAACQUISTO")
+    print(data_acquisto)
+    diff = data_oggi - data_acquisto
+    diff = diff.days
+    print(diff)
+    if id_casa == id_alloggio and diff>30:
         rec = cercarec(id_alloggio, email)
+        print("SONO QUI")
         return render_template("Recensione.html", id=id_alloggio, rec=rec)
     else:
-        return redirect(url_for('gu.userpage'))
+        return redirect(url_for('gu.userpage', message='Il tuo messaggio qui'))
 
 @gu2.route("/recensisci", methods=['POST'])
 def recensisci():

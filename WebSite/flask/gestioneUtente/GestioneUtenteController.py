@@ -254,6 +254,10 @@ def registra_homechecker():
 @gu.route('/Userpage', methods=['GET', 'POST'])
 def userpage():
     if session.get("tipo") == "Locatore" or session.get("tipo") == "Studente":
+        if(request.args.get('message')):
+            message = request.args.get('message')
+        else:
+            message=""
         universita = cercatutteuni()
         alloggi = []  # Inizializzazione della lista per memorizzare le case
         immagini=[] #inizializzazione della lista per memorizzare le immagini
@@ -295,7 +299,7 @@ def userpage():
                             print("path:     " + p)
                             immagini.append(p)
                             count = 1
-                return render_template("Userpage.html",alloggi=alloggi, universita= universita, immagini=immagini) #se l'utente ha case in affitto
+                return render_template("Userpage.html",alloggi=alloggi, universita= universita, immagini=immagini,message=message) #se l'utente ha case in affitto
             return render_template("Userpage.html", universita=universita) #se l'utente non ha case in affitto
         return render_template('Userpage.html', universita=universita, alloggi=alloggi, immagini = immagini) #se l'utente LOCATORE ha postato case
     return render_template("error.html")
