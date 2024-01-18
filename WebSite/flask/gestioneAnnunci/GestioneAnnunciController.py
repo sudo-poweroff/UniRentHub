@@ -420,12 +420,11 @@ def inseriscirec():
     diff = data_oggi - data_acquisto
     diff = diff.days
     print(diff)
-    if id_casa == id_alloggio and diff>30:
+    if id_casa == id_alloggio :
         rec = cercarec(id_alloggio, email)
         print("SONO QUI")
-        return render_template("Recensione.html", id=id_alloggio, rec=rec)
-    else:
-        return redirect(url_for('gu.userpage', message='Il tuo messaggio qui'))
+        return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
+
 
 @gu2.route("/recensisci", methods=['POST'])
 def recensisci():

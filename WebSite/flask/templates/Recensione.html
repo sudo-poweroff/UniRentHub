@@ -20,6 +20,7 @@
             <div class="card-body" style="font-size: 24px; width:500px;">
                 <form action="/recensisci" method="POST">
                  <input type="hidden" name ="id"  class="form-control" id="id" value="{{id}}" >
+                <input type="hidden" name ="data"  class="form-control" id="data" value="{{diff}}" >
 
              <label for="titolo" class="form-label">Titolo</label>
              <input name ="titolo" type="text" class="form-control" id="titolo"
@@ -84,7 +85,11 @@
     document.getElementById("mioBottone").addEventListener("click", function() {
         var titolo = document.getElementById("titolo").value;
         var descrizione = document.getElementById("descrizione").value;
-
+        var diff = document.getElementById("data").value;
+        if(diff<30){
+            alert("Non sono passati 30 giorni!");
+            event.preventDefault();
+        }
         if (titolo.trim() === "") {
             alert("Inserisci il titolo!");
             event.preventDefault();
