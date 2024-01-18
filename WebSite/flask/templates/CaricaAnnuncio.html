@@ -126,32 +126,32 @@
     <div class="row form">
     <div class="col-md-6 mb-3">
       <label for="citta">Città</label>
-      <input type="text" class="form-control" id="citta" placeholder="Citta" name = citta required>
+      <input type="text" class="form-control" id="citta" placeholder="Citta" name = "citta" >
     </div>
     <div class="col-md-3 mb-3">
       <label for="provincia">Provincia</label>
-      <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia" required>
+      <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia" >
     </div>
     <div class="col-md-3 mb-3">
       <label for="cap">CAP</label>
-      <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" required>
+      <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" >
     </div>
     </div>
     <div class="row form">
     <div class="col-md-4 mb-3">
     <label for="indirizzo">Indirizzo</label>
-    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" required>
+    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" >
     </div>
     <div class="col-md-4 mb-3">
     <label for="civico">Civico</label>
-      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" min="1" required>
+      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" min="1" >
     </div>
     </div>
     <div class="row form">
     <div class="col-md-6 mb-3">
     <label for="tipo">Tipo Appartamento:</label>
     <div class="form-group" >
-        <select id="tipo" name="tipo" class="custom-select  " required>
+        <select id="tipo" name="tipo" class="custom-select  " >
         <option value="villa">Villa</option>
         <option value="camera">Camera</option>
         <option value="bilocale">Bilocale</option>
@@ -210,7 +210,7 @@
         <label for="classe_energetica">Classe energetica:</label>
 
     <div class="form-group">
-        <select id="classe_energetica" name="classee" class="custom-select" required>
+        <select id="classe_energetica" name="classee" class="custom-select" >
 
             <option value="A++">A++</option>
             <option value="A+">A+</option>
@@ -333,7 +333,7 @@
 
 <div style="margin-top: 50px" class="form-group">
     <label for="lista_immagini"><h2>Carica immagini (max 3)</h2></label>
-    <input type="file" class="form-control-file" id="lista_immagini" name="lista_immagini[]" multiple accept="image/*" required>
+    <input type="file" class="form-control-file" id="lista_immagini" name="lista_immagini[]" multiple accept="image/*" >
     <small id="fileHelp" class="form-text text-muted">Carica massimo 3 immagini.</small>
     <div id="preview-container"></div>
 </div>
@@ -342,7 +342,7 @@
    onmouseover="this.style.backgroundColor='#6eb150'; this.style.borderColor='#6eb150';"
    onmouseout="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
    onmousedown="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';"
-   onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';" type="submit" class="btn btn-primary">Pubblica</button>
+   onmouseup="this.style.backgroundColor='#5c8e48'; this.style.borderColor='#5c8e48';" type="submit" class="btn btn-primary" id="MioBottone">Pubblica</button>
         </form>
 </div>
     </div>
@@ -380,6 +380,7 @@
 
         var titolo = document.getElementById('titolo').value;
         var provincia = document.getElementById('provincia').value;
+        var citta = document.getElementById('citta').value;
         var cap = document.getElementById('cap').value;
         var indirizzo = document.getElementById('indirizzo').value;
         var civico = document.getElementById('civico').value;
@@ -388,16 +389,65 @@
         var num_camere = document.getElementById('num_camere').value;
         var num_ospiti = document.getElementById('num_ospiti').value;
         var metri_quadri = document.getElementById('metri_quadri').value;
-        var periodo_minimo = document.getElementById('periodo_minimo').value;
         var prezzo = document.getElementById('prezzo').value;
+        var immaginiInput = document.getElementById('lista_immagini');
 
 
-        if (titolo === '' || provincia === '' || cap === '' || indirizzo === '' || civico === '' || descrizione === '' || num_bagni === '' || num_camere === '' || num_ospiti === '' || metri_quadri === '' || periodo_minimo === '' || prezzo === '') {
-            alert('Compila tutti i campi del form prima di registrarti.');
-            return false;
-        } else {
-            return true;
+        if (titolo.trim().length <5) {
+            alert("Inserisci il titolo!");
+            event.preventDefault();
         }
+        if(citta.trim().length<=0){
+            alert("Inserisci città!")
+            event.preventDefault()
+        }
+        if(provincia.trim().length !== 2){
+            alert("Provincia non valida!");
+            event.preventDefault();
+        }
+        if(cap.trim().length!==4){
+            alert("Dimensione Cap non valida")
+            event.preventDefault();
+        }
+        if(indirizzo.trim().length <= 5){
+            alert("Indirizzo non valido")
+            event.preventDefault();
+        }
+        if(civico.trim().length === 0){
+            alert("Civico non valido")
+            event.preventDefault();
+        }
+        if(descrizione.trim().length < 30){
+            alert("Descrizione troppo breve")
+            event.preventDefault();
+        }
+        if(num_bagni <= 0){
+            alert("Numero bagni non valido")
+            event.preventDefault();
+        }
+        if(num_camere <= 0){
+            alert("Numero camere non valido")
+            event.preventDefault();
+        }
+        if(num_ospiti <= 0){
+            alert("Numero ospiti non valido")
+            event.preventDefault();
+        }
+        if(metri_quadri <= 0){
+            alert("Metri quadri non validi")
+            event.preventDefault();
+        }
+        if(prezzo <= 0){
+            alert("Prezzo non valido")
+            event.preventDefault();
+        }
+        if (immaginiInput.files.length !== 3) {
+        alert("Carica esattamente 3 immagini.");
+        event.preventDefault();
+    }
+
+
+
     }
 </script>
 
