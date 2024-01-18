@@ -26,6 +26,21 @@ Il progetto, oltre all’aspetto pratico, vuole porre grande enfasi sulla sosten
 - [Greco Marco](https://github.com/Gmarco2706)
 - [Sorrentino Giuseppe Pio](https://github.com/GiuSeppE898)
 
+## Informazioni Tecniche
+
+In questa sezione mostriamo informazioni tecniche e la guida all'installazione
+
+### Installazione
+
+Per i vari step d'installazione vi rimandiamo al [manuale dedicato](https://google.it). <!-- TODO TO BE CHANGED -->
+
+### Build with
+
+- [Python](https://www.python.org) - Linguaggio di programmazione per lo sviluppo back-end.
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/) - Framework usato per costruire e sviluppare applicativi web.
+- [HTML5](https://www.w3schools.com/html/default.asp) - Usato per lo sviluppo front-end.
+- [Bootstrap](https://getbootstrap.com/docs/4.6/getting-started/introduction/) - Framework front-end.
+
 ## Sneak Peek
 
 ![WhatsApp Image 2024-01-18 at 18 08 09](https://github.com/sudo-poweroff/UniRentHub/assets/127889824/88d3c02c-a377-4dd9-a267-d8279ee17e79)
