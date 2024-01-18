@@ -122,38 +122,16 @@ font-size: 30px" class="flash-messages">
 
     if (creditCardNumber.length < 16) {
         alert("Il numero della carta deve essere di almeno 16 cifre.");
-        return false;
+        event.preventDefault();
     }
 
     if (cvv.length < 3) {
         alert("Il CVV deve essere di almeno 3 cifre.");
-        return false;
+        event.preventDefault();
     }
 
-    var currentYear = new Date().getFullYear();
-    var currentMonth = new Date().getMonth() + 1; // Aggiungi 1 perché i mesi in JavaScript partono da zero
 
-    var selectedYear = parseInt(document.getElementById("anno_scadenza").value, 10);
-    var selectedMonth = parseInt(document.getElementById("mese_scadenza").value, 10);
-
-    // Controllo generale sulla scadenza della carta
-    if (selectedYear < currentYear || (selectedYear === currentYear && selectedMonth < currentMonth)) {
-        alert("La tua carta è scaduta. Seleziona una data di scadenza valida.");
-        // Resetta il valore del campo del mese di scadenza al valore predefinito
-        document.getElementById("mese_scadenza").value = "";
-        return false;
-    }
-
-    // Controllo specifico per il mese corrente
-    if (selectedYear === currentYear && selectedMonth === currentMonth) {
-        alert("Attenzione: hai selezionato il mese corrente. La tua carta è scaduta.");
-        // Puoi scegliere di consentire all'utente di procedere o intraprendere ulteriori azioni
-        return false;
-    }
-
-    return true;
 }
-
 </script>
 <script>
     function validatecheckinout() {
@@ -162,10 +140,8 @@ font-size: 30px" class="flash-messages">
 
         if (checkInDate > checkOutDate) {
             alert("La data di check-in non può essere successiva alla data di check-out.");
-            return false;
+            event.preventDefault();
         }
-
-        return true;
     }
 </script>
 
@@ -236,7 +212,6 @@ font-size: 30px" class="flash-messages">
               <div class="col-md-3 mb-3">
                 <label for="scadenza">Mese</label>
              <select class="custom-select d-block w-100" id="anno_scadenza" name="anno_scadenza" required="">
-                  <option value="">Mese</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -260,7 +235,6 @@ font-size: 30px" class="flash-messages">
                 <div class="col-md-3 mb-3">
                 <label for="scadenza">Anno</label>
                 <select name="anno_scadenza" class="custom-select d-block w-100" id="anno_scadenza" required="">
-                  <option value="">Anno</option>
                  <option value="2024">2024</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
