@@ -212,10 +212,10 @@ class ClienteDAO:
         values = (email, data)
 
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchone()
+        results = self.__cursor.fetchall()
 
-        if result:
-            return result[0]
+        if results:
+            return [result[0] for result in results]
         else:
             return None
 

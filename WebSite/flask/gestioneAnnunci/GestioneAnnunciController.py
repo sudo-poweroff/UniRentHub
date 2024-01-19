@@ -1,3 +1,5 @@
+import idlelib.calltip
+
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
 from datetime import datetime, date
 
@@ -410,8 +412,9 @@ def inseriscirec():
     data_oggi = date.today()
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
-    id_casa = int(idcasas(email, data_oggi))
-    print(id_casa,id_alloggio)
+    id_casa = idcasas(email, data_oggi)
+    for id_ in id_casa:
+        print("CIAO FRATMMMMMM" + str(id_), str(id_alloggio))
     data_acquisto = cercadataacquisto(email,id_alloggio)
     print("DATAOGGI")
     print(data_oggi)
@@ -420,10 +423,11 @@ def inseriscirec():
     diff = data_oggi - data_acquisto
     diff = diff.days
     print(diff)
-    if id_casa == id_alloggio :
-        rec = cercarec(id_alloggio, email)
-        print("SONO QUI")
-        return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
+    for id_ in id_casa:
+        if id_ == id_alloggio:
+            rec = cercarec(id_alloggio, email)
+            print("SONO QUI")
+            return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
 
 
 @gu2.route("/recensisci", methods=['POST'])
