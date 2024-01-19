@@ -288,6 +288,38 @@ class AlloggioDAO:
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
+    def modifica_alloggio_post(self, id_alloggio, alloggio):
+        query = """
+            UPDATE alloggio
+            SET
+                titolo = %s,
+                arredamenti = %s,
+                pannelli_solari = %s,
+                pannelli_fotovoltaici = %s,
+                descrizione = %s,
+                prezzo = %s,
+                tasse = %s
+            WHERE
+                id_alloggio = %s
+        """
+        values = (
+            alloggio.get_titolo(),  # titolo
+            alloggio.get_arredamenti(),  # arredamenti
+            alloggio.get_pannelli_solari(),  # pannelli_solari
+            alloggio.get_pannelli_fotovoltaici(),  # pannelli_fotovoltaici
+            alloggio.get_descrizione(),  # descrizione
+            alloggio.get_prezzo(),  # prezzo
+            alloggio.get_tasse(),  # tasse
+            id_alloggio  # id_alloggio
+        )
+        print("MODIFCO DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        result = self.__cursor.execute(query, values)
+        self.__connection.commit()
+        if result:
+            print("FATTO: " + result)
+        else:
+            print("NONEEEE")
+
     def ricerca_prezzo_minore_per_citta(self, citta):
         query = """
             SELECT a.*

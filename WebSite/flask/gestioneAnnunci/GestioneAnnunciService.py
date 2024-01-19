@@ -301,6 +301,38 @@ def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto
     return alloggio
 
 
+
+
+
+# modifica_annuncio_post
+def modifica_annuncio_byid_post(id_allogio, titolo, arredamenti, data_pubblicazione,
+                           pannelli_solari, pannelli_fotovoltaici, descrizione,
+                           prezzo, tasse):
+    alloggio = Alloggio(
+        titolo=titolo,
+        arredamenti=arredamenti,
+        data_publicazione=data_pubblicazione,
+        pannelli_solari=pannelli_solari,
+        pannelli_fotovoltaici=pannelli_fotovoltaici,
+        descrizione=descrizione,
+        prezzo=prezzo,
+        tasse=tasse
+    )
+    print("sono nel service")
+    dao = AlloggioDAO()
+
+    dao.modifica_alloggio_post(id_alloggio=id_allogio, alloggio=alloggio)
+    return alloggio
+
+
+#check_casa_verificata
+def check_casa_byid(id_):
+    dao = AlloggioDAO()
+    print("CHECK CASA!!!!!!!!!!")
+    alloggio = dao.ricerca_per_id(id_)
+    return alloggio
+
+
 # modifica indirizzo
 def modifica_indirizzo_byid(id_alloggio, indirizzo):
     dao = IndirizzoDAO()

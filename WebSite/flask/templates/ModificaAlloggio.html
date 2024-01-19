@@ -126,32 +126,44 @@
     <div class="row form">
     <div class="col-md-6 mb-3">
       <label for="citta">Città</label>
-      <input type="text" class="form-control" id="citta" placeholder="Citta" name = citta value="{{ indirizzo.get_citta()}}" required>
+      <input type="text" class="form-control" id="citta" placeholder="Citta" name = citta value="{{ indirizzo.get_citta()}}"
+             {% if alloggio.get_verifica() == True %}disabled{% endif %}
+             required>
     </div>
     <div class="col-md-3 mb-3">
       <label for="provincia">Provincia</label>
-      <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia" value="{{ indirizzo.get_provincia()}}" required>
+      <input type="text" class="form-control" id="provincia" placeholder="Provincia" name="provincia" value="{{ indirizzo.get_provincia()}}"
+             {% if alloggio.get_verifica() == True %}disabled{% endif %}
+             required>
     </div>
     <div class="col-md-3 mb-3">
       <label for="cap">CAP</label>
-      <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" value="{{ indirizzo.get_cap()}}" required>
+      <input type="text" class="form-control" id="cap" placeholder="CAP" name = "cap" value="{{ indirizzo.get_cap()}}"
+             {% if alloggio.get_verifica() == True %}disabled{% endif %}
+             required>
     </div>
     </div>
     <div class="row form">
     <div class="col-md-4 mb-3">
     <label for="indirizzo">Indirizzo</label>
-    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" value="{{ indirizzo.get_via()}}" required>
+    <input type="text" class="form-control" id="indirizzo" placeholder="indirizzo" name="indirizzo" value="{{ indirizzo.get_via()}}"
+           {% if alloggio.get_verifica() == True %}disabled{% endif %}
+           required>
     </div>
     <div class="col-md-4 mb-3">
     <label for="civico">Civico</label>
-      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" value="{{ indirizzo.get_civico()}}" required>
+      <input type="text" class="form-control" id="civico" placeholder="civico" name = "civico" value="{{ indirizzo.get_civico()}}"
+             {% if alloggio.get_verifica() == True %}disabled{% endif %}
+             required>
     </div>
     </div>
     <div class="row form">
     <div class="col-md-6 mb-3">
     <label for="tipo">Tipo Appartamento:</label>
     <div class="form-group" >
-        <select id="tipo" name="tipo" class="custom-select  " required>
+        <select id="tipo" name="tipo" class="custom-select  "
+                {% if alloggio.get_verifica() == True %}disabled{% endif %}
+                required>
         <option value="villa">Villa</option>
         <option value="camera">Camera</option>
         <option value="bilocale">Bilocale</option>
@@ -174,11 +186,15 @@
     <div style="margin-top: 60px" class="row form">
             <div class="col-md-4 mb-3">
         <label for="num_bagni">Numero Bagni:</label>
-        <input type="number" class= "form-control" id="num_bagni" name="num_bagni" value="{{ alloggio.get_n_bagni()}}">
+        <input type="number" class= "form-control" id="num_bagni" name="num_bagni"
+               {% if alloggio.get_verifica() == True %}disabled{% endif %}
+               value="{{ alloggio.get_n_bagni()}}">
     </div>
     <div class="col-md-4 mb-3">
         <label for="num_camere">Numero Camere da letto:</label>
-        <input type="number" id="num_camere" class="form-control" name="num_camere"  value="{{ alloggio.get_n_camere_letto()}}">
+        <input type="number" id="num_camere" class="form-control" name="num_camere"
+               {% if alloggio.get_verifica() == True %}disabled{% endif %}
+               value="{{ alloggio.get_n_camere_letto()}}">
     </div>
     </div>
 
@@ -210,7 +226,9 @@
         <label for="classe_energetica">Classe energetica:</label>
 
     <div class="form-group">
-        <select id="classe_energetica" name="classee" class="custom-select" {% if alloggio.get_verifica() == True %}disabled{% endif %} required>
+        <select id="classe_energetica" name="classee" class="custom-select"
+                {% if alloggio.get_verifica() == True %}disabled{% endif %}
+                required>
 
             <option value="A++">A++</option>
             <option value="A+">A+</option>
@@ -226,11 +244,15 @@
     <div class="row form">
 <div class="col-md-4 mb-3">
         <label for="num_ospiti">Numero ospiti:</label>
-        <input type="number" class="form-control" id="num_ospiti" name="num_ospiti"  value="{{ alloggio.get_n_ospiti()}}">
+        <input type="number" class="form-control" id="num_ospiti" name="num_ospiti"
+               {% if alloggio.get_verifica() == True %}disabled{% endif %}
+               value="{{ alloggio.get_n_ospiti()}}">
     </div>
 <div class="col-md-4 mb-3">
     <label for="metri_quadri">Metri quadri:</label>
-    <input type="number" class="form-control" id="metri_quadri" name="metri_quadri" value="{{ alloggio.get_mq()}}">
+    <input type="number" class="form-control" id="metri_quadri" name="metri_quadri"
+           {% if alloggio.get_verifica() == True %}disabled{% endif %}
+           value="{{ alloggio.get_mq()}}">
 </div>
     </div>
 <div class="row form">
