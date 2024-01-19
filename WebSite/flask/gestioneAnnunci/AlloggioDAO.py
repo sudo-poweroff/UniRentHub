@@ -111,9 +111,7 @@ class AlloggioDAO:
         else:
             return None
 
-    def inseriscicasa(self, titolo, tipo, descrizione, num_bagni, num_camere, classe_energetica, num_ospiti,
-                      metri_quadri, prezzo, periodo_minimo, arredamento, pannelli_fotovoltaici, pannelli_solari,
-                      data, stanze, mail):
+    def inseriscicasa(self, alloggio):
         query = """
                 INSERT INTO Alloggio (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni,
                                       classe_energetica, arredamenti, data_pubblicazione, pannelli_solari,
@@ -123,8 +121,9 @@ class AlloggioDAO:
                                       (%s, 1,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, %s, %s,%s,%s,%s)
                 """
         tasse=10
-        values = (tipo, titolo, metri_quadri, num_camere, num_bagni, classe_energetica, arredamento, data,
-                  pannelli_solari, pannelli_fotovoltaici, descrizione, prezzo, num_ospiti, stanze,tasse, mail)
+        values = (alloggio.get_id_alloggio(), alloggio.get_disponibilita(), alloggio.get_titolo(), alloggio.get_mq(), alloggio.get_n_camere_letto(), alloggio.get_n_bagni(), alloggio.get_classe_energetica(),
+                  alloggio.get_arredamenti(), alloggio.get_data_pubblicazione(), alloggio.get_pannelli_solari(), alloggio.get_pannelli_fotovoltaici(), alloggio.get_descrizione(), alloggio.get_verifica(),
+                  alloggio.get_prezzo(), alloggio.get_n_ospiti(), alloggio.get_n_stanze(), alloggio.get_tasse(), alloggio.get_email_loc())
 
         self.__cursor.execute(query, values)
 
@@ -194,7 +193,9 @@ class AlloggioDAO:
     def create_alloggio(self, alloggio):
         query = """
             INSERT INTO alloggio
-            (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica)
+            (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, 
+            data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, 
+            tasse, email_dip, email_loc, data_verifica)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (

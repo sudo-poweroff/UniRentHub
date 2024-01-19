@@ -13,13 +13,13 @@ class AffittareDAO:
 
 
     # Update affitto
-    def updateaffittare(self, id_alloggio, email, data_inizio, data_fine, numero_carta, data_scadenza, prezzo):
+    def updateaffittare(self, id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza,anno_scadenza, prezzo):
         query = """
                 UPDATE Affittare
-                SET data_inizio = %s, data_fine = %s, numero_carta = %s, data_scadenza = %s, prezzo = %s
+                SET data_inizio = %s, data_fine = %s, numero_carta = %s, mese_scadenza = %s,anno_scadenza = %s, prezzo = %s
                 WHERE id_alloggio = %s AND email = %s
                 """
-        values = (data_inizio, data_fine, numero_carta, data_scadenza, prezzo, id_alloggio, email)
+        values = (data_inizio, data_fine, numero_carta,mese_scadenza,anno_scadenza, prezzo, id_alloggio, email)
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
@@ -37,7 +37,7 @@ class AffittareDAO:
     def ricercaaffitto(self, id_alloggio):
 
         query = """
-                SELECT id_alloggio, email, data_inizio, data_fine, numero_carta,data_scadenza, prezzo 
+                SELECT id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza,prezzo 
                 FROM Affittare
                 WHERE id_alloggio = %s
                 """
@@ -54,8 +54,9 @@ class AffittareDAO:
                 data_inizio=result[2],
                 data_fine=result[3],
                 numero_carta=result[4],
-                data_scadenza=result[5],
-                prezzo=result[6]
+                mese_scadenza=result[5],
+                anno_scadenza=result[6],
+                prezzo=result[7]
 
             )
 
@@ -79,13 +80,16 @@ class AffittareDAO:
         return result[0] > 0  # Restituisce True se ci sono prenotazioni, altrimenti False
 
     #creazione affitto
-    def creaaffitto(self, id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza,
-                    prezzo):
+    def creaaffitto(self, affittare):
         query = """
                 INSERT INTO affittare (id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza, prezzo)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """
-        values = (id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza, prezzo)
+        values = (affittare.get_id_alloggio(), affittare.get_email(), affittare.get_data_inizio(),
+                  affittare.get_data_fine(),
+                  affittare.get_numero_carta(), affittare.get_mese_scadenza(), affittare.get_anno_scadenza(),
+                  affittare.get_prezzo()
+                  )
         self.__cursor.execute(query, values)
         self.__connection.commit()
 

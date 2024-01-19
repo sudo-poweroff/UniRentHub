@@ -15,6 +15,7 @@ from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
 from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 from .ServiziDAO import ServiziDAO
 from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
+from WebSite.flask.gestioneAffitto.Recensione import Recensione
 
 
 # Funzione di controllo per l'email caratteri
@@ -303,11 +304,11 @@ def preleva_data_visita(id_alloggio):
     prenotazione = dao.ricercaprenotazione(id_alloggio=id_alloggio)
     return prenotazione
 
-def recensione(id, titolo, descrizione, voto, data, mail):
-    print("ciao")
+def recensione(id_alloggio, titolo, descrizione, voto, data_recensione, email):
+    recensione_istanza = Recensione(id_alloggio=id_alloggio, titolo=titolo, descrizione=descrizione, voto=voto, data_recensione=data_recensione, email=email)
     dao = RecensioneDAO()
-    dao.deleterecensione(id, mail)
-    dao.recensione_alloggio(id, mail, titolo, voto, descrizione, data)
+    dao.deleterecensione(id_alloggio, email)
+    dao.recensione_alloggio(recensione_istanza)
 
 def cercarec(id_alloggio, email):
     dao = RecensioneDAO()
