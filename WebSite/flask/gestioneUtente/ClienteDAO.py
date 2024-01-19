@@ -118,6 +118,37 @@ class ClienteDAO:
         else:
             return None
 
+    def ricerca_cliente(self, email):
+        query = """
+               SELECT *
+               FROM cliente
+               WHERE email = %s
+           """
+        values = (email, )
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            cliente = Cliente(
+                email=result[0],
+                nome=result[1],
+                cognome=result[2],
+                tipo_utente=result[3],
+                data_nascita=result[4],
+                numero_carta=result[5],
+                mese_scadenza=result[6],
+                anno_scadenza=result[7],
+                verificato=result[8],
+                password=result[9],
+                data_blocco=result[10]
+            )
+            return cliente
+        else:
+            return None
+
+
+
     def universitabystudente(self, email):
         query = """
             SELECT iscrizione.denominazione

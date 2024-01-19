@@ -74,6 +74,30 @@ def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, 
                         return
 
 
+#permette di visualizzare  se un utente è gia regitsrato
+def validate_registrazione(email):
+
+    dao = ClienteDAO()
+    cliente = dao.ricerca_cliente(email=email)
+
+    if cliente is not None:
+        return False
+    elif cliente is None:
+        return True
+
+
+#permette di visualizzare  se un dipendente è gia regitsrato
+def validate_registrazione_dipendente(email, password):
+
+    dao = DipendenteDAO()
+    dipendente = dao.ricercaDip(email=email, password=password)
+
+    if dipendente is not None:
+        return False
+    elif dipendente is None:
+        return True
+
+
 # creazione nuovo homechecker
 def registra_homechecker_service(email, nome, cognome, password):
     if is_valid_email(email):

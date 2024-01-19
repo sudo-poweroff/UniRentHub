@@ -8,7 +8,8 @@ from .GestioneUtenteService import get_cliente_by_email_password, registra_clien
     show_homecheckerService, iscrizione_universita, accesso_admin, elimina_dipendente_service, \
     cerca_uni, cercatutteuni, casep, update_cliente, idcasas, cercacasastudente, visualizzasegnalazione_service, \
     update_verificatoservice, check_account_verification, cerca_cliente_byEmail, blocca_utenteservice, \
-    rimuovi_blocco_utenteservice, utenti_contre_segnalazioniservice, chiudi_tutte_le_segnalazioni, update_blocco
+    rimuovi_blocco_utenteservice, utenti_contre_segnalazioniservice, chiudi_tutte_le_segnalazioni, update_blocco, \
+    validate_registrazione, validate_registrazione_dipendente
 from WebSite.flask.gestioneAnnunci.GestioneAnnunciService import preleva_immagini
 from itsdangerous import  URLSafeTimedSerializer
 from functools import wraps
@@ -76,6 +77,16 @@ def registrazione():
         cvv = request.form["cvv"]
         mese = request.form["mese-scadenza"]
         anno = request.form["anno-scadenza"]
+
+        print("OKAY SONO FUORI")
+        #verifichiamo se esiste l'utente nel DB
+        boolean = validate_registrazione(email=email)
+
+        #se è uguale a false vuol dire che esiste già un utente nel db non quell'email
+        if boolean is False:
+            print("okay, ci sono nel boolean")
+            flash("Email già registrata. Prova con un'altra.", 'error')
+            return redirect(url_for("gu.registrazione"))
 
         user = registra_cliente(nome=nome, cognome=cognome, email=email, password=password, tipo_utente=tipo,
                                 numero_carta=numero_carta, mese_scadenza=mese, anno_scadenza=anno)
@@ -241,7 +252,16 @@ def registra_homechecker():
             cognome = request.form.get('cognome')
             password = request.form.get('password')
 
-            if email and nome and cognome and password:  # Verifica che tutti i campi siano presenti
+            if email and nome and cognome and password:
+                # Verifica che tutti i campi siano presenti
+                # verifichiamo se esiste l'utente nel DB
+                boolean = validate_registrazione_dipendente(email=email, password=password)
+
+                # se è uguale a false vuol dire che esiste già un utente nel db non quell'email
+                if boolean is False:
+                    flash("Email già registrata. Prova con un'altra.", 'error')
+                    return redirect(url_for("gu.registra_homechecker"))
+
                 nuovo_homechecker = registra_homechecker_service(email, nome, cognome, password)
                 if nuovo_homechecker:
                     dipendenti_homechecker = show_homecheckerService()
