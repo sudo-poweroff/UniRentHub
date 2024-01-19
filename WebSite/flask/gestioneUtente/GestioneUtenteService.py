@@ -65,8 +65,13 @@ def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, 
                     cliente = Cliente(nome=nome, cognome=cognome, email=email, password=password,
                                       tipo_utente=tipo_utente, numero_carta=numero_carta, mese_scadenza=mese_scadenza, anno_scadenza=anno_scadenza)
                     dao = ClienteDAO()
-                    dao.createCliente(cliente)
-                    return cliente
+                    try:
+                        dao.createCliente(cliente)
+                        return cliente
+                    except Exception:
+                        return
+                    except ValueError:
+                        return
 
 
 # creazione nuovo homechecker

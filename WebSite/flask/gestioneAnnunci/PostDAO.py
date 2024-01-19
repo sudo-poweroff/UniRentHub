@@ -10,7 +10,11 @@ class PostDAO:
         self.__cursor = self.__gestioneConnessione.getCursor()
 
     def createPost(self, post):
-        query="""
+        if (post is None or post.get_email() is None or post.get_email() == ""
+                or post.get_titolo() is None or post.get_titolo() == ""
+                or post.get_descrizione() is None or post.get_descrizione() == ""):
+            raise ValueError("Il post e tutti i suoi campi devono essere definiti.")
+        query = """
             INSERT INTO Post (titolo, descrizione, email)
             VALUES (%s, %s, %s)
         """
@@ -36,11 +40,17 @@ class PostDAO:
 
         for row in risultati:
             post = Post(
-                titolo= row[1],
-                descrizione= row[2],
+                titolo=row[1],
+                descrizione=row[2],
                 email=row[3]
             )
             posts.append(post)
         return posts
 
-
+    def contapost(self):
+        query = """
+            SELECT COUNT(*) FROM post
+        """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results

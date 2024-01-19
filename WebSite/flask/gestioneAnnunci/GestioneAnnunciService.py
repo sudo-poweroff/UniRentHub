@@ -196,7 +196,10 @@ def ricerca_post_studente(value):
 def creazione_post(titolo, descrizione, email):
     dao = PostDAO()
     post = Post(titolo=titolo, descrizione=descrizione, email=email)
-    dao.createPost(post=post)
+    try:
+        dao.createPost(post=post)
+    except ValueError:
+        return
 
 
 # restituisce il MAX id alloggio

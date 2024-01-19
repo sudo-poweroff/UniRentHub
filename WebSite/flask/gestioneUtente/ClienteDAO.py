@@ -2,6 +2,8 @@ from .Cliente import Cliente
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 from datetime import datetime
+
+
 class ClienteDAO:
 
     def __init__(self):
@@ -10,6 +12,15 @@ class ClienteDAO:
         self.__cursor = self.__gestioneConnessione.getCursor()
 
     def createCliente(self, cliente):
+        if (cliente is None or cliente.getEmail() is None or cliente.getEmail() == ""
+                or cliente.getNome() is None or cliente.getNome() == ""
+                or cliente.getCognome() is None or cliente.getCognome() == ""
+                or cliente.getTipo() is None or cliente.getTipo() == ""
+                or cliente.getNumeroCarta() is None or cliente.getNumeroCarta() == ""
+                or cliente.getAnnoScadenza() is None or cliente.getAnnoScadenza() == ""
+                or cliente.getMeseScadenza() is None or cliente.getMeseScadenza() == ""
+                or cliente.getPassword() is None or cliente.getPassword() == ""):
+            raise ValueError("Il dipendente e tutti i suoi campi devono essere definiti.")
         query = """
                INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, AES_ENCRYPT(%s, 'ciao'), NULL)
@@ -84,7 +95,6 @@ class ClienteDAO:
             AND password = AES_ENCRYPT(%s, 'ciao')
         """
 
-
         values = (email, pwd)
 
         self.__cursor.execute(query, values)
@@ -109,7 +119,7 @@ class ClienteDAO:
             return None
 
     def universitabystudente(self, email):
-        query ="""
+        query = """
             SELECT iscrizione.denominazione
             FROM iscrizione
             WHERE email = %s
@@ -126,7 +136,7 @@ class ClienteDAO:
             return None
 
     def cercacaseproprietario(self, email):
-        query="""
+        query = """
         SELECT * FROM alloggio
         WHERE email_loc = %s
         """
@@ -163,7 +173,7 @@ class ClienteDAO:
         return alloggi
 
     def cercacasastudente(self, email, data):
-        query="""
+        query = """
         SELECT id_alloggio FROM affittare
         WHERE affittare.email = %s
         AND data_fine > %s
@@ -229,7 +239,7 @@ class ClienteDAO:
                 SET data_blocco = NULL 
                 WHERE email = %s
                 """
-        values = (email, )
+        values = (email,)
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
@@ -244,3 +254,12 @@ class ClienteDAO:
 
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def contacliente(self):
+        query = """
+                    SELECT COUNT(*) FROM cliente
+                    
+                                """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results
