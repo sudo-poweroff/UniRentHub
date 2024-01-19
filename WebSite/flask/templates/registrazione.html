@@ -124,6 +124,20 @@ label.light {
 {% endblock %}
 {% block content %}
     {% include "header.html" %}
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flashes text-center">
+      {% for category, message in messages %}
+        <span style="margin-top: 20px; color: red; font-size: 25px;">{{ message }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+
 <div style="margin-top: 100px; margin-bottom: 100px" class="row">
     <div class="col-md-12">
       <form action="/registrazione" method="post" onsubmit="return verificaForm()">
