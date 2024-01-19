@@ -191,23 +191,16 @@ class AlloggioDAO:
         return alloggi
 
     def create_alloggio(self, alloggio):
-        if (alloggio is None or alloggio.get_disponibilita() is None or alloggio.get_disponibilita() == "" or
-                alloggio.get_titolo() is None or alloggio.get_titolo() == "" or
+        if (alloggio.get_titolo() is None or alloggio.get_titolo() == "" or
                 alloggio.get_mq() is None or alloggio.get_mq() == "" or
                 alloggio.get_n_bagni() is None or alloggio.get_n_bagni() == "" or
                 alloggio.get_n_camere_letto() is None or alloggio.get_n_camere_letto() == "" or
                 alloggio.get_classe_energetica() is None or alloggio.get_classe_energetica() == "" or
-                alloggio.get_arredamenti() is None or alloggio.get_arredamenti() == "" or
                 alloggio.get_data_publicazione() is None or alloggio.get_data_publicazione() == "" or
-                alloggio.get_pannelli_fotovoltaici() is None or alloggio.get_tipo_alloggio() == "" or
                 alloggio.get_descrizione() is None or alloggio.get_descrizione() == "" or
                 alloggio.get_prezzo() is None or alloggio.get_prezzo() == "" or
-                alloggio.get_pannelli_solari() is None or alloggio.get_pannelli_solari()=="" or
                 alloggio.get_n_ospiti() is None or alloggio.get_n_ospiti()=="" or
-                alloggio.get_tasse() is None or alloggio.get_tasse()=="" or
-                alloggio.get_email_dip() is None or alloggio.get_email_dip()=="" or
                 alloggio.get_email_loc() is None or alloggio.get_email_loc()=="" or
-                alloggio.get_data_verifica() is None or alloggio.get_data_verifica()=="" or
                 alloggio.get_n_stanze() is None or alloggio.get_n_stanze()==""):
             raise ValueError("L'Annuncio e tutti i suoi campi devono essere definiti.")
 
