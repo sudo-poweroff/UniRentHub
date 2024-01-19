@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestTCSRecensioneT2D2P1():
+class TestP1():
   def setup_method(self, method):
     self.driver = webdriver.Chrome()
     self.vars = {}
@@ -18,28 +18,25 @@ class TestTCSRecensioneT2D2P1():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_tCSRecensioneT2D2P1(self):
+  def test_p1(self):
+    delay = 5.0
     self.driver.get("http://127.0.0.1:5000/")
     self.driver.set_window_size(1265, 1372)
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(1)").click()
-    element = self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(1)")
-    actions = ActionChains(self.driver)
-    actions.move_to_element(element).perform()
-    element = self.driver.find_element(By.CSS_SELECTOR, "body")
-    actions = ActionChains(self.driver)
+    time.sleep(delay)
     self.driver.find_element(By.ID, "exampleDropdownFormEmail1").click()
+    time.sleep(delay)
     self.driver.find_element(By.ID, "exampleDropdownFormEmail1").send_keys("sofiaesposito@gmail.com")
     self.driver.find_element(By.ID, "exampleDropdownFormPassword1").click()
     self.driver.find_element(By.ID, "exampleDropdownFormPassword1").send_keys("Passsofy1@")
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
-    self.driver.find_element(By.CSS_SELECTOR, "svg").click()
-    self.driver.find_element(By.LINK_TEXT, "Recensione").click()
-    self.driver.find_element(By.ID, "titolo").click()
-    self.driver.find_element(By.ID, "titolo").send_keys("Casa molto accogliente")
-    self.driver.find_element(By.ID, "descrizione").click()
-    self.driver.find_element(By.ID, "descrizione").send_keys("Una casa perfetta, vicino l’università!")
-    self.driver.find_element(By.NAME, "voto").click()
-    dropdown = self.driver.find_element(By.NAME, "voto")
+    self.driver.find_element(By.CSS_SELECTOR, ".bi-person-circle").click()
+    self.driver.find_element(By.ID, "mese_scadenza").click()
+    dropdown = self.driver.find_element(By.ID, "mese_scadenza")
     dropdown.find_element(By.XPATH, "//option[. = '5']").click()
-    self.driver.find_element(By.ID, "mioBottone").click()
+    self.driver.find_element(By.ID, "password").click()
+    self.driver.find_element(By.ID, "password").clear()
+    self.driver.find_element(By.ID, "password").send_keys("12")
+    self.driver.find_element(By.ID, "modificaDatiBtn").click()
+    assert self.driver.switch_to.alert.text == "La password non è valida. Assicurati di rispettare tutti i requisiti."
   

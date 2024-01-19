@@ -3,7 +3,6 @@ import pytest
 import time
 import json
 from selenium import webdriver
-from selenium.common import NoAlertPresentException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions
@@ -11,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestNC1DS1IC2():
+class TestNC1DS2():
   def setup_method(self, method):
     self.driver = webdriver.Chrome()
     self.vars = {}
@@ -19,7 +18,7 @@ class TestNC1DS1IC2():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_nC1DS1IC2(self):
+  def test_nC1DS2(self):
     delay = 5.0
     self.driver.get("http://127.0.0.1:5000/")
     self.driver.set_window_size(1265, 1372)
@@ -29,25 +28,19 @@ class TestNC1DS1IC2():
     actions.move_to_element(element).perform()
     element = self.driver.find_element(By.CSS_SELECTOR, "body")
     actions = ActionChains(self.driver)
+    time.sleep(delay)
     self.driver.find_element(By.ID, "exampleDropdownFormEmail1").click()
-    self.driver.find_element(By.ID, "exampleDropdownFormEmail1").send_keys("annayellow@gmail.com")
+    time.sleep(delay)
+    self.driver.find_element(By.ID, "exampleDropdownFormEmail1").send_keys("sofiaesposito@gmail.com")
     self.driver.find_element(By.ID, "exampleDropdownFormPassword1").click()
-    self.driver.find_element(By.ID, "exampleDropdownFormPassword1").send_keys("yellowAnnPass!456")
+    self.driver.find_element(By.ID, "exampleDropdownFormPassword1").send_keys("Passsofy1@2")
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
     self.driver.find_element(By.ID, "search").click()
-    self.driver.find_element(By.ID, "search").send_keys("Milano")
+    self.driver.find_element(By.ID, "search").send_keys("Salerno")
     self.driver.find_element(By.ID, "nutton").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(9) .img-fluid").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(6) .card-title").click()
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".col-md-3:nth-child(2) > #anno_scadenza").click()
-    dropdown = self.driver.find_element(By.CSS_SELECTOR, ".col-md-3:nth-child(2) > #anno_scadenza")
-    dropdown.find_element(By.XPATH, "//option[. = '2024']").click()
-    self.driver.find_element(By.ID, "anno_scadenza").click()
-    dropdown = self.driver.find_element(By.ID, "anno_scadenza")
-    dropdown.find_element(By.XPATH, "//option[. = '1']").click()
-    self.driver.find_element(By.ID, "cc-cvv").click()
-    self.driver.find_element(By.ID, "cc-cvv").send_keys("21")
-    time.sleep(delay)
+    self.driver.find_element(By.ID, "mese_scadenza").click()
     self.driver.find_element(By.ID, "confermaPagamentoBtn").click()
-    time.sleep(delay)
-    assert self.driver.switch_to.alert.text == "Il CVV deve essere di almeno 3 cifre."
+    assert self.driver.switch_to.alert.text == "Carta Scaduta"
+  

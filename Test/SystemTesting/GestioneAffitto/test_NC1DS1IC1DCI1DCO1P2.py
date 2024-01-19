@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestTCSSegnalazioneM1():
+class TestNC1DS1IC1DCI1DCO1P2():
   def setup_method(self, method):
     self.driver = webdriver.Chrome()
     self.vars = {}
@@ -18,21 +18,30 @@ class TestTCSSegnalazioneM1():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_tCSSegnalazioneM1(self):
+  def test_nC1DS1IC1DCI1DCO1P2(self):
+    delay = 5.0
     self.driver.get("http://127.0.0.1:5000/")
     self.driver.set_window_size(1265, 1372)
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(1)").click()
+    time.sleep(delay)
     self.driver.find_element(By.ID, "exampleDropdownFormEmail1").click()
-    self.driver.find_element(By.ID, "exampleDropdownFormEmail1").send_keys("annayellow@gmail.com")
+    time.sleep(delay)
+    self.driver.find_element(By.ID, "exampleDropdownFormEmail1").send_keys("sofiaesposito@gmail.com")
     self.driver.find_element(By.ID, "exampleDropdownFormPassword1").click()
-    self.driver.find_element(By.ID, "exampleDropdownFormPassword1").send_keys("yellowAnnPass!456")
+    self.driver.find_element(By.ID, "exampleDropdownFormPassword1").send_keys("Passsofy1@2")
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
     self.driver.find_element(By.ID, "search").click()
     self.driver.find_element(By.ID, "search").send_keys("Salerno")
     self.driver.find_element(By.ID, "nutton").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(6) .card-body").click()
-    self.driver.execute_script("window.scrollTo(0,1000)")
-    self.driver.find_element(By.CSS_SELECTOR, ".btn-primary:nth-child(5)").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".bottone > .btn").click()
-    assert self.driver.switch_to.alert.text == "Non hai compilato nessun form. Compila almeno una checkbox e il campo di descrizione."
+    self.driver.find_element(By.CSS_SELECTOR, ".card:nth-child(6) .img-fluid").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(2)").click()
+    self.driver.find_element(By.ID, "lastCheckOutDate").click()
+    time.sleep(delay)
+    self.driver.find_element(By.ID, "lastCheckOutDate").clear()
+    self.driver.find_element(By.ID, "lastCheckOutDate").send_keys("2028-11-23")
+    self.driver.find_element(By.ID, "lastCheckInDate").clear()
+    self.driver.find_element(By.ID, "lastCheckInDate").click()
+    self.driver.find_element(By.ID, "button1").click()
+    time.sleep(delay)
+    assert self.driver.switch_to.alert.text == "L\'affitto deve essere minimo di 3 mesi."
   
