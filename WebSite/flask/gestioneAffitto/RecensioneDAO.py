@@ -12,6 +12,13 @@ class RecensioneDAO:
 
     #creazione recensione
     def recensione_alloggio(self, recensione):
+        if (recensione is None or recensione.get_email() is None or recensione.get_email() == ""
+                or recensione.get_id_alloggio() is None or recensione.get_id_alloggio() == ""
+                or recensione.get_titolo() is None or recensione.get_titolo() == ""
+                or recensione.get_descrizione() is None or recensione.get_descrizione() == ""
+                or recensione.get_data_recensione() is None or recensione.get_data_recensione() == ""
+                or recensione.get_voto() is None or recensione.get_voto() == ""):
+            raise ValueError("Il dipendente e tutti i suoi campi devono essere definiti.")
         query = """
         INSERT INTO recensione
         (id_alloggio, email, titolo, voto, descrizione, data_recensione) 
@@ -94,3 +101,11 @@ class RecensioneDAO:
             )
             recensioni.append(rec)
         return recensioni
+
+    def contarec(self):
+        query="""
+            SELECT COUNT(*) FROM recensione
+        """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results

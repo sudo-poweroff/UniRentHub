@@ -1,4 +1,6 @@
 import re
+from sqlite3 import IntegrityError
+
 from flask import Flask, flash
 from .Cliente import Cliente
 from .ClienteDAO import ClienteDAO
@@ -74,8 +76,13 @@ def registra_homechecker_service(email, nome, cognome, password):
         if is_valid_password(password):
             dipendente = Dipendente(nome=nome, cognome=cognome, email=email, password=password)
             dao = DipendenteDAO()
-            dao.registra_homechecker(dipendente)
-            return dipendente
+            try:
+                dao.registra_homechecker(dipendente)
+                return dipendente
+            except Exception:
+                return
+            except ValueError:
+                return
 
 
 def get_cliente_by_email_password(email, password):
