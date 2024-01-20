@@ -474,21 +474,30 @@ def inseriscirec():
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
     id_casa = idcasas(email, data_oggi)
+
+    casa_trovata = False
     for id_ in id_casa:
         print("CIAO FRATMMMMMM" + str(id_), str(id_alloggio))
-    data_acquisto = cercadataacquisto(email,id_alloggio)
-    print("DATAOGGI")
-    print(data_oggi)
-    print("DATAACQUISTO")
-    print(data_acquisto)
-    diff = data_oggi - data_acquisto
-    diff = diff.days
-    print(diff)
-    for id_ in id_casa:
         if id_ == id_alloggio:
-            rec = cercarec(id_alloggio, email)
-            print("SONO QUI")
-            return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
+            casa_trovata = True
+
+    print("Valore casa:     " + str(casa_trovata))
+    if casa_trovata is True:
+        data_acquisto = cercadataacquisto(email,id_alloggio)
+        print("DATAOGGI")
+        print(data_oggi)
+        print("DATAACQUISTO")
+        print(data_acquisto)
+        diff = data_oggi - data_acquisto
+        diff = diff.days
+        print(diff)
+        for id_ in id_casa:
+            if id_ == id_alloggio:
+                rec = cercarec(id_alloggio, email)
+                print("SONO QUI")
+                return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
+    else:
+        return render_template("error.html")
 
 
 @gu2.route("/recensisci", methods=['POST'])
