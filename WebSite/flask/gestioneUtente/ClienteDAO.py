@@ -2,6 +2,8 @@ from .Cliente import Cliente
 from WebSite.flask.test.GestioneConnessione import GestioneConnessione
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 from datetime import datetime
+
+
 class ClienteDAO:
 
     def __init__(self):
@@ -9,12 +11,20 @@ class ClienteDAO:
         self.__connection = self.__gestioneConnessione.getConnessione()
         self.__cursor = self.__gestioneConnessione.getCursor()
 
-
     def createCliente(self, cliente):
+        if (cliente is None or cliente.getEmail() is None or cliente.getEmail() == ""
+                or cliente.getNome() is None or cliente.getNome() == ""
+                or cliente.getCognome() is None or cliente.getCognome() == ""
+                or cliente.getTipo() is None or cliente.getTipo() == ""
+                or cliente.getNumeroCarta() is None or cliente.getNumeroCarta() == ""
+                or cliente.getAnnoScadenza() is None or cliente.getAnnoScadenza() == ""
+                or cliente.getMeseScadenza() is None or cliente.getMeseScadenza() == ""
+                or cliente.getPassword() is None or cliente.getPassword() == ""):
+            raise ValueError("Il dipendente e tutti i suoi campi devono essere definiti.")
         query = """
-            INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NULL)
-        """
+               INSERT INTO cliente (email, nome, cognome, tipo_utente, data_nascita, numero_carta, mese_scadenza, anno_scadenza, verificato, password, data_blocco)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, AES_ENCRYPT(%s, 'ciao'), NULL)
+           """
         values = (
             cliente.getEmail(), cliente.getNome(), cliente.getCognome(),
             cliente.getTipo(), cliente.getDataNascita(),
@@ -38,7 +48,7 @@ class ClienteDAO:
     def updateCliente(self, email, password, numero_carta, data_scadenza, data_blocco):
         query = """
             UPDATE cliente
-            SET password = %s, numero_carta = %s, data_scadenza = %s, data_blocco = %s
+            SET password = AES_ENCRYPT(%s, 'ciao'), numero_carta = %s, data_scadenza = %s, data_blocco = %s
             WHERE email = %s
         """
 
@@ -82,10 +92,39 @@ class ClienteDAO:
             SELECT *
             FROM cliente
             WHERE email = %s
-            AND password = %s
+            AND password = AES_ENCRYPT(%s, 'ciao')
         """
 
         values = (email, pwd)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            cliente = Cliente(
+                email=result[0],
+                nome=result[1],
+                cognome=result[2],
+                tipo_utente=result[3],
+                data_nascita=result[4],
+                numero_carta=result[5],
+                mese_scadenza=result[6],
+                anno_scadenza=result[7],
+                verificato=result[8],
+                password=pwd,
+                data_blocco=result[10]
+            )
+            return cliente
+        else:
+            return None
+
+    def ricerca_cliente(self, email):
+        query = """
+               SELECT *
+               FROM cliente
+               WHERE email = %s
+           """
+        values = (email, )
 
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
@@ -108,8 +147,10 @@ class ClienteDAO:
         else:
             return None
 
+
+
     def universitabystudente(self, email):
-        query ="""
+        query = """
             SELECT iscrizione.denominazione
             FROM iscrizione
             WHERE email = %s
@@ -126,7 +167,7 @@ class ClienteDAO:
             return None
 
     def cercacaseproprietario(self, email):
-        query="""
+        query = """
         SELECT * FROM alloggio
         WHERE email_loc = %s
         """
@@ -163,7 +204,7 @@ class ClienteDAO:
         return alloggi
 
     def cercacasastudente(self, email, data):
-        query="""
+        query = """
         SELECT id_alloggio FROM affittare
         WHERE affittare.email = %s
         AND data_fine > %s
@@ -171,10 +212,10 @@ class ClienteDAO:
         values = (email, data)
 
         self.__cursor.execute(query, values)
-        result = self.__cursor.fetchone()
+        results = self.__cursor.fetchall()
 
-        if result:
-            return result[0]
+        if results:
+            return [result[0] for result in results]
         else:
             return None
 
@@ -182,7 +223,7 @@ class ClienteDAO:
         try:
             query = """
                 UPDATE cliente
-                SET nome = %s, cognome = %s, password = %s, numero_carta = %s, anno_scadenza = %s, mese_scadenza = %s
+                SET nome = %s, cognome = %s, password =AES_ENCRYPT(%s, 'ciao'), numero_carta = %s, anno_scadenza = %s, mese_scadenza = %s
                 WHERE email = %s
             """
 
@@ -229,7 +270,7 @@ class ClienteDAO:
                 SET data_blocco = NULL 
                 WHERE email = %s
                 """
-        values = (email, )
+        values = (email,)
         self.__cursor.execute(query, values)
         self.__connection.commit()
 
@@ -244,3 +285,12 @@ class ClienteDAO:
 
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def contacliente(self):
+        query = """
+                    SELECT COUNT(*) FROM cliente
+                    
+                                """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results

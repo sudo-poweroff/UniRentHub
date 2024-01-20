@@ -10,9 +10,15 @@ class DipendenteDAO:
         self.__cursor = self.__gestioneConnessione.getCursor()
 
     def registra_homechecker(self, dipendente):
+        if (dipendente is None or dipendente.getEmail() is None or dipendente.getEmail() == ""
+                or dipendente.getNome() is None or dipendente.getNome() == ""
+                or dipendente.getCognome() is None or dipendente.getCognome() == ""
+                or dipendente.getPassword() is None or dipendente.getPassword() == ""):
+            raise ValueError("Il dipendente e tutti i suoi campi devono essere definiti.")
+
         query = """
             INSERT INTO dipendente (email, nome, cognome, tipo_dipendente, password)
-            VALUES (%s, %s, %s, 'Homechecker', %s)
+            VALUES (%s, %s, %s, 'Homechecker', AES_ENCRYPT(%s, 'ciao'))
         """
         values = (
             dipendente.getEmail(), dipendente.getNome(), dipendente.getCognome(),
@@ -32,7 +38,7 @@ class DipendenteDAO:
     def updateDipendente(self, email, password):
         query = """
             UPDATE dipendente
-            SET password = %s
+            SET password = AES_ENCRYPT(%s, 'ciao')
             WHERE email = %s
         """
         values = (password, email)
@@ -44,9 +50,9 @@ class DipendenteDAO:
             SELECT *
             FROM dipendente
             WHERE email = %s
-            AND password = %s
+            AND password = AES_ENCRYPT(%s, 'ciao')
         """
-        values = (email,password)
+        values = (email, password)
 
         self.__cursor.execute(query, values)
         result = self.__cursor.fetchone()
@@ -57,7 +63,7 @@ class DipendenteDAO:
                 nome=result[1],
                 cognome=result[2],
                 tipo_dipendente=result[3],
-                password=result[4]
+                password=password
             )
             return dipendente
         else:
@@ -93,3 +99,12 @@ class DipendenteDAO:
         values = (email,)
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def contadip(self):
+        query = """
+                        SELECT COUNT(*) FROM dipendente
+                        WHERE  tipo_dipendente='Homechecker'
+                        """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results

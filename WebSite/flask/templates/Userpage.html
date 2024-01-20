@@ -13,7 +13,13 @@
 
 
 <div style="height: 2800px">
+   {% if message=="Il tuo messaggio qui" %}
+    <script>
+        alert("Non è passato ancora 1 mese dall'acquisto");
+        // Reimposta la variabile di sessione a "NO" dopo aver mostrato l'alert
 
+    </script>
+{% endif %}
 
       <div class="container marketing">
           <hr class="featurette-divider">
@@ -24,14 +30,14 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
-                <input type="text" name="nome" class="form-control" id="firstName" placeholder="" value="{{session["nome"] }}" required="">
+                <input type="text" name="nome" class="form-control" id="firstName" placeholder="" value="{{session["nome"] }}" readonly>
                 <div class="invalid-feedback">
                   È richiesto un nome valido.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Cognome</label>
-                <input type="text" name="cognome" class="form-control" id="lastName" placeholder="" value="{{session["cognome"] }}" required="">
+                <input type="text" name="cognome" class="form-control" id="lastName" placeholder="" value="{{session["cognome"] }}" readonly>
                 <div class="invalid-feedback">
                   È richiesto un cognome valido.
                 </div>
@@ -87,19 +93,18 @@
               <div class="col-md-3 mb-3">
                 <label for="mese_scadenza">Mese</label>
                 <select class="custom-select d-block w-100" id="mese_scadenza" name="mese-scadenza" required="">
-                  <option value="">Mese</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                     <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
 
                 </select>
 
@@ -111,14 +116,13 @@
                 <div class="col-md-3 mb-3">
                 <label for="scadenza">Anno</label>
                 <select class="custom-select d-block w-100" id="scadenza" name="anno-scadenza" required="">
-                  <option value="">Anno</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
-                    <option>2028</option>
-                    <option>2029</option>
-                    <option>2030</option>
+                    <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
                 </select>
 
                 <div class="invalid-feedback">
@@ -148,7 +152,53 @@
     </button>
           </form>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.getElementById("modificaDatiBtn").addEventListener("click", function() {
+        var password = document.getElementById("password").value;
+        var cvv = document.getElementById("cc-cvv").value;
+        var anno = parseInt(document.getElementById("scadenza").value);
+var mese = parseInt(document.getElementById("mese_scadenza").value);
+var currentDate = new Date();
+var currentYear = currentDate.getFullYear();
+var currentMonth = currentDate.getMonth() + 1; // Aggiungi uno per ottenere il mese corrente
 
+
+if (anno < currentYear || (anno === currentYear && mese <= currentMonth)) {
+    alert("Carta Scaduta");
+    event.preventDefault();
+}
+        // Verifica che la password contenga almeno 8 caratteri
+        var lunghezzaValida = password.length >= 8;
+
+        // Verifica che ci sia almeno una maiuscola
+        var contieneMaiuscola = /[A-Z]/.test(password);
+
+        // Verifica che ci sia almeno una minuscola
+        var contieneMinuscola = /[a-z]/.test(password);
+
+        // Verifica che ci sia almeno un numero
+        var contieneNumero = /\d/.test(password);
+
+        // Verifica che ci sia almeno un carattere speciale
+        var contieneSpeciale = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        var numcarta = document.getElementById("cc-number").value
+        if(numcarta.trim().length !== 16){
+            alert("il Numero di carta deve avere 16 cifre");
+            event.preventDefault()
+        }
+        if(cvv.trim().length !== 3){
+            alert("il cvv non ha tre cifre");
+            event.preventDefault();
+        }
+        // Controlla tutte le condizioni
+        if (lunghezzaValida && contieneMaiuscola && contieneMinuscola && contieneNumero && contieneSpeciale) {
+
+        } else {
+            alert("La password non è valida. Assicurati di rispettare tutti i requisiti.");
+            event.preventDefault();
+        }
+    });
+</script>
         </div>
 
 

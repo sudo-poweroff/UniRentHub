@@ -18,3 +18,5 @@ app.register_blueprint(gu3)
 
 if __name__ == '__main__':
     app.run()
+
+

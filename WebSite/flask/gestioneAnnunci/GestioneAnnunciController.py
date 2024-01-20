@@ -1,3 +1,5 @@
+import idlelib.calltip
+
 from flask import Blueprint, request, render_template, session, redirect, url_for, Flask
 from datetime import datetime, date
 
@@ -9,7 +11,7 @@ from .GestioneAnnunciService import pubblicazione_alloggio, ricerca_alloggio, ri
     visualizza_annuncio, inserisci_immagini_service, visualizza_servizi_alloggio, visualizza_indirizzo, \
     modifica_annuncio_byid, modifica_indirizzo_byid, preleva_immagini, elimina_alloggio_byid, preleva_data_visita, \
     recensione, cercarec, segnala_service, ricerca_prezzo_minore, ricerca_prezzo_maggiore, ricerca_classe_energetica, \
-    ricerca_recensione, ricerca_recensione_byId
+    ricerca_recensione, ricerca_recensione_byId, cercadataacquisto, check_casa_byid, modifica_annuncio_byid_post
 from .ImmagineDAO import ImmagineDAO
 from .Indirizzo import Indirizzo
 from .IndirizzoDAO import IndirizzoDAO
@@ -307,29 +309,90 @@ def modifica_annuncio():
         mail = session.get("email")
         servizi_selezionati = request.form.getlist('checkboxGroup')
 
-        cap_con_zero = cap.zfill(5)
+        cap_con_zero = cap.zfill(5) if cap else ""
 
-        print("id: " + str(id_))
-        print("titolo:" + titolo)
-        print("indirizzo:" + indirizzo)
-        print("cap:" + cap_con_zero)
-        print("provincia:" + provincia)
-        print("citta:" + citta)
-        print("tipo:" + tipo)
-        print("descrizione:" + descrizione)
-        print("num_bagni:" + str(num_bagni))
-        print("num_camere:" + str(num_camere))
-        print("num_ospiti:" + str(num_ospiti))
-        print("metri_quadri:" + str(metri_quadri))
-        print("prezzo:" + str(prezzo))
-        print("periodo_minimo:" + str(periodo_minimo))
-        print("pannelli_fotovoltaici:" + str(pannelli_fotovoltaici))
-        print("pannelli_solari:" + str(pannelli_solari))
-        print("arredamento:" + str(arredamento))
-        print("civico:" + civico)
-        print("data:" + data)
-        print("mail:" + mail)
-        print("servizi_selezionati:" + str(servizi_selezionati))
+
+        if id_ is not None:
+            print("id: " + str(id_))
+
+        if titolo is not None:
+            print("titolo:" + titolo)
+
+        if indirizzo is not None:
+            print("indirizzo:" + indirizzo)
+
+        if cap_con_zero is not None:
+            print("cap:" + cap_con_zero)
+
+        if provincia is not None:
+            print("provincia:" + provincia)
+
+        if citta is not None:
+            print("citta:" + citta)
+
+        if tipo is not None:
+            print("tipo:" + tipo)
+
+        if descrizione is not None:
+            print("descrizione:" + descrizione)
+
+        if num_bagni is not None:
+            print("num_bagni:" + str(num_bagni))
+
+        if num_camere is not None:
+            print("num_camere:" + str(num_camere))
+
+        if num_ospiti is not None:
+            print("num_ospiti:" + str(num_ospiti))
+
+        if metri_quadri is not None:
+            print("metri_quadri:" + str(metri_quadri))
+
+        if prezzo is not None:
+            print("prezzo:" + str(prezzo))
+
+        if periodo_minimo is not None:
+            print("periodo_minimo:" + str(periodo_minimo))
+
+        if pannelli_fotovoltaici is not None:
+            print("pannelli_fotovoltaici:" + str(pannelli_fotovoltaici))
+
+        if pannelli_solari is not None:
+            print("pannelli_solari:" + str(pannelli_solari))
+
+        if arredamento is not None:
+            print("arredamento:" + str(arredamento))
+
+        if civico is not None:
+            print("civico:" + civico)
+
+        if data is not None:
+            print("data:" + data)
+
+        if mail is not None:
+            print("mail:" + mail)
+
+        if servizi_selezionati is not None:
+            print("servizi_selezionati:" + str(servizi_selezionati))
+
+
+        all = check_casa_byid(id_=id_)
+        print("VERIFICATO:     " + str(all.get_verifica()))
+        if all.get_verifica() == 1:
+            print("VERIFICATO")
+            alloggio = modifica_annuncio_byid_post(id_allogio=id_, titolo=titolo, arredamenti=arredamento,
+                                                   data_pubblicazione=data, pannelli_solari=pannelli_solari, pannelli_fotovoltaici=pannelli_fotovoltaici,
+                                                   descrizione=descrizione, prezzo=prezzo, tasse=prezzo-20)
+
+            alloggio.set_mq(all.get_mq())
+            alloggio.set_n_stanze(all.get_n_stanze())
+            alloggio.set_email_loc(all.get_email_loc())
+
+            path = preleva_immagini(id_)
+            indirizzo2 = visualizza_indirizzo(id_alloggio=id_)
+            servizi = visualizza_servizi_alloggio(id_)
+            return render_template("Alloggio.html", alloggio=alloggio, indirizzo=indirizzo2, immagini=path,
+                                   servizi=servizi)
 
         alloggio = modifica_annuncio_byid(id_allogio=id_, tipo_alloggio=tipo, titolo=titolo, mq=metri_quadri, n_camere_letto=num_camere,
                                           n_bagni=num_bagni, classe_energetica=classe_energetica,
@@ -407,15 +470,35 @@ def segnala_successo():
 
 @gu2.route("/recensione")
 def inseriscirec():
-    data_oggi = date.today().isoformat()
+    data_oggi = date.today()
     id_alloggio = int(request.args.get('id') or session.get("id_alloggio"))
     email=session["email"]
-    id_casa = int(idcasas(email, data_oggi))
-    if id_casa == id_alloggio:
-        rec = cercarec(id_alloggio, email)
-        return render_template("Recensione.html", id=id_alloggio, rec=rec)
+    id_casa = idcasas(email, data_oggi)
+
+    casa_trovata = False
+    for id_ in id_casa:
+        print("CIAO FRATMMMMMM" + str(id_), str(id_alloggio))
+        if id_ == id_alloggio:
+            casa_trovata = True
+
+    print("Valore casa:     " + str(casa_trovata))
+    if casa_trovata is True:
+        data_acquisto = cercadataacquisto(email,id_alloggio)
+        print("DATAOGGI")
+        print(data_oggi)
+        print("DATAACQUISTO")
+        print(data_acquisto)
+        diff = data_oggi - data_acquisto
+        diff = diff.days
+        print(diff)
+        for id_ in id_casa:
+            if id_ == id_alloggio:
+                rec = cercarec(id_alloggio, email)
+                print("SONO QUI")
+                return render_template("Recensione.html", id=id_alloggio, rec=rec,diff=diff)
     else:
-        return redirect(url_for('gu.userpage'))
+        return render_template("error.html")
+
 
 @gu2.route("/recensisci", methods=['POST'])
 def recensisci():

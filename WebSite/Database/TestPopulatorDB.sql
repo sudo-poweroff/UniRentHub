@@ -473,7 +473,7 @@ INSERT INTO Immagine (id_alloggio, path) VALUES
 
 -- Popolamento della tabella Affittare
 INSERT INTO Affittare (id_alloggio, email, data_inizio, data_fine, numero_carta, mese_scadenza, anno_scadenza, prezzo) VALUES
-(3, 'sofiaesposito@gmail.com', '2024-01-15', '2024-07-30', '3546746378291034', 1, 2025, 5600.00),
+(3, 'sofiaesposito@gmail.com', '2023-01-15', '2024-07-30', '3546746378291034', 1, 2025, 5600.00),
 (5, 'laurawhite@gmail.com', '2024-02-01', '2024-07-30', '9876543210987654', 5, 2024, 5400.00),
 (7, 'mariorossi@gmail.com', '2024-02-01', '2024-07-01', '1234567890123456', 10, 2025, 7000.00),
 (11, 'antoalbanese@gmail.com', '2024-02-01', '2024-07-30', '3546374789092364', 7, 2024, 1750.00),

@@ -111,9 +111,7 @@ class AlloggioDAO:
         else:
             return None
 
-    def inseriscicasa(self, titolo, tipo, descrizione, num_bagni, num_camere, classe_energetica, num_ospiti,
-                      metri_quadri, prezzo, periodo_minimo, arredamento, pannelli_fotovoltaici, pannelli_solari,
-                      data, stanze, mail):
+    def inseriscicasa(self, alloggio):
         query = """
                 INSERT INTO Alloggio (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni,
                                       classe_energetica, arredamenti, data_pubblicazione, pannelli_solari,
@@ -123,8 +121,9 @@ class AlloggioDAO:
                                       (%s, 1,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, %s, %s,%s,%s,%s)
                 """
         tasse=10
-        values = (tipo, titolo, metri_quadri, num_camere, num_bagni, classe_energetica, arredamento, data,
-                  pannelli_solari, pannelli_fotovoltaici, descrizione, prezzo, num_ospiti, stanze,tasse, mail)
+        values = (alloggio.get_id_alloggio(), alloggio.get_disponibilita(), alloggio.get_titolo(), alloggio.get_mq(), alloggio.get_n_camere_letto(), alloggio.get_n_bagni(), alloggio.get_classe_energetica(),
+                  alloggio.get_arredamenti(), alloggio.get_data_pubblicazione(), alloggio.get_pannelli_solari(), alloggio.get_pannelli_fotovoltaici(), alloggio.get_descrizione(), alloggio.get_verifica(),
+                  alloggio.get_prezzo(), alloggio.get_n_ospiti(), alloggio.get_n_stanze(), alloggio.get_tasse(), alloggio.get_email_loc())
 
         self.__cursor.execute(query, values)
 
@@ -192,9 +191,24 @@ class AlloggioDAO:
         return alloggi
 
     def create_alloggio(self, alloggio):
+        if (alloggio.get_titolo() is None or alloggio.get_titolo() == "" or
+                alloggio.get_mq() is None or alloggio.get_mq() == "" or
+                alloggio.get_n_bagni() is None or alloggio.get_n_bagni() == "" or
+                alloggio.get_n_camere_letto() is None or alloggio.get_n_camere_letto() == "" or
+                alloggio.get_classe_energetica() is None or alloggio.get_classe_energetica() == "" or
+                alloggio.get_data_publicazione() is None or alloggio.get_data_publicazione() == "" or
+                alloggio.get_descrizione() is None or alloggio.get_descrizione() == "" or
+                alloggio.get_prezzo() is None or alloggio.get_prezzo() == "" or
+                alloggio.get_n_ospiti() is None or alloggio.get_n_ospiti()=="" or
+                alloggio.get_email_loc() is None or alloggio.get_email_loc()=="" or
+                alloggio.get_n_stanze() is None or alloggio.get_n_stanze()==""):
+            raise ValueError("L'Annuncio e tutti i suoi campi devono essere definiti.")
+
         query = """
             INSERT INTO alloggio
-            (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, tasse, email_dip, email_loc, data_verifica)
+            (tipo_alloggio, disponibilità, titolo, mq, n_camere_letto, n_bagni, classe_energetica, arredamenti, 
+            data_pubblicazione, pannelli_solari, pannelli_fotovoltaici, descrizione, verifica, prezzo, n_ospiti, n_stanze, 
+            tasse, email_dip, email_loc, data_verifica)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (
@@ -273,6 +287,38 @@ class AlloggioDAO:
         values = (id_alloggio,)
         self.__cursor.execute(query, values)
         self.__connection.commit()
+
+    def modifica_alloggio_post(self, id_alloggio, alloggio):
+        query = """
+            UPDATE alloggio
+            SET
+                titolo = %s,
+                arredamenti = %s,
+                pannelli_solari = %s,
+                pannelli_fotovoltaici = %s,
+                descrizione = %s,
+                prezzo = %s,
+                tasse = %s
+            WHERE
+                id_alloggio = %s
+        """
+        values = (
+            alloggio.get_titolo(),  # titolo
+            alloggio.get_arredamenti(),  # arredamenti
+            alloggio.get_pannelli_solari(),  # pannelli_solari
+            alloggio.get_pannelli_fotovoltaici(),  # pannelli_fotovoltaici
+            alloggio.get_descrizione(),  # descrizione
+            alloggio.get_prezzo(),  # prezzo
+            alloggio.get_tasse(),  # tasse
+            id_alloggio  # id_alloggio
+        )
+        print("MODIFCO DAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        result = self.__cursor.execute(query, values)
+        self.__connection.commit()
+        if result:
+            print("FATTO: " + result)
+        else:
+            print("NONEEEE")
 
     def ricerca_prezzo_minore_per_citta(self, citta):
         query = """
@@ -715,3 +761,11 @@ class AlloggioDAO:
             return alloggio
         else:
             return None
+
+    def conta(self):
+        query = """
+                    SELECT COUNT(*) FROM alloggio
+                """
+        self.__cursor.execute(query)
+        results = self.__cursor.fetchone()[0]
+        return results

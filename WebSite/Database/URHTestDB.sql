@@ -1,6 +1,6 @@
-DROP SCHEMA unirenthub;
-CREATE  SCHEMA unirenthub;
-use unirenthub;
+DROP SCHEMA urhtestdb;
+CREATE  SCHEMA urhtestdb;
+use urhtestdb;
 
 
 -- Creazione della tabella Cliente

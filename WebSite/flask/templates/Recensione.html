@@ -20,6 +20,7 @@
             <div class="card-body" style="font-size: 24px; width:500px;">
                 <form action="/recensisci" method="POST">
                  <input type="hidden" name ="id"  class="form-control" id="id" value="{{id}}" >
+                <input type="hidden" name ="data"  class="form-control" id="data" value="{{diff}}" >
 
              <label for="titolo" class="form-label">Titolo</label>
              <input name ="titolo" type="text" class="form-control" id="titolo"
@@ -31,7 +32,7 @@
 
 
             <label for="exampleFormControlTextarea1" class="form-label" style="margin-top: 10px">Descrizione</label>
-            <textarea name = "descrizione" class="form-control" id="exampleFormControlTextarea1" rows="3"
+            <textarea name = "descrizione" class="form-control" id="descrizione" rows="3"
                       {% if not rec or  not rec.get_descrizione() %}
                       placeholder="Descrivi la tua esperienza">
                       {% else %}
@@ -57,7 +58,7 @@
 
 
             {% if rec %}
-                <button  class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; margin-left: 350px;"  type="submit">
+                <button  class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; margin-left: 350px;"  type="submit" id="mioBottone">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-plus-fill" viewBox="0 0 16 16">
             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"></path>
             <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"></path>
@@ -66,7 +67,7 @@
             </button>
 
                 {% else %}
-            <button  class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; margin-left: 350px;"  type="submit">
+            <button  class="btn btn-success" style="background-color: #5c8e48; border-color: #5c8e48; margin-top: 10px; margin-left: 350px;"  type="submit" id="mioBottone">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-plus-fill" viewBox="0 0 16 16">
             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"></path>
             <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"></path>
@@ -80,6 +81,32 @@
 
 
 </div>
+     <script>
+    document.getElementById("mioBottone").addEventListener("click", function() {
+        var titolo = document.getElementById("titolo").value;
+        var descrizione = document.getElementById("descrizione").value;
+        var diff = document.getElementById("data").value;
+        if(diff<30){
+            alert("Non sono passati 30 giorni!");
+            event.preventDefault();
+        }
+        if (titolo.trim() === "") {
+            alert("Inserisci il titolo!");
+            event.preventDefault();
+        } else if (titolo.trim().length < 5) {
+            alert("Il titolo è troppo breve. Inserisci almeno 5 parole.");
+            event.preventDefault();
+        }
+        if (descrizione.trim() === "") {
+        alert("Inserisci la descrizione");
+        event.preventDefault();
+        } else if (descrizione.trim().length < 30) {
+        alert("La descrizione è troppo breve. Inserisci almeno 30 caratteri.");
+        event.preventDefault();
+        }
+
+    });
+</script>
 
 
     {% include "footerNew.html" %}

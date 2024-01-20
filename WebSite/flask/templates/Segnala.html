@@ -68,7 +68,7 @@
 {% block content %}
     {% include "header.html" %}
     <h1>{{ tipo_utente }}</h1>
-<form action = "{{ url_for('gu2.segnala') }}" method = "POST">
+<form action = "{{ url_for('gu2.segnala') }}" method = "POST"  >
     <div class="text-center">
         <h2>Seleziona le opzioni:</h2>
     </div>
@@ -109,28 +109,50 @@
         </div>
         <!-- script per selezionare una sola checkbox con name = motivo -->
         <script>
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="motivo"]');
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function() {
-            checkboxes.forEach((cb) => {
-                if (cb !== this) {
-                    cb.checked = false;
-                }
+            document.addEventListener('DOMContentLoaded', function () {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"][name="motivo"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.addEventListener('change', function() {
+                        const checkedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
+                        if (checkedCheckboxes.length > 1) {
+                            alert('Puoi scegliere un solo motivo. Deseleziona le altre caselle di controllo.');
+                            checkbox.checked = false;
+                        }
+                    });
+                });
             });
-        });
-    });
-       </script>
+        </script>
 
 
+<!-- alert script form vuoto -->
+{% block script %}
+    <script>
+        function validaForm() {
+            // Verifica se almeno una checkbox è selezionata
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="motivo"]');
+            let almenoUnaCheckboxSelezionata = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
+            // Verifica se il campo di descrizione non è vuoto
+            const descrizione = document.getElementById('Descrizione').value.trim();
+            let descrizioneCompilata = descrizione !== '';
 
+            // Mostra un alert se nessuna checkbox è selezionata o il campo descrizione è vuoto
+            if (!almenoUnaCheckboxSelezionata || !descrizioneCompilata) {
+                alert('Non hai compilato nessun form. Compila almeno una checkbox e il campo di descrizione.');
+                return false; // Impedisce l'invio del form
+            }
+
+            return true; // Permette l'invio del form se la validazione è superata
+        }
+    </script>
+{% endblock %}
 
 
          <div class="form-group textarea-container">
             <label for="Descrizione">Dicci di più:</label>
             <textarea class="form-control" id="Descrizione" name="descrizione" rows="3"></textarea>
             <div class="bottone">
-                <button type="submit" class="btn btn-primary" style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width: 200px;">
+                <button type="submit" class="btn btn-primary"    onclick="return validaForm()"    style="margin-top: 15px; background-color: #5c8e48; border-color: #5c8e48; width: 200px;">
                     Invia segnalazione
                 </button>
             </div>

@@ -1,4 +1,6 @@
 import re
+from sqlite3 import IntegrityError
+
 from flask import Flask, flash
 from .Cliente import Cliente
 from .ClienteDAO import ClienteDAO
@@ -63,8 +65,37 @@ def registra_cliente(nome, cognome, email, password, tipo_utente, numero_carta, 
                     cliente = Cliente(nome=nome, cognome=cognome, email=email, password=password,
                                       tipo_utente=tipo_utente, numero_carta=numero_carta, mese_scadenza=mese_scadenza, anno_scadenza=anno_scadenza)
                     dao = ClienteDAO()
-                    dao.createCliente(cliente)
-                    return cliente
+                    try:
+                        dao.createCliente(cliente)
+                        return cliente
+                    except Exception:
+                        return
+                    except ValueError:
+                        return
+
+
+#permette di visualizzare  se un utente è gia regitsrato
+def validate_registrazione(email):
+
+    dao = ClienteDAO()
+    cliente = dao.ricerca_cliente(email=email)
+
+    if cliente is not None:
+        return False
+    elif cliente is None:
+        return True
+
+
+#permette di visualizzare  se un dipendente è gia regitsrato
+def validate_registrazione_dipendente(email, password):
+
+    dao = DipendenteDAO()
+    dipendente = dao.ricercaDip(email=email, password=password)
+
+    if dipendente is not None:
+        return False
+    elif dipendente is None:
+        return True
 
 
 # creazione nuovo homechecker
@@ -74,8 +105,13 @@ def registra_homechecker_service(email, nome, cognome, password):
         if is_valid_password(password):
             dipendente = Dipendente(nome=nome, cognome=cognome, email=email, password=password)
             dao = DipendenteDAO()
-            dao.registra_homechecker(dipendente)
-            return dipendente
+            try:
+                dao.registra_homechecker(dipendente)
+                return dipendente
+            except Exception:
+                return
+            except ValueError:
+                return
 
 
 def get_cliente_by_email_password(email, password):

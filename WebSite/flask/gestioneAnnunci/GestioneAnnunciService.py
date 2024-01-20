@@ -15,6 +15,7 @@ from WebSite.flask.gestioneAffitto.RecensioneDAO import RecensioneDAO
 from WebSite.flask.gestioneUtente.SegnalazioneDAO import SegnalazioneDAO
 from .ServiziDAO import ServiziDAO
 from WebSite.flask.gestioneAffitto.AffittareDAO import AffittareDAO
+from WebSite.flask.gestioneAffitto.Recensione import Recensione
 
 
 # Funzione di controllo per l'email caratteri
@@ -32,7 +33,8 @@ def controlla_email_esistente(email):
     else:
         return False  # se il cliente non esiste torni False
 
-#verifica campi alloggio
+
+# verifica campi alloggio
 def verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_ospiti, metri_quadri, prezzo,
                    periodo_minimo):
     if 30 > len(titolo) > 5:
@@ -48,7 +50,7 @@ def verifica_campi(titolo, indirizzo, descrizione, num_bagni, num_camere, num_os
         return False
 
 
-#pubblicazione alloggio
+# pubblicazione alloggio
 def pubblicazione_alloggio(tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
                            classe_energetica, arredamenti, data_pubblicazione,
                            pannelli_solari, pannelli_fotovoltaici, descrizione,
@@ -76,9 +78,7 @@ def pubblicazione_alloggio(tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
     return alloggio
 
 
-
-
-#funzione di inserimento immagini tramite la creazione di una cartella con nome = all'id_alloggio associato all'immagine
+# funzione di inserimento immagini tramite la creazione di una cartella con nome = all'id_alloggio associato all'immagine
 def inserisci_immagini_service(lista_immagini):
     dao1 = AlloggioDAO()
     dao2 = ImmagineDAO()
@@ -105,7 +105,7 @@ def inserisci_immagini_service(lista_immagini):
     return path
 
 
-#ricerca di un alloggio
+# ricerca di un alloggio
 def ricerca_alloggio(citta):
     dao1 = IndirizzoDAO()
     dao2 = AlloggioDAO()
@@ -120,7 +120,7 @@ def ricerca_alloggio(citta):
     print("Sono FUORI")
     # Itera su ogni ID alloggio e cerca l'alloggio associato
     for i in id_alloggi:
-        id_alloggio = i[0] #inserisco i[0] in id_alloggio, in modo tale da scorrere sempre il prossimo id
+        id_alloggio = i[0]  # inserisco i[0] in id_alloggio, in modo tale da scorrere sempre il prossimo id
         alloggio = dao2.visualizzaannuncio(id_alloggio)
         print("nome ALLOGGIO: " + alloggio.get_titolo())
         # Aggiungi l'alloggio alla lista
@@ -185,68 +185,80 @@ def ricerca_recensione(citta):
     return media
 
 
-#ricerca di un post studente UniRentHubCommunity
+# ricerca di un post studente UniRentHubCommunity
 def ricerca_post_studente(value):
     dao = PostDAO()
     posts = dao.ricerca_post(value)
     return posts
 
-#creazione di un post studente UniRentHubCommunity
+
+# creazione di un post studente UniRentHubCommunity
 def creazione_post(titolo, descrizione, email):
     dao = PostDAO()
     post = Post(titolo=titolo, descrizione=descrizione, email=email)
-    dao.createPost(post=post)
+    try:
+        dao.createPost(post=post)
+    except ValueError:
+        return
 
 
-#restituisce il MAX id alloggio
+# restituisce il MAX id alloggio
 def max_id_casa():
     dao = AlloggioDAO()
     val = dao.cercaidcasa()
     return val
 
-#Crea un indirizzo utilizzando la logica dei DAO
+
+# Crea un indirizzo utilizzando la logica dei DAO
 def indirizzo_crea(indirizzo):
     dao = IndirizzoDAO()
     dao.crea_indirizzo(indirizzo)
 
-#crea un possedimento id_alloggio - id_servizio
+
+# crea un possedimento id_alloggio - id_servizio
 def crea_possedimento(possedimento):
     dao = PossedimentoDAO()
     dao.inserisci_possedimento(possedimento)
 
-#Permette di visualizzare i servizi
+
+# Permette di visualizzare i servizi
 def visualizza_servizi():
     dao = ServiziDAO()
     servizi = dao.visualizzaservizidisponibili()
     return servizi
 
-#Permette di visualizzare un annuncio
+
+# Permette di visualizzare un annuncio
 def visualizza_annuncio(id_alloggio):
     dao = AlloggioDAO()
     alloggio = dao.visualizzaannuncio(id_alloggio)
     return alloggio
 
-#permette di visualizzare un indirizzo
+
+# permette di visualizzare un indirizzo
 def visualizza_indirizzo(id_alloggio):
     dao = IndirizzoDAO()
     indirizzo = dao.visualizzaindirizzo(id_alloggio=id_alloggio)
     return indirizzo
 
-#Permette di visualizzare i servizi presenti in un alloggio
+
+# Permette di visualizzare i servizi presenti in un alloggio
 def visualizza_servizi_alloggio(id_alloggio):
     dao = ServiziDAO()
     servizi = dao.visualizza_servizi(id_alloggio=id_alloggio)
     for s in servizi:
-        print ("SERVICE: " + s.get_descrizione())
+        print("SERVICE: " + s.get_descrizione())
     return servizi
 
-#permette di visualizzare i servizi-possedimento di un id_alloggio
+
+# permette di visualizzare i servizi-possedimento di un id_alloggio
 def visualizza_servizi_possedimento_byid(id_alloggio):
     dao = PossedimentoDAO()
     id_possedimento = dao.ricerca_by_id_alloggio(id_alloggio=id_alloggio)
     return id_possedimento
 
-#preleva immagine dal DB
+
+# preleva immagine dal DB
 def preleva_immagini(id_alloggio):
     dao = ImmagineDAO()
     immagini = dao.recupera_path(id_alloggio=id_alloggio)
@@ -256,7 +268,8 @@ def preleva_immagini(id_alloggio):
         path.append(im.get_path())
     return path
 
-#modifica_annuncio
+
+# modifica_annuncio
 def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto, n_bagni,
                            classe_energetica, arredamenti, data_pubblicazione,
                            pannelli_solari, pannelli_fotovoltaici, descrizione,
@@ -287,40 +300,84 @@ def modifica_annuncio_byid(id_allogio, tipo_alloggio, titolo, mq, n_camere_letto
     dao.modifica_alloggio(id_alloggio=id_allogio, alloggio=alloggio)
     return alloggio
 
-#modifica indirizzo
+
+
+
+
+# modifica_annuncio_post
+def modifica_annuncio_byid_post(id_allogio, titolo, arredamenti, data_pubblicazione,
+                           pannelli_solari, pannelli_fotovoltaici, descrizione,
+                           prezzo, tasse):
+    alloggio = Alloggio(
+        titolo=titolo,
+        arredamenti=arredamenti,
+        data_publicazione=data_pubblicazione,
+        pannelli_solari=pannelli_solari,
+        pannelli_fotovoltaici=pannelli_fotovoltaici,
+        descrizione=descrizione,
+        prezzo=prezzo,
+        tasse=tasse
+    )
+    print("sono nel service")
+    dao = AlloggioDAO()
+
+    dao.modifica_alloggio_post(id_alloggio=id_allogio, alloggio=alloggio)
+    return alloggio
+
+
+#check_casa_verificata
+def check_casa_byid(id_):
+    dao = AlloggioDAO()
+    print("CHECK CASA!!!!!!!!!!")
+    alloggio = dao.ricerca_per_id(id_)
+    return alloggio
+
+
+# modifica indirizzo
 def modifica_indirizzo_byid(id_alloggio, indirizzo):
     dao = IndirizzoDAO()
     dao.modifica_indirizzo(id_alloggio=id_alloggio, indirizzo=indirizzo)
 
-#elimina alloggio
+
+# elimina alloggio
 def elimina_alloggio_byid(id_alloggio):
     dao = AlloggioDAO()
     dao.elimina_alloggio(id_alloggio=id_alloggio)
 
-#preleva data visita by id
+
+# preleva data visita by id
 def preleva_data_visita(id_alloggio):
     dao = PrenotazioneDAO()
     prenotazione = dao.ricercaprenotazione(id_alloggio=id_alloggio)
     return prenotazione
 
-def recensione(id, titolo, descrizione, voto, data, mail):
-    print("ciao")
+
+def recensione(id_alloggio, titolo, descrizione, voto, data_recensione, email):
+    recensione_istanza = Recensione(id_alloggio=id_alloggio, titolo=titolo, descrizione=descrizione, voto=voto,
+                                    data_recensione=data_recensione, email=email)
     dao = RecensioneDAO()
-    dao.deleterecensione(id, mail)
-    dao.recensione_alloggio(id, mail, titolo, voto, descrizione, data)
+    dao.deleterecensione(id_alloggio, email)
+    try:
+        dao.recensione_alloggio(recensione_istanza)
+    except ValueError:
+        return
 
 def cercarec(id_alloggio, email):
     dao = RecensioneDAO()
-    rec = dao.ricercarecensionestudente(id_alloggio,email)
+    rec = dao.ricercarecensionestudente(id_alloggio, email)
     return rec
+
+
 def segnala_service(email, emailS, motivo):
     dao = SegnalazioneDAO()
     dao.createSegnalazione(email, emailS, motivo)
 
-def cercadataacquisto(email,id_alloggio):
+
+def cercadataacquisto(email, id_alloggio):
     dao = AffittareDAO()
-    data = dao.cercadataaffitto(email,id_alloggio)
+    data = dao.cercadataaffitto(email, id_alloggio)
     return data
+
 
 def ricerca_prezzo_minore(citta):
     dao2 = AlloggioDAO()
@@ -328,6 +385,7 @@ def ricerca_prezzo_minore(citta):
     for i in alloggi:
         print("CASA TITOLO SERVICE MINORE: " + i.get_titolo())
     return alloggi
+
 
 def ricerca_prezzo_maggiore(citta):
     dao2 = AlloggioDAO()
@@ -355,6 +413,7 @@ def ricerca_classe_energetica(citta):
     tutti_alloggi.extend(alloggiD)
 
     return tutti_alloggi
+
 
 def ricerca_alloggio_Byid(id_alloggio):
     dao = AlloggioDAO()
