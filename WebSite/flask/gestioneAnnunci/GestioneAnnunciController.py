@@ -18,7 +18,7 @@ from .IndirizzoDAO import IndirizzoDAO
 from .Possedimento import Possedimento
 from .ServiziDAO import ServiziDAO
 from WebSite.flask.gestioneAffitto.GestioneAffittoService import ricerca_data_disponibile
-from WebSite.flask.gestioneUtente.GestioneUtenteService import idcasas
+from WebSite.flask.gestioneUtente.GestioneUtenteService import idcasas, alloggio_esiste
 from WebSite.flask.gestioneUtente.GestioneUtenteController import verifica_account_required
 
 gu2 = Blueprint('gu2', __name__, template_folder="gestioneAnnunci")
@@ -274,12 +274,19 @@ def rimuovip():
 def modifica_annuncio():
     if request.method=='GET':
         id_alloggio = request.args.get('id')
-        alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
-        indirizzo = visualizza_indirizzo(id_alloggio)
-        print("indirizzo: " + indirizzo.get_citta())
-        session["id_alloggio"] = id_alloggio
-        print("ID ALLOGGIO GET: " + session["id_alloggio"])
-        return render_template("ModificaAlloggio.html", alloggio=alloggio, indirizzo=indirizzo)
+        email_cliente = session.get("email")
+
+        b = alloggio_esiste(id_alloggio, email_cliente)
+        print("BOOLEN"+str(b))
+        if b:
+            alloggio = visualizza_annuncio(id_alloggio=id_alloggio)
+            indirizzo = visualizza_indirizzo(id_alloggio)
+            print("indirizzo: " + indirizzo.get_citta())
+            session["id_alloggio"] = id_alloggio
+            print("ID ALLOGGIO GET: " + session["id_alloggio"])
+            return render_template("ModificaAlloggio.html", alloggio=alloggio, indirizzo=indirizzo)
+        else:
+            return render_template("error.html")
     elif request.method=='POST':
         id_ = session.get("id_alloggio")
         titolo = request.form.get("titolo")
@@ -421,9 +428,9 @@ def elimina_annuncio():
         return render_template("Userpage.html")
 
 
-@gu2.route('/data_visita')
+@gu2.route('/data_visita',  methods=['POST', 'GET'])
 def data_visita_locatore():
-    id_alloggio = request.args.get('id') or session.get("id_alloggio")
+    id_alloggio = session.get("id_alloggio")
     print("id_alloggio fuori: " + str(id_alloggio))
 
     prenotazione = preleva_data_visita(id_alloggio=id_alloggio)
