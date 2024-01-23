@@ -1,5 +1,5 @@
 from .Cliente import Cliente
-from WebSite.flask.test.GestioneConnessione import GestioneConnessione
+from WebSite.flask.DBConnection.GestioneConnessione import GestioneConnessione
 from WebSite.flask.gestioneAnnunci.Alloggio import Alloggio
 from datetime import datetime
 

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from WebSite.flask.gestioneAffitto.Affittare import Affittare
-from WebSite.flask.test.GestioneConnessione import GestioneConnessione
+from WebSite.flask.DBConnection.GestioneConnessione import GestioneConnessione
 
 
 class AffittareDAO:

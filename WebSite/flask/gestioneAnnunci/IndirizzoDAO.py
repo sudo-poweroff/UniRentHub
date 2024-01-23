@@ -1,5 +1,5 @@
 from WebSite.flask.gestioneAnnunci.Indirizzo import Indirizzo
-from WebSite.flask.test.GestioneConnessione import GestioneConnessione
+from WebSite.flask.DBConnection.GestioneConnessione import GestioneConnessione
 
 class IndirizzoDAO:
     def __init__(self):

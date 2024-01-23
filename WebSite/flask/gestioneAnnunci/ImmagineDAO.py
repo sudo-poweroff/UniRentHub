@@ -1,5 +1,5 @@
 from .Immagine import Immagine
-from WebSite.flask.test.GestioneConnessione import GestioneConnessione
+from WebSite.flask.DBConnection.GestioneConnessione import GestioneConnessione
 
 
 class ImmagineDAO:

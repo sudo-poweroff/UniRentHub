@@ -1,5 +1,5 @@
 from WebSite.flask.gestioneAnnunci.Servizi import Servizi
-from WebSite.flask.test.GestioneConnessione import GestioneConnessione
+from WebSite.flask.DBConnection.GestioneConnessione import GestioneConnessione
 
 
 class ServiziDAO:
