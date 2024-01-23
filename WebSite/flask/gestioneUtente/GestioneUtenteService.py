@@ -239,3 +239,8 @@ def chiudi_tutte_le_segnalazioni(emailS):
 def update_blocco(email):
     dao = ClienteDAO()
     dao.resetDataBloccoCliente(email=email)
+
+def alloggio_esiste(id_alloggio, email):
+    dao = AlloggioDAO()
+    b = dao.verifica_esistenza_alloggio_email_loc(id_alloggio=id_alloggio, email_loc=email)
+    return b

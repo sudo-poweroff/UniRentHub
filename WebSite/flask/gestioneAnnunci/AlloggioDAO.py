@@ -769,3 +769,18 @@ class AlloggioDAO:
         self.__cursor.execute(query)
         results = self.__cursor.fetchone()[0]
         return results
+
+    def verifica_esistenza_alloggio_email_loc(self, id_alloggio, email_loc):
+        query =  """
+        SELECT * FROM alloggio
+        WHERE id_alloggio = %s AND email_loc = %s
+    """
+        values = (id_alloggio, email_loc)
+
+        self.__cursor.execute(query, values)
+        result = self.__cursor.fetchone()
+
+        if result:
+            return True
+        else:
+            return False
